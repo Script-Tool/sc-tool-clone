@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include ../common/header%>
+
+  <body id="page-top">
+    <div class="abstract-bg"></div>
+    <div class="grid-pattern"></div>
+    <div class="abstract-shape w-96 h-96 top-1 left-1"></div>
+    <div class="abstract-shape w-96 h-96 bottom-1 right-1"></div>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <% include ../common/sidebar.ejs%>
+      <!-- End of Sidebar -->
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <br />
+            <!-- Page Heading -->
+            <div class="row">
+              <div class="col-12">
+                <div
+                  class="d-sm-flex align-items-center justify-content-between mb-4"
+                >
+                  <h1 class="h3 mb-0 primary-text font-weight-bold">
+                    Quản lý Trình duyệt
+                  </h1>
+                </div>
+
+                <!-- Export/Import Buttons -->
+                <div class="mb-3">
+                  <button
+                    id="exportBrowsers"
+                    class="px-4 py-2 text-gray-200 rounded hover:bg-gray-600"
+                  >
+                    Export Browsers
+                  </button>
+                  <button
+                    id="importBrowsers"
+                    class="space-button px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 ml-2"
+                  >
+                    Import Browsers
+                  </button>
+                  <input type="file" id="importFile" class="hidden" />
+                </div>
+
+                <!-- Add New Browser Card -->
+                <div class="space-card p-4">
+                  <div class="flex justify-between items-start mb-6">
+                    <h3 class="space-font text-lg font-bold mb-2 text-white">
+                      Thêm Trình duyệt Mới
+                    </h3>
+                  </div>
+
+                  <div>
+                    <div class="p-4">
+                      <form id="add-browser-form">
+                        <div class="mb-4">
+                          <select
+                            class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-200 focus:outline-none focus:border-blue-500"
+                            id="browser-name"
+                            required
+                          >
+                            <option value="" class="bg-gray-700">
+                              Chọn trình duyệt
+                            </option>
+                            <option
+                              value="chromium-browser"
+                              class="bg-gray-700"
+                            >
+                              Chromium
+                            </option>
+                            <option value="brave" class="bg-gray-700">
+                              Brave
+                            </option>
+                            <option value="opera" class="bg-gray-700">
+                              Opera
+                            </option>
+                            <option value="microsoft-edge" class="bg-gray-700">
+                              Microsoft Edge
+                            </option>
+                            <option
+                              value="google-chrome-stable"
+                              class="bg-gray-700"
+                            >
+                              Google Chrome
+                            </option>
+                            <option value="vivaldi-stable" class="bg-gray-700">
+                              Vivaldi
+                            </option>
+                          </select>
+                        </div>
+                        <div class="mb-4">
+                          <input
+                            type="number"
+                            class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-200 focus:outline-none focus:border-blue-500"
+                            id="browser-order"
+                            placeholder="Thứ tự"
+                            required
+                          />
+                        </div>
+                        <button
+                          type="button"
+                          id="add-browser-button"
+                          class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                        >
+                          Thêm
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Browser List Card -->
+            <div class="row mt-4">
+              <div class="col-12">
+                <div class="space-card p-4">
+                  <div class="flex justify-between items-start mb-6">
+                    <h3 class="space-font text-lg font-bold mb-2 text-white">
+                      Danh sách Trình duyệt
+                    </h3>
+                  </div>
+
+                  <div>
+                    <div class="p-4">
+                      <ul id="browser-list" class="space-y-4">
+                        <!-- Browser list will be populated by JavaScript -->
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- End of Main Content -->
+            <% include ../common/footer%>
+          </div>
+          <!-- End of Content Wrapper -->
+        </div>
+        <!-- End of Page Wrapper -->
+      </div>
+    </div>
+
+    <% include ../common/js%>
+    <script src="/js/bootbox.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+    <script src="https://unpkg.com/popper.js@1.15.0/dist/umd/popper.min.js"></script>
+    <script src="/javascripts/utils.js"></script>
+
+    <script>
+      const allowedBrowsers = [
+        'chromium-browser',
+        'brave',
+        'opera',
+        'microsoft-edge',
+        'google-chrome-stable',
+        'vivaldi-stable',
+      ];
+
+      const browserNames = {
+        'chromium-browser': 'Chromium',
+        brave: 'Brave',
+        opera: 'Opera',
+        'microsoft-edge': 'Microsoft Edge',
+        'google-chrome-stable': 'Google Chrome',
+        'vivaldi-stable': 'Vivaldi',
+      };
+
+      async function loadBrowsers() {
+        const response = await fetch('/admin/browsers');
+        const browsers = await response.json();
+        const browserList = document.getElementById('browser-list');
+        browserList.innerHTML = '';
+
+        browsers.forEach((browser) => {
+          if (allowedBrowsers.includes(browser.name)) {
+            const li = document.createElement('li');
+            li.className = ' rounded-lg p-4 border border-gray-700';
+            li.innerHTML = `
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h5 class="text-gray-200 font-semibold">${
+                                  browserNames[browser.name] || browser.name
+                                }</h5>
+                                <small class="text-gray-400">Thứ tự: ${
+                                  browser.order
+                                }</small>
+                            </div>
+                            <div class="space-x-2">
+                                <button class="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700" 
+                                        onclick="deleteBrowser('${
+                                          browser._id
+                                        }')">
+                                    Xóa
+                                </button>
+                                <button class="px-3 py-1 rounded text-sm ${
+                                  browser.isActive
+                                    ? 'bg-yellow-600'
+                                    : 'bg-green-600'
+                                } text-white hover:opacity-90" 
+                                        onclick="toggleBrowserActive('${
+                                          browser._id
+                                        }')">
+                                    ${
+                                      browser.isActive
+                                        ? 'Ấn để vô hiệu hóa'
+                                        : 'Ấn để kích hoạt'
+                                    }
+                                </button>
+                                <button class="px-3 py-1 rounded text-sm ${
+                                  browser.isDownloadable
+                                    ? 'bg-blue-600'
+                                    : 'bg-gray-600'
+                                } text-white hover:opacity-90" 
+                                        onclick="toggleBrowserDownloadable('${
+                                          browser._id
+                                        }')">
+                                    ${
+                                      browser.isDownloadable
+                                        ? 'Ấn để tool không tải xuống'
+                                        : 'Ấn để cho phép tool tải xuống'
+                                    }
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h6 class="text-gray-200 font-semibold mb-3">Phiên bản:</h6>
+                            <ul class="space-y-2">
+                                ${browser.versions
+                                  .map(
+                                    (version) => `
+                                    <li class=" p-3 rounded flex justify-between items-center">
+                                        <span class="text-gray-200">${version.version} - ${version.downloadLink}</span>
+                                        <button class="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700" 
+                                                onclick="deleteVersion('${browser._id}', '${version._id}')">
+                                            Xóa
+                                        </button>
+                                    </li>
+                                `
+                                  )
+                                  .join('')}
+                            </ul>
+                            <form onsubmit="addVersion('${
+                              browser._id
+                            }', event)" class="mt-4">
+                                <div class="flex space-x-2">
+                                    <input type="text" 
+                                           class="flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-200" 
+                                           placeholder="Phiên bản" 
+                                           required>
+                                    <input type="url" 
+                                           class="flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-200" 
+                                           placeholder="Link tải" 
+                                           required>
+                                    <button type="submit" 
+                                            class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                        Thêm phiên bản
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    `;
+            browserList.appendChild(li);
+          }
+        });
+      }
+
+      // Rest of the JavaScript functions remain the same
+      document.getElementById('add-browser-button').onclick = async () => {
+        const name = document.getElementById('browser-name').value;
+        const order = document.getElementById('browser-order').value;
+        if (!name || !order) {
+          alert('Vui lòng điền đầy đủ thông tin');
+          return;
+        }
+        if (!allowedBrowsers.includes(name)) {
+          alert('Trình duyệt không được phép');
+          return;
+        }
+        try {
+          const response = await fetch('/admin/browsers', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, order }),
+          });
+          if (!response.ok) {
+            throw new Error('Không thể thêm trình duyệt');
+          }
+          document.getElementById('browser-name').value = '';
+          document.getElementById('browser-order').value = '';
+          await loadBrowsers();
+        } catch (error) {
+          console.error('Lỗi:', error);
+          alert('Có lỗi xảy ra khi thêm trình duyệt');
+        }
+      };
+
+      async function deleteBrowser(id) {
+        if (confirm('Bạn có chắc chắn muốn xóa trình duyệt này?')) {
+          await fetch(`/admin/browsers/${id}`, { method: 'DELETE' });
+          loadBrowsers();
+        }
+      }
+
+      async function addVersion(browserId, event) {
+        event.preventDefault();
+        const [versionInput, linkInput] = event.target.elements;
+        await fetch(`/admin/browsers/${browserId}/versions`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            version: versionInput.value,
+            downloadLink: linkInput.value,
+          }),
+        });
+        loadBrowsers();
+      }
+
+      async function deleteVersion(browserId, versionId) {
+        if (confirm('Bạn có chắc chắn muốn xóa phiên bản này?')) {
+          await fetch(`/admin/browsers/${browserId}/versions/${versionId}`, {
+            method: 'DELETE',
+          });
+          loadBrowsers();
+        }
+      }
+
+      async function toggleBrowserActive(id) {
+        await fetch(`/admin/browsers/${id}/toggle-active`, { method: 'PATCH' });
+        loadBrowsers();
+      }
+
+      async function toggleBrowserDownloadable(id) {
+        await fetch(`/admin/browsers/${id}/toggle-downloadable`, {
+          method: 'PATCH',
+        });
+        loadBrowsers();
+      }
+
+      // Load browsers when page loads
+      loadBrowsers();
+    </script>
+    <script src="/javascripts/browser-management.js"></script>
+  </body>
+</html>

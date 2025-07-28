@@ -1,0 +1,492 @@
+async function fbLogin(action) {
+  try {
+    await sleep(5000);
+    reportLive(action.pid);
+
+    let url = window.location.toString();
+    url = url.split("?")[0];
+
+    if (ALLOW_RUN_UPDATE_ACCOUNT_INFO && action.running_update_info) {
+      await fbUpdateInfo(action);
+      return;
+    }
+
+    if (url.includes("https://www.facebook.com/checkpoint/828281030927956")) {
+      if (action.checked_for_verify) {
+        await updateActionStatus(
+          action.pid,
+          action.id,
+          LOGIN_STATUS.ERROR,
+          "khong the verify"
+        );
+        return;
+      }
+
+      async function clickNext(action) {
+        let nextBtn =
+          document.querySelector('div[aria-label="Next"]') ||
+          document.querySelector('div[aria-label="आगे बढ़ें"]') ||
+          document.querySelector('div[aria-label="Tiếp"]');
+        if (nextBtn) {
+          await userClick(action.pid, "nextBtn", nextBtn);
+        }
+        return nextBtn;
+      }
+
+      let verifyBtn = document.querySelector(
+        'div[role="main"] div[role="button"]'
+      );
+      if (verifyBtn) {
+        let textDebug = verifyBtn.innerText;
+        await userClick(action.pid, "verifyBtn", verifyBtn);
+        await sleep(3000);
+        await clickNext(action);
+        await sleep(5000);
+        await userClick(action.pid, 'div[role="list"] div[role="button"]');
+        await sleep(5000);
+        let getCodeBtn =
+          document.querySelector('div[aria-label="Get code"]') ||
+          document.querySelector('div[aria-label="कोड पाएँ"]') ||
+          document.querySelector('div[aria-label="Nhận mã"]');
+        if (!getCodeBtn) {
+          await updateActionStatus(
+            action.pid,
+            action.id,
+            LOGIN_STATUS.ERROR,
+            "Sai ngon ngu - " + textDebug
+          );
+          return;
+        }
+        await userClick(action.pid, "getCodeBtn", getCodeBtn);
+        await sleep(10000);
+        let codeData = await getMailCode("fb_" + action.pid);
+
+        if (codeData && codeData.success) {
+          let codes = codeData.code.split(",");
+          if (codes.length) {
+            for await (let code of codes) {
+              if (document.querySelector('input[type="text"]')) {
+                code = code.trim() + "";
+                if (code.length == 5) {
+                  code = "0" + code;
+                }
+
+                await userTypeEnter(action.pid, 'input[type="text"]', code);
+                await sleep(5000);
+                if (document.querySelector('div[aria-label="OK"]')) {
+                  await userClick(action.pid, 'div[aria-label="OK"]');
+                }
+
+                if (await clickNext(action)) {
+                  break;
+                }
+              }
+              await sleep(3000);
+            }
+
+            await clickNext(action);
+            await sleep(3000);
+            await clickNext(action);
+            await sleep(3000);
+            await clickNext(action);
+
+            await sleep(3000);
+            await clickNext(action);
+            await sleep(10000);
+            action.checked_for_verify = true;
+            await setActionData(action);
+            await goToLocation(
+              action.pid,
+              "https://www.facebook.com/settings?tab=language"
+            );
+            await sleep(20000);
+            //await updateActionStatus(action.pid, action.id, LOGIN_STATUS.SUCCESS)
+          }
+        }
+        await updateActionStatus(
+          action.pid,
+          action.id,
+          LOGIN_STATUS.ERROR,
+          "Sai ngon ngu - " + textDebug
+        );
+      }
+    } else if (
+      url == "https://www.facebook.com/" ||
+      url == "https://m.facebook.com/" ||
+      url == "https://m.facebook.com/home.php" ||
+      url.includes("/home.php")
+    ) {
+      if (action.id == "change_pass") {
+        action.login_fb_success = true;
+        await setActionData(action);
+        await goToLocation(
+          action.pid,
+          "https://www.facebook.com/settings?tab=security"
+        );
+      } else {
+        if (url.includes("mbasic.facebook.com")) {
+          await userClick(
+            action.pid,
+            "nav a",
+            document.querySelectorAll("nav a").item(3)
+          );
+        } else {
+          await goToLocation(
+            action.pid,
+            "https://www.facebook.com/settings?tab=language"
+          );
+        }
+      }
+      //await goToLocation(action.pid, 'https://www.facebook.com/pages/?category=your_pages')
+      //await updateActionStatus(action.pid, action.id, LOGIN_STATUS.SUCCESS)
+    } else if (url.includes("facebook.com/notifications")) {
+      await goToLocation(
+        action.pid,
+        "https://www.facebook.com/settings?tab=language"
+      );
+    } else if (url.includes("2fa.live")) {
+      await userType(action.pid, "#listToken", action.recover_mail);
+      await userClick(action.pid, "#submit");
+      await sleep(2000);
+      action.fa_code = document.querySelector("#output").value.split("|")[1];
+      await setActionData(action);
+      await updateUserInput(
+        action.pid,
+        "GO_TO_FISRT_TAB",
+        0,
+        0,
+        0,
+        0,
+        "",
+        "GO_TO_FISRT_TAB"
+      );
+    } else if (url.includes("facebook.com/settings")) {
+      await updateUserInput(action.pid, "ESC", 0, 0, 0, 0, "", "ESC");
+      if (!action.reloaded) {
+        action.reloaded = true;
+        await setActionData(action);
+        location.reload();
+        return;
+      }
+
+      if (action.changed_lang) {
+        await goToLocation(
+          action.pid,
+          "https://www.facebook.com/pages/?category=your_pages"
+        );
+        return;
+      }
+
+      let editBtn = getElementContainsInnerText("span", [
+        "Language for buttons, titles and other text from Facebook for this account on www.facebook.com",
+      ]);
+      if (!editBtn) {
+        let formLangs = [
+          ...document.querySelectorAll(
+            'div[style="border-radius: max(0px, min(8px, ((100vw - 4px) - 100%) * 9999)) / 8px;"]'
+          ),
+        ];
+        let formLang = formLangs.pop();
+        if (formLang) {
+          let screenY =
+            window.screen.height -
+            window.screen.availHeight +
+            (window.outerHeight - window.innerHeight);
+          const formPos = formLang.getBoundingClientRect();
+          const editBtnX = formPos.width + formPos.left - 68;
+          const editBtnY = screenY + formPos.top + 70;
+          await updateUserInput(
+            action.pid,
+            "CLICK",
+            editBtnX,
+            editBtnY,
+            0,
+            0,
+            "",
+            "editBtn"
+          );
+
+          let selectorVN = document.querySelector(
+            'div[aria-haspopup="listbox"]'
+          );
+          if (selectorVN) {
+            let pos = getElementPosition(selectorVN);
+            await updateUserInput(
+              action.pid,
+              "TYPE_KEY_ENTER",
+              pos.x,
+              pos.y,
+              0,
+              0,
+              "Eng",
+              "ESC"
+            );
+            const saveBtnX = formPos.width + formPos.left - 68;
+            const saveBtnY = screenY + formPos.top + 195;
+            await updateUserInput(
+              action.pid,
+              "CLICK",
+              saveBtnX,
+              saveBtnY,
+              0,
+              0,
+              "",
+              "saveBtn"
+            );
+          }
+        }
+
+        action.changed_lang = true;
+        await setActionData(action);
+      }
+
+      await sleep(10000);
+
+      if (
+        action.client_config_allow_change_fb_info &&
+        ALLOW_RUN_UPDATE_ACCOUNT_INFO
+      ) {
+        action.running_update_info = true;
+        await setActionData(action);
+        await goToLocation(action.pid, "https://www.facebook.com/profile.php");
+      } else {
+        await updateActionStatus(action.pid, action.id, LOGIN_STATUS.SUCCESS);
+      }
+      // await goToLocation(action.pid, 'https://www.facebook.com/pages/?category=your_pages')
+    } else if (url.includes("facebook.com/pages/creation")) {
+      await handleRegPage(action);
+      window.open("https://www.facebook.com/pages/?category=your_pages");
+      //await goToLocation(action.pid, 'https://www.facebook.com/pages/?category=your_pages')
+      //await updateUserInput(action.pid,'KEY_ENTER')
+      await sleep(10000);
+    } else if (url.includes("facebook.com/pages")) {
+      let pages = document.querySelectorAll('div[aria-label="More"]');
+      if (!pages) {
+        pages = [];
+      }
+
+      if (
+        pages.length == 0 &&
+        !document.querySelector('div[role="main"] span')
+      ) {
+        let profileIcon = document.querySelector(
+          'div[role="navigation"] svg[aria-label="Your profile"]'
+        );
+        if (profileIcon) {
+          await userClick(action.pid, "#profileIcon", profileIcon);
+          let seeAllProfileBtn = document
+            .querySelectorAll(
+              'div[style="border-radius: max(0px, min(8px, ((100vw - 4px) - 100%) * 9999)) / 8px;"] div[role="button"]'
+            )
+            .item(1);
+          if (seeAllProfileBtn) {
+            await userClick(action.pid, "#seeAllProfileBtn", seeAllProfileBtn);
+            await sleep(4000);
+
+            pages = document.querySelectorAll(
+              'div[role="dialog"] div[role="list"] div[style="padding-left: 8px; padding-right: 8px;"] image'
+            );
+          }
+        }
+      }
+
+      if (pages.length == 0) {
+        pages = getElementContainsInnerText(
+          "span",
+          ["Switch Now"],
+          "",
+          "equal",
+          "array"
+        );
+        if (!pages) {
+          pages = [];
+        }
+      }
+      if (action.current_total_page == pages.length) {
+        await updateActionStatus(
+          action.pid,
+          action.id,
+          LOGIN_STATUS.ERROR,
+          "không thể tạo thêm page"
+        );
+        return;
+      }
+      if (pages && pages.length) {
+        updateTotalCreatedUsers(action.pid, pages.length);
+      }
+
+      const totalPage = Number(action.total_page_created) || 2;
+      action.current_total_page = pages.length;
+      await setActionData(action);
+
+      if (pages.length >= totalPage) {
+        await updateActionStatus(action.pid, action.id, LOGIN_STATUS.SUCCESS);
+      } else {
+        await goToLocation(action.pid, "https://facebook.com/pages/creation");
+      }
+    } else if (url.includes("facebook.com/login/device-based/regular/login")) {
+      let erMessage = "";
+      try {
+        erMessage = document
+          .querySelectorAll("#loginform div > div")
+          .item(4).innerText;
+      } catch (error) {
+        console.log(error);
+      }
+      await updateActionStatus(
+        action.pid,
+        action.id,
+        LOGIN_STATUS.ERROR,
+        erMessage || "CANNOT LOGIN"
+      );
+    } else if (url.includes("m.facebook.com/login/checkpoint/")) {
+      await userClick(action.pid, 'button[type="submit"]');
+    } else if (
+      url.includes("facebook.com/checkpoint") ||
+      url.includes("mbasic.facebook.com/checkpoint") ||
+      url.includes("mbasic.facebook.com/login/checkpoint/")
+    ) {
+      if (document.querySelector('form input[name="search"]')) {
+        await userClick(
+          action.pid,
+          "nav a",
+          document.querySelectorAll("nav a").item(3)
+        );
+        return;
+      }
+
+      if (document.querySelector("#approvals_code")) {
+        window.open("https://2fa.live/");
+        let execeted = false;
+        setInterval(async () => {
+          if (!execeted) {
+            let rs = await getActionData();
+            action = rs.action;
+            if (action.fa_code) {
+              execeted = true;
+              await userTypeEnter(
+                action.pid,
+                "#approvals_code",
+                action.fa_code
+              );
+              await sleep(5000);
+              await userClick(action.pid, "#checkpointSubmitButton");
+            }
+          }
+        }, 2000);
+        await sleep(120000);
+      } else if (document.querySelector("#checkpointSubmitButton")) {
+        while (document.querySelector("#checkpointSubmitButton")) {
+          await userClick(action.pid, "#checkpointSubmitButton");
+          await sleep(5000);
+        }
+      } else {
+        await updateActionStatus(
+          action.pid,
+          action.id,
+          LOGIN_STATUS.ERROR,
+          url
+        );
+      }
+    } else if (
+      url.includes("facebook.com/login") ||
+      url.includes("https://mbasic.facebook.com/")
+    ) {
+      if (action.loged) {
+        await updateActionStatus(action.pid, action.id, "CANNOT LOGIN");
+        return;
+      } else {
+        action.loged = true;
+        await setActionData(action);
+      }
+
+      await userType(action.pid, 'input[name="email"]', action.email);
+      await userTypeEnter(action.pid, 'input[name="pass"]', action.password);
+
+      await sleep(15000);
+      let erMessage = "";
+      try {
+        erMessage = document
+          .querySelectorAll("#loginform div > div")
+          .item(4).innerText;
+      } catch (error) {
+        console.log(error);
+      }
+      await updateActionStatus(
+        action.pid,
+        action.id,
+        LOGIN_STATUS.ERROR,
+        erMessage || "CANNOT LOGIN"
+      );
+    } else if (url.includes("facebook.com/two_step_verification/two_factor")) {
+      await sleep(2000);
+      // await updateUserInput(action.pid, "NeverBtn", 0, 0, 0, 0, "", "NeverBtn");
+
+      const tryAnotherWayBtn = document.querySelector(
+        "span.x1lliihq.x193iq5w.x6ikm8r.x10wlt62.xlyipyv.xuxw1ft"
+      );
+      if (tryAnotherWayBtn) {
+        await userClick(action.pid, "tryAnotherWayBtn", tryAnotherWayBtn);
+      }
+
+      await updateUserInput(
+        action.pid,
+        "AuthenticationApp",
+        0,
+        0,
+        0,
+        0,
+        "",
+        "AuthenticationApp"
+      );
+
+      let continueBtn1 = await getElementContainsInnerText("span", "Continue");
+      let continueBtn2 = await getElementContainsInnerText("span", "Tiếp tục");
+      let continueBtn12 = continueBtn1 || continueBtn2;
+      await userClick(action.pid, "continueBtn12", continueBtn12);
+
+      let response2fa = await getCode2FAFacebook(action.recover_mail);
+      let fa_code = response2fa.token || "";
+
+      if (fa_code) {
+        let inputCode1 = await getElementContainsInnerText("label", "Code");
+        let inputCode2 = await getElementContainsInnerText("label", "Mã");
+        let inputCode = inputCode1 || inputCode2;
+        await userTypeEnter(action.pid, "inputCode", fa_code, inputCode);
+        await sleep(5000);
+
+        let continueBtn3 = await getElementContainsInnerText(
+          "span",
+          "Continue"
+        );
+        let continueBtn4 = await getElementContainsInnerText(
+          "span",
+          "Tiếp tục"
+        );
+        let continueBtn34 = continueBtn3 || continueBtn4;
+        await userClick(action.pid, "continueBtn34", continueBtn34);
+      }
+    } else if (url.includes("facebook.com/two_factor/remember_browser")) {
+      await updateUserInput(
+        action.pid,
+        "AlwaysConfirmItMe",
+        0,
+        0,
+        0,
+        0,
+        "",
+        "AlwaysConfirmItMe"
+      );
+    } else {
+      // await updateActionStatus(
+      //   action.pid,
+      //   action.id,
+      //   LOGIN_STATUS.ERROR,
+      //   url.split("?")[0]
+      // );
+    }
+  } catch (er) {
+    console.log(er);
+    // await updateActionStatus(action.pid, action.id, LOGIN_STATUS.ERROR, er.message)
+  }
+}

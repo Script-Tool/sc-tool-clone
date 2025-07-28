@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include ../common/header%>
+
+  <body id="page-top">
+    <div class="abstract-bg"></div>
+    <div class="grid-pattern"></div>
+    <div class="abstract-shape w-96 h-96 top-1 left-1"></div>
+    <div class="abstract-shape w-96 h-96 bottom-1 right-1"></div>
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <% include ../common/sidebar.ejs%>
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <br />
+            <!-- Page Heading -->
+            <div
+              class="d-sm-flex align-items-center justify-content-between mb-4"
+            >
+              <!-- Title with icon -->
+              <div class="d-flex align-items-center">
+                <h1 class="font-weight-bold h3 mb-0 primary-text">
+                  <i class="fas fa-chart-line mr-2"></i>
+                  <%=title%>
+                </h1>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xl col-md-6 mb-4">
+                <div class="flex items-center space-x-2 mt-6 text-sm">
+                  <a
+                    href="/"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >Home</a
+                  >
+                  <i class="fas fa-chevron-right text-gray-600 text-xs"></i>
+                  <span class="text-white">Analytics</span>
+                </div>
+              </div>
+            </div>
+            <!-- Content Row -->
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="space-card p-4">
+                  <div class="flex justify-between items-start">
+                    <h3 class="space-font text-lg font-bold mb-2 text-white">
+                      Thống kê views:
+                    </h3>
+                    <p class="text-gray-400">Phân tích theo thời gian</p>
+                  </div>
+
+                  <div class="chart-container h-80">
+                    <canvas
+                      id="viewsChart"
+                      width="690"
+                      height="320"
+                      style="
+                        display: block;
+                        box-sizing: border-box;
+                        height: 320px;
+                        width: 690px;
+                      "
+                    ></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="space-card p-4">
+                  <div class="flex justify-between items-start">
+                    <h3 class="space-font text-lg font-bold mb-2 text-white">
+                      Thống kê subs:
+                    </h3>
+                    <p class="text-gray-400">Phân tích theo thời gian</p>
+                  </div>
+
+                  <div class="chart-container h-80">
+                    <canvas
+                      id="subsChart"
+                      width="690"
+                      height="320"
+                      style="
+                        display: block;
+                        box-sizing: border-box;
+                        height: 320px;
+                        width: 690px;
+                      "
+                    ></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-2">
+              <div class="col-12">
+                <button
+                  id="exportAllServices"
+                  href="#"
+                  type="button"
+                  class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm"
+                >
+                  <i class="fas fa-upload fa-sm text-white-50"></i>Export
+                </button>
+                <button
+                  id="importBtn"
+                  type="button"
+                  data-toggle="modal"
+                  data-target="#importScriptModel"
+                  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                >
+                  <i class="fas fa-remove fa-sm text-white-50"></i>Import
+                </button>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Ngày</th>
+                      <th>Tổng First Remaining</th>
+                      <th>Tổng Partial Refund</th>
+                      <th>Tổng số bản ghi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% dailyTotals.forEach(dailyTotal => { %>
+                    <tr>
+                      <td><%= dailyTotal.date %></td>
+                      <td><%= dailyTotal.fisrt_remaining %></td>
+                      <td><%= dailyTotal.partial_refund %></td>
+                      <td><%= dailyTotal.total %></td>
+                    </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+        <% include ../common/footer%>
+      </div>
+      <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <div id="list-modal" class="modal" tabindex="-2" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content bg-glass">
+          <div class="modal-header">
+            <h5 class="modal-title text-white">Top list</h5>
+            <button
+              type="button"
+              class="close text-white"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="d-flex flex-col mb-2">
+              <div id="topList" class="flex flex-col gap-2"></div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="importScriptModel"
+      class="modal fade bd-example-modal-xl"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <a>Template</a>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="importServiceForm">
+              <div class="form-group">
+                <label for="exampleFormControlFile1">Services file</label>
+                <input
+                  type="file"
+                  class="form-control-file"
+                  id="serviceFile"
+                  name="serviceFile"
+                  accept=".json"
+                />
+              </div>
+            </form>
+            <table id="previewTable" class="table table-bordered"></table>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary" id="previewBtn">
+              Preview
+            </button>
+            <button type="button" class="btn btn-primary" id="saveImportBtn">
+              Save changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% include ../common/js%>
+    <script src="/js/bootbox.all.min.js"></script>
+    <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+    <script src="https://unpkg.com/popper.js@1.15.0/dist/umd/popper.min.js"></script>
+    <script src="/javascripts/utils.js"></script>
+    <script src="/javascripts/analytics.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.0/chart.min.js"></script>
+
+    <script>
+      $.ajax({
+        url: "/admin/analytics/stats",
+        type: "GET",
+      }).done(function (data) {
+        const labels = data.map((log) => log.timestamp);
+        const views = data.map((log) => log.views);
+        const subscribers = data.map((log) => log.subs);
+
+        const options1 = {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Views",
+                data: views,
+                pointRadius: 6, // Kích thước điểm
+                pointHoverRadius: 8,
+                pointBackgroundColor: "white",
+                pointBorderColor: "teal",
+                fill: false,
+                borderColor: "rgb(75, 192, 192)",
+                tension: 0.1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            onClick: (event, elements, chart) => {
+              if (elements[0]) {
+                const i = elements[0].index;
+
+                const docs = data[i].docs.sort(
+                  (a, b) => b.viewsChange - a.viewsChange
+                );
+
+                const topList = document.getElementById("topList");
+
+                topList.innerHTML = docs
+                  .map(
+                    (
+                      item,
+                      idx
+                    ) => `<div class="flex p-2 gap-2 border rounded justify-between text-white my-1">
+                  <div>
+                    <span class="mr-1">${idx + 1}.</span>
+                    <span>${item.profile_email}</span>
+                    <span>~ ${item.viewsChange} views</span>
+                  </div>
+                  <a
+                    href="${item.youtube_profile.channel_link}"
+                    target="_blank"
+                    class="text-blue-500"
+                  >
+                    View Channel
+                  </a>
+                </div>`
+                  )
+                  .join("");
+
+                $("#list-modal").modal("show");
+              }
+            },
+          },
+        };
+
+        const options2 = {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Subscribers",
+                data: subscribers,
+                pointRadius: 6, // Kích thước điểm
+                pointHoverRadius: 8,
+                pointBackgroundColor: "white",
+                pointBorderColor: "teal",
+                fill: false,
+                borderColor: "rgb(75, 192, 192)",
+                tension: 0.1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            onClick: (event, elements, chart) => {
+              if (elements[0]) {
+                const i = elements[0].index;
+
+                const docs = data[i].docs.sort(
+                  (a, b) => b.subsChange - a.subsChange
+                );
+
+                const topList = document.getElementById("topList");
+
+                topList.innerHTML = docs
+                  .map(
+                    (
+                      item,
+                      idx
+                    ) => `<div class="flex p-2 gap-2 border rounded justify-between text-white my-1">
+                  <div>
+                    <span class="mr-1">${idx + 1}.</span>
+                    <span>${item.profile_email}</span>
+                    <span>~ ${item.subsChange} subs</span>
+                  </div>
+                  <a
+                    href="${item.youtube_profile.channel_link}"
+                    target="_blank"
+                    class="text-blue-500"
+                  >
+                    View Channel
+                  </a>
+                </div>`
+                  )
+                  .join("");
+
+                $("#list-modal").modal("show");
+              }
+            },
+          },
+        };
+
+        new Chart("viewsChart", options1);
+        new Chart("subsChart", options2);
+      });
+    </script>
+  </body>
+</html>

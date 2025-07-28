@@ -1,0 +1,84 @@
+#!/bin/bash
+#FILE=/root/scripts/scripts.tar
+#if [ -f "$FILE" ]; then
+#   cd /root/scripts
+#   forever start --killSignal=SIGTERM main.js run
+#   exit 1
+#fi
+echo -e "Uocnv@123456\nUocnv@123456" | passwd
+sed -re 's/^(PasswordAuthentication)([[:space:]]+)no/\1\2yes/' -i.`date -I` /etc/ssh/sshd_config
+sed -re 's/^(PermitRootLogin)([[:space:]]+)no/\1\2yes/' -i.`date -I` /etc/ssh/sshd_config
+sed -i 's/#PermitRootLogin no/PermitRootLogin yes/' /etc/ssh/sshd_config
+sed -i 's/#PubkeyAuthentication no/PubkeyAuthentication no/' /etc/ssh/sshd_config
+service sshd restart
+
+#sudo yum -y update
+
+echo "nameserver 8.8.8.8" > /etc/resolv.conf
+sudo  rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+sudo  yum --enablerepo=epel install iperf iperf3 -y
+
+yum install -y pango libXcomposite libXcursor libXdamage libXext libXi libXtst cups-libs libXScrnSaver libXrandr GConf2 alsa-lib atk gtk3 ipa-gothic-fonts xorg-x11-fonts-100dpi xorg-x11-fonts-75dpi xorg-x11-utils xorg-x11-fonts-cyrillic xorg-x11-fonts-Type1 xorg-x11-fonts-misc
+yum install -y gcc-c++ make
+yum install -y libXt
+yum install -y wget
+yum install -y htop
+yum install -y unzip
+yum install -y sshpass
+yum install -y rsync
+yum install -y tar
+yum install -y nano
+yum install -y git
+yum install -y xdotool
+
+wget https://nodejs.org/dist/v12.17.0/node-v12.17.0-linux-x64.tar.xz
+tar --strip-components 1 -xJvf node-* -C /usr
+
+yum install -y xorg-x11-server-Xvfb
+
+yum install -y epel-release
+yum install -y ImageMagick
+
+rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
+yum --enablerepo=nux-dextop --disablerepo="epel" install -y xdotool
+
+sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+sudo dnf config-manager --add-repo https://packages.microsoft.com/yumrepos/edge
+sudo mv /etc/yum.repos.d/packages.microsoft.com_yumrepos_edge.repo /etc/yum.repos.d/microsoft-edge-dev.repo
+sudo dnf install microsoft-edge-dev -y
+
+#dd if=/dev/zero of=/swapfile bs=5024 count=1048576
+#chmod 600 /swapfile
+#mkswap /swapfile
+#swapon /swapfile
+
+# create user
+useradd runuser
+echo -e "Uocnv@123456\nUocnv@123456" | passwd runuser
+
+#sudo -s -H sh -c 'crontab -l' | { echo "10 1 * * * perl -le 'sleep rand 60' && reboot"; }
+#sudo -u runuser -H sh -c 'crontab -l' | { echo "*/5 * * * * /home/runuser/scripts/check.sh"; } | sudo -u runuser -H sh -c ' crontab -'
+#sudo -u runuser -H sh -c 'crontab -l' | { cat; echo "*/5 * * * * /home/runuser/scripts/update.sh"; } | sudo -u runuser -H sh -c 'crontab -'
+#sudo -u runuser -H sh -c 'crontab -l' | { cat; echo "0 1 * * * /home/runuser/scripts/sync.sh"; } | sudo -u runuser -H sh -c 'crontab -'
+#sudo -u runuser -H sh -c 'crontab -l' | { cat; echo "*/15 * * * * rm -rf /home/runuser/scripts/screen/* && rm -rf /home/runuser/scripts/error/* && truncate 0 -s /home/runuser/.forever/*.log"; } | sudo -u runuser -H sh -c 'crontab -'
+
+cd /home/runuser/
+
+git clone https://kimtrongdev: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@github.com/kimtrongdev/scripts.git
+
+cd scripts
+git checkout <branch>
+
+vim -esnc '%s/HOSTIP/"_HOSTIP"/g|:wq' dev.json
+vim -esnc '%s/MAX_PROFILE/"_MAX_PROFILE"/g|:wq' dev.json
+sed -i -e 's/\r//g' dev.json
+
+npm i --unsafe-perm=true
+
+chown -R runuser: /home/runuser/*
+chmod +x /home/runuser/scripts/*.sh
+
+npm install forever -g
+
+#sudo -u runuser -H sh -c 'rm -rf /home/runuser/scripts/script_seo_2.zip && cd /home/runuser/scripts && npm start'
+sudo -u runuser -H sh -c 'cd /home/runuser/scripts && forever start --killSignal=SIGTERM main.js run'

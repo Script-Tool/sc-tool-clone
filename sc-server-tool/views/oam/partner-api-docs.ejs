@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include ../common/header%>
+
+  <style>
+    /* API endpoint styling */
+    .api-docs {
+      padding: 30px;
+    }
+
+    .api-section {
+      background: linear-gradient(
+        145deg,
+        rgba(21, 28, 63, 0.95),
+        rgba(20, 26, 70, 0.95)
+      );
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      padding: 30px;
+      margin-bottom: 40px;
+      box-shadow: var(--neon-glow);
+      transform: translateZ(20px);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .api-section:hover {
+      transform: translateZ(30px) scale(1.01);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(78, 115, 223, 0.2);
+    }
+
+    .api-title {
+      color: #ffffff;
+      margin-bottom: 25px;
+      font-size: 26px;
+      font-weight: 600;
+      position: relative;
+      padding-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .api-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #4e73df, #36b9cc);
+      border-radius: 3px;
+    }
+
+    .endpoint {
+      background: rgba(40, 44, 52, 0.8);
+      border-radius: 12px;
+      border-left: 4px solid #4e73df;
+      padding: 18px;
+      margin: 20px 0;
+      font-family: 'Fira Code', 'Courier New', monospace;
+      font-size: 14px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+    }
+
+    /* Code examples styling */
+    .code-example {
+      background: rgba(45, 55, 72, 0.8);
+      color: #e2e8f0;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 15px 0;
+      font-family: 'Fira Code', 'Courier New', monospace;
+      white-space: pre;
+      overflow-x: auto;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .code-example::before {
+      content: '{ }';
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 12px;
+    }
+
+    .example-label {
+      color: #8be9fd;
+      font-size: 15px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+    }
+
+    .example-label::before {
+      content: '▶';
+      margin-right: 8px;
+      font-size: 12px;
+      color: #4e73df;
+    }
+
+    /* Method badges */
+    .method {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 12px;
+      border-radius: 6px;
+      color: white;
+      font-weight: bold;
+      margin-right: 15px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      min-width: 60px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .get {
+      background: linear-gradient(135deg, #38a169, #2f855a);
+    }
+
+    .post {
+      background: linear-gradient(135deg, #4299e1, #3182ce);
+    }
+
+    /* Response section */
+    .response-section {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    }
+
+    .response-title {
+      color: #a0aec0;
+      font-size: 16px;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    /* Parameter table */
+    .param-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .param-table th {
+      background: rgba(45, 55, 72, 0.8);
+      color: #e2e8f0;
+      text-align: left;
+      padding: 12px 15px;
+      font-weight: 600;
+    }
+
+    .param-table td {
+      padding: 10px 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #cbd5e0;
+    }
+
+    .param-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .param-required {
+      color: #fc8181;
+      font-size: 12px;
+      margin-left: 5px;
+    }
+
+    .param-optional {
+      color: #68d391;
+      font-size: 12px;
+      margin-left: 5px;
+    }
+  </style>
+
+  <body id="page-top">
+    <div class="abstract-bg"></div>
+    <div class="grid-pattern"></div>
+    <div class="abstract-shape w-96 h-96 top-1 left-1"></div>
+    <div class="abstract-shape w-96 h-96 bottom-1 right-1"></div>
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <% include ../common/sidebar.ejs%>
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <div class="api-docs">
+            <div class="api-section" style="margin-bottom: 50px;">
+              <h2 class="api-title" style="font-size: 32px; margin-bottom: 20px;">Partner API Documentation</h2>
+              <p style="color: #a0aec0; line-height: 1.6; margin-bottom: 20px;">
+                Welcome to the Partner API documentation. This API allows you to integrate with our service platform
+                and manage services programmatically. All API requests require authentication using your client key.
+              </p>
+              <div style="background: rgba(66, 153, 225, 0.1); border-left: 4px solid #4299e1; padding: 15px; border-radius: 6px; margin-top: 20px;">
+                <p style="color: #a0aec0; margin: 0;">
+                  <strong style="color: #4299e1;">Base URL:</strong>
+                  <code style="background: rgba(45, 55, 72, 0.5); padding: 3px 6px; border-radius: 4px; font-family: monospace;">http://SERVER_DOMAIN</code>
+                </p>
+              </div>
+            </div>
+
+            <!-- Get Services Section -->
+            <div class="api-section">
+              <h2 class="api-title">Get List of Services</h2>
+              <p style="color: #a0aec0; margin-bottom: 15px;">Retrieve a list of all available services with their details.</p>
+              <div class="endpoint">
+                <span class="method get">GET</span>
+                <code>http://SERVER_DOMAIN/partner-api/services?key=CLIENT_KEY</code>
+              </div>
+
+              <div class="response-section">
+                <h3 class="response-title">Response Format</h3>
+                <div class="code-example">
+{
+  "status": "success",
+  "data": [
+    {
+      "id": "1",
+      "service_code": "youtube_sub",
+      "name": "YouTube Subscribers",
+      "description": "Add subscribers to a YouTube channel",
+      "price_per_1000": 10.5,
+      "min_order": 10,
+      "max_order": 5000
+    },
+    // More services...
+  ]
+}</div>
+              </div>
+            </div>
+
+            <!-- Create Service Section -->
+            <div class="api-section">
+              <h2 class="api-title">Create Service</h2>
+              <p style="color: #a0aec0; margin-bottom: 15px;">Create a new service order with specific parameters.</p>
+              <div class="endpoint">
+                <span class="method post">POST</span>
+                <code>http://SERVER_DOMAIN/partner-api/service?key=CLIENT_KEY</code>
+              </div>
+
+              <table class="param-table">
+                <thead>
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>service_code <span class="param-required">required</span></td>
+                    <td>string</td>
+                    <td>Unique identifier for the service type</td>
+                  </tr>
+                  <tr>
+                    <td>total <span class="param-required">required</span></td>
+                    <td>integer</td>
+                    <td>Number of items to order</td>
+                  </tr>
+                  <tr>
+                    <td>service_data <span class="param-required">required</span></td>
+                    <td>object</td>
+                    <td>Service-specific data (varies by service type)</td>
+                  </tr>
+                  <tr>
+                    <td>delay_time <span class="param-optional">optional</span></td>
+                    <td>integer</td>
+                    <td>Delay execution time in milliseconds</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="example-label">Basic Example</div>
+              <div class="code-example">
+{
+  "service_code": "youtube_sub",
+  "total": 10,
+  "service_data": {
+    "channel_id": "channel/abc"
+  }
+}</div>
+
+              <div class="example-label">Delayed Execution Example</div>
+              <div class="code-example">
+{
+  "service_code": "youtube_sub",
+  "total": 10,
+  "service_data": {
+    "channel_id": "channel/abc"
+  },
+  "delay_time": 60000
+}</div>
+
+              <div class="example-label">Watch Video Example</div>
+              <div class="code-example">
+{
+  "service_code": "watch_video",
+  "total": 10,
+  "service_data": {
+    "video_id": "QXPhUud_-bU"
+  }
+}</div>
+
+              <div class="example-label">Like Video Example</div>
+              <div class="code-example">
+{
+  "service_code": "like_youtube",
+  "total": 10,
+  "service_data": {
+    "video_id": "QXPhUud_-bU"
+  }
+}</div>
+
+              <div class="example-label">Comment Example</div>
+              <div class="code-example">
+{
+  "service_code": "comment_youtube",
+  "total": 10,
+  "service_data": {
+    "video_id": "QXPhUud_-bU",
+    "comments": "comment1 \n comment2"
+  }
+}</div>
+
+              <div class="response-section">
+                <h3 class="response-title">Response Format</h3>
+                <div class="code-example">
+{
+  "status": "success",
+  "data": {
+    "id": "12345",
+    "service_code": "youtube_sub",
+    "total": 10,
+    "created_at": "2023-06-15T14:30:45Z",
+    "status": "pending"
+  }
+}</div>
+              </div>
+            </div>
+
+            <!-- Get Service Section -->
+            <div class="api-section">
+              <h2 class="api-title">Get Service Details</h2>
+              <p style="color: #a0aec0; margin-bottom: 15px;">Retrieve details about a specific service order by ID.</p>
+              <div class="endpoint">
+                <span class="method get">GET</span>
+                <code>http://SERVER_DOMAIN/partner-api/service/SERVICE_ID?key=CLIENT_KEY</code>
+              </div>
+
+              <div class="response-section">
+                <h3 class="response-title">Response Format</h3>
+                <div class="code-example">
+{
+  "status": "success",
+  "data": {
+    "id": "12345",
+    "service_code": "youtube_sub",
+    "total": 10,
+    "completed": 5,
+    "created_at": "2023-06-15T14:30:45Z",
+    "status": "in_progress",
+    "service_data": {
+      "channel_id": "channel/abc"
+    }
+  }
+}</div>
+              </div>
+            </div>
+
+            <!-- Set Service Status Section -->
+            <div class="api-section">
+              <h2 class="api-title">Set Service Status</h2>
+              <p style="color: #a0aec0; margin-bottom: 15px;">Update the active status of an existing service.</p>
+              <div class="endpoint">
+                <span class="method post">POST</span>
+                <code>http://SERVER_DOMAIN/partner-api/service/status?key=CLIENT_KEY</code>
+              </div>
+
+              <table class="param-table">
+                <thead>
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>id <span class="param-required">required</span></td>
+                    <td>string</td>
+                    <td>Service ID to update</td>
+                  </tr>
+                  <tr>
+                    <td>is_active <span class="param-required">required</span></td>
+                    <td>boolean</td>
+                    <td>New active status (true/false)</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="example-label">Example</div>
+              <div class="code-example">
+{
+  "id": "3",
+  "is_active": true
+}</div>
+
+              <div class="response-section">
+                <h3 class="response-title">Response Format</h3>
+                <div class="code-example">
+{
+  "status": "success",
+  "message": "Service status updated successfully"
+}</div>
+              </div>
+            </div>
+
+            <!-- Error Handling Section -->
+            <div class="api-section">
+              <h2 class="api-title">Error Handling</h2>
+              <p style="color: #a0aec0; margin-bottom: 15px;">All API errors follow a standard format with appropriate HTTP status codes.</p>
+
+              <div class="code-example">
+{
+  "status": "error",
+  "error": {
+    "code": "invalid_parameter",
+    "message": "The service_code parameter is required"
+  }
+}</div>
+
+              <table class="param-table">
+                <thead>
+                  <tr>
+                    <th>Error Code</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>invalid_key</td>
+                    <td>The API key is invalid or missing</td>
+                  </tr>
+                  <tr>
+                    <td>invalid_parameter</td>
+                    <td>One or more required parameters are missing or invalid</td>
+                  </tr>
+                  <tr>
+                    <td>service_not_found</td>
+                    <td>The requested service ID does not exist</td>
+                  </tr>
+                  <tr>
+                    <td>insufficient_balance</td>
+                    <td>Your account balance is too low to complete this order</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <% include ../common/footer%>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <% include ../common/js%>
+    <script src="/js/bootbox.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+    <script src="https://unpkg.com/popper.js@1.15.0/dist/umd/popper.min.js"></script>
+  </body>
+</html>

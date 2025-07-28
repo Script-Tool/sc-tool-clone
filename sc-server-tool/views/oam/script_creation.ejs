@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<% include ../common/header%>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+  <!-- Sidebar -->
+  <% include ../common/sidebar.ejs%>
+  <!-- End of Sidebar -->
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+     
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+        <br>
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="font-weight-bold h3 mb-0 text-gray-800">Script creation</h1>
+          <div class="">
+
+            <button id="importProxyBtn" href="#" type="button" data-toggle="modal" data-target="#importProfileModal" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+              <i class="fas fa-upload fa-sm text-white-50"></i> 
+              Add proxy
+            </button>
+
+          </div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+
+      <div class="container-fluid">
+        <div role="form">
+          <div class="form-group">
+            <label class="col-form-label">API KEY</label>
+            <div class="">
+              <input class="form-control" id="gptKey">
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label class="col-form-label">Ý tưởng</label>
+            <div class="">
+              <input class="form-control" id="script_y_tuong">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-form-label">Môi trường</label>
+            <div class="">
+              <input class="form-control" id="script_moi_truong">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-form-label">Bối cảnh</label>
+            <div class="">
+              <input class="form-control" id="script_boi_canh">
+            </div>
+          </div>
+          <!-- <div class="form-group">
+            <label class="col-form-label">Thời lượng</label>
+            <div class="">
+              <input class="form-control" id="script_thoi_luong">
+            </div>
+          </div> -->
+          <div class="form-group">
+            <label class="col-form-label">Tình huống</label>
+            <div class="">
+              <input class="form-control" id="script_tinh_huong">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-form-label">Thông điệp</label>
+            <div class="">
+              <input class="form-control" id="script_thong_diep">
+            </div>
+          </div>
+        </div>
+        <button id="createScript" type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+          Tạo kịch bản
+        </button>
+
+        <div class="text-info" id="kickban">
+
+        </div>
+        <div class="text-danger" id="loi">
+
+        </div>
+      </div>
+
+    </div>
+    <!-- End of Main Content -->
+
+    <% include ../common/footer%>
+
+  </div>
+  <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<% include ../common/js%>
+<script src="/js/bootbox.all.min.js"></script>
+<script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+
+<script>
+  $('#createScript').on('click',function(){
+    document.querySelector('#kickban').innerText = ''
+    document.querySelector('#loi').innerText = ''
+
+    let data = {}
+    data['Ý tưởng'] = $('#script_y_tuong').val()
+    data['môi trường'] = $('#script_moi_truong').val()
+    data['bối cảnh'] = $('#script_boi_canh').val()
+    data['tình huống'] = $('#script_tinh_huong').val()
+    data['thông điệp'] = $('#script_thong_diep').val()
+
+    document.querySelector('#createScript').innerText = 'Đang tạo kịch bản'
+    document.querySelector('#createScript').disabled = true
+    $.ajax({
+      url: "/admin/script/creation?gptKey=" + $('#gptKey').val(),
+      type: "POST",
+      data: JSON.stringify({payload: data}),
+      contentType: "application/json; charset=utf-8"
+    }).done(function (data) {
+      document.querySelector('#createScript').innerText = 'Tạo kịch bản'
+      document.querySelector('#createScript').disabled = false
+
+      if (data.success) {
+        document.querySelector('#kickban').innerText = data.result
+      } else {
+        document.querySelector('#loi').innerText = data.error
+      }
+    });
+  })
+</script>
+</body>
+
+</html>

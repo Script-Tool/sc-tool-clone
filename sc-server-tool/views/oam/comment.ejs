@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include ../common/header%>
+
+  <body id="page-top">
+    <div class="abstract-bg"></div>
+    <div class="grid-pattern"></div>
+    <div class="abstract-shape w-96 h-96 top-1 left-1"></div>
+    <div class="abstract-shape w-96 h-96 bottom-1 right-1"></div>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <% include ../common/sidebar.ejs%>
+      <!-- End of Sidebar -->
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <br />
+            <!-- Page Heading -->
+            <div
+              class="d-sm-flex align-items-center justify-content-between mb-4"
+            >
+              <h1 class="font-weight-bold h3 mb-0 primary-text">Comments</h1>
+              <div class="">
+                <button
+                  id="deleteAll"
+                  href="#"
+                  type="button"
+                  class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"
+                >
+                  <i class="fas fa-remove fa-sm text-white-50"></i>
+                  Delete all
+                </button>
+                <button
+                  id="importPlaylistBtn"
+                  href="#"
+                  type="button"
+                  data-toggle="modal"
+                  data-target="#editVideoModal"
+                  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                >
+                  <i class="fas fa-upload fa-sm text-white-50"></i>
+                  Add Comment
+                </button>
+                <button
+                  href="#"
+                  type="button"
+                  data-toggle="modal"
+                  data-target="#importModal"
+                  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                >
+                  <i class="fas fa-upload fa-sm text-white-50"></i>
+                  Import comments
+                </button>
+              </div>
+            </div>
+
+            <div
+              class="filter d-flex align-items-center justify-content-between px-3"
+            >
+              <div class="d-flex">
+                <div class="form-group ml-2 flex items-center gap-2">
+                  <label for="comment_target_filter">Loại</label>
+                  <select id="comment_target_filter" class="form-control">
+                    <option value="">Tất cả</option>
+                    <option value="facebook">Facebook</option>
+                    <option value="tiktok">Tiktok</option>
+                    <option value="youtube">Youtube</option>
+                    <option value="gmail">Gmail</option>
+                    <option value="image_link">Image Link</option>
+                  </select>
+                </div>
+
+                <div class="form-group ml-2 d-flex">
+                  <button
+                    href="#"
+                    class="form-control"
+                    id="searchBtn"
+                    type="button"
+                    class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm"
+                  >
+                    <i class="fas fa-remove fa-sm text-white-50"></i>
+                    Search
+                  </button>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center">
+                <div class="text-success"><%=count%> records</div>
+                <nav class="ml-2" aria-label="Page navigation example">
+                  <ul class="pagination">
+                    <li id="pre_page" class="page-item">
+                      <a class="page-link" href="#"><-</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#"><%=current_page%></a>
+                    </li>
+                    <li id="next_page" class="page-item">
+                      <a class="page-link" href="#">-></a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+
+            <div
+              class="relative overflow-hidden rounded-lg border border-slate-200/10 bg-slate-800/40 shadow-md backdrop-blur-xl"
+            >
+              <div class="overflow-x-auto">
+                <table
+                  class="w-full table-auto badge-soft-dark text-white"
+                  id="tableList"
+                >
+                  <thead class="bg-slate-900/50">
+                    <tr>
+                      <th
+                        class="w-[70px] px-4 py-3 text-center text-sm font-medium text-white"
+                      >
+                        Content
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Target
+                      </th>
+
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody id="formulaList" class="divide-slate-100/10">
+                    <% comments.forEach(function(comment){ %>
+                    <tr class="transition-all hover:bg-slate-700/30">
+                      <td class="px-4 py-3"><%=comment.content%></td>
+                      <td class="px-4 py-3"><%=comment.target%></td>
+                      <td class="px-4 py-3">
+                        <a
+                          href="#"
+                          class="btn btn-danger a-btn-slide-text deleteBtn"
+                          value="<%=comment._id%>"
+                          >Delete</a
+                        >
+                      </td>
+                    </tr>
+                    <%})%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+
+          <div id="editVideoModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">New Comment</h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <div role="form">
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Content</label>
+                      <div class="col-sm-10">
+                        <input
+                          class="form-control"
+                          autofocus
+                          id="comment_content"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Target</label>
+                      <div class="col-sm-10">
+                        <select id="comment_target">
+                          <option value="">Tất cả</option>
+                          <option value="facebook">Facebook</option>
+                          <option value="tiktok">Tiktok</option>
+                          <option value="youtube">Youtube</option>
+                          <option value="gmail">Gmail</option>
+                          <option value="image_link">Image Link</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        id="saveForm"
+                      >
+                        Save changes
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="importModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Import comments</h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div role="form">
+                    <div class="form-group">
+                      <form id="importForm">
+                        <div class="form-group">
+                          <label for="profileFile">Comments file</label>
+                          <input
+                            type="file"
+                            class="form-control-file"
+                            id="profileFile"
+                            name="file"
+                            accept=".csv"
+                          />
+                        </div>
+                      </form>
+
+                      <label for="profileFile">Loại</label>
+                      <select class="form-control" id="comment_target_import">
+                        <option value="">Tất cả</option>
+                        <option value="facebook">Facebook</option>
+                        <option value="tiktok">Tiktok</option>
+                        <option value="youtube">Youtube</option>
+                        <option value="gmail">Gmail</option>
+                        <option value="image_link">Image Link</option>
+                      </select>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        id="importBtn"
+                      >
+                        Save changes
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End of Main Content -->
+
+          <% include ../common/footer%>
+        </div>
+        <!-- End of Content Wrapper -->
+      </div>
+      <!-- End of Page Wrapper -->
+    </div>
+    <% include ../common/js%>
+    <script src="/js/bootbox.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+    <script src="https://unpkg.com/popper.js@1.15.0/dist/umd/popper.min.js"></script>
+    <script src="/javascripts/utils.js"></script>
+    <script src="/javascripts/comment.js"></script>
+  </body>
+</html>

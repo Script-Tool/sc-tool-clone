@@ -1,0 +1,123 @@
+<div class="wrapper">
+  <canvas id="canvas" style="width:100%;height: 400px;"></canvas>
+</div>
+
+<script>
+  // some data to be plotted
+  var x_data = [];
+  var y_data = []
+  let startH = 0
+  while (startH <= 23) {
+    x_data.push(startH + 'h')
+    startH++
+  }
+
+  // globals
+  var activePoint = null;
+  var canvas = null;
+
+  // draw a line chart on the canvas context
+  window.onload = function () {
+    $.ajax({
+      url: "/admin/config/get-config-by-key",
+      type: "GET",
+      data: { key: 'percent_view_channel_youtube' },
+      contentType: 'application/json',
+    }).done(function (data) {
+      y_data = data.data
+      if (!y_data) {
+        y_data = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
+      }
+
+      // Draw a line chart with two data sets
+      var ctx = document.getElementById("canvas").getContext("2d");
+      canvas = document.getElementById("canvas");
+      window.myChart = Chart.Line(ctx, {
+        data: {
+          labels: x_data,
+          datasets: [
+            {
+              label: "Tỷ lệ chạy nhóm 1",
+              data: y_data,
+              borderColor: "#3e95cd",
+              backgroundColor: "#3f7da9",
+            }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Biểu đồ view youtube"
+          },
+          animation: {
+            duration: 0
+          },
+          tooltips: {
+            mode: 'nearest'
+          },
+          scales: {
+            yAxes: [{
+                display: true,
+                ticks: {
+                    beginAtZero: true,
+                    steps: 1,
+                    stepValue: 1,
+                    max: 100
+                }
+            }]
+          },
+        }
+      });
+
+      // set pointer event handlers for canvas element
+      canvas.onpointerdown = down_handler;
+      canvas.onpointerup = up_handler;
+      canvas.onpointermove = null;
+    });
+  };
+
+  function down_handler(event) {
+    // check for data point near event location
+    const points = window.myChart.getElementAtEvent(event, { intersect: false });
+    if (points.length > 0) {
+      // grab nearest point, start dragging
+      activePoint = points[0];
+      canvas.onpointermove = move_handler;
+    };
+  };
+
+  function up_handler(event) {
+    // release grabbed point, stop dragging
+    activePoint = null;
+    canvas.onpointermove = null;
+  };
+
+  function move_handler(event) {
+    // locate grabbed point in chart data
+    if (activePoint != null) {
+      var data = activePoint._chart.data;
+      var datasetIndex = activePoint._datasetIndex;
+
+      // read mouse position
+      const helpers = Chart.helpers;
+      var position = helpers.getRelativePosition(event, myChart);
+
+      // convert mouse position to chart y axis value 
+      var chartArea = window.myChart.chartArea;
+      var yAxis = window.myChart.scales["y-axis-0"];
+      var yValue = map(position.y, chartArea.bottom, chartArea.top, yAxis.min, yAxis.max);
+
+      // update y value of active data point
+      yValue = Math.floor(yValue)
+      if (yValue >= 0 && yValue <= 100) {
+        data.datasets[datasetIndex].data[activePoint._index] = yValue;
+        window.myChart.update();
+      }
+    };
+  };
+
+  // map value to other coordinate system
+  function map(value, start1, stop1, start2, stop2) {
+    return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1))
+  };
+</script>

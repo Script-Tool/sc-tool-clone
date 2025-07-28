@@ -1,0 +1,51 @@
+#!/bin/bash
+echo -e "1\n1" | passwd
+#sed -re 's/.*PasswordAuthentication.*/PasswordAuthentication yes/' -i.`date -I` /etc/ssh/sshd_config
+#sed -i 's/.*PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+#export DEBIAN_FRONTEND=noninteractive
+#PATH=$PATH:/usr/sbin
+#service sshd restart
+
+apt install -y sudo curl
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+apt install -y nodejs
+npm install pm2 -g
+
+apt install -y gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget sshpass libavcodec-extra software-properties-common
+apt install -y imagemagick xdotool htop xvfb wget git vim wmctrl
+#cd /root
+
+_BROWSER_INSTALL_
+
+userdel -r _USER_
+echo -e "1\n1" | adduser _USER_
+useradd _USER_
+echo -e "1\n1" | passwd _USER_
+echo '_USER_ ALL=(ALL) NOPASSWD: ALL' | sudo EDITOR='tee -a' visudo
+cd /home/_USER_/
+
+sudo -u _USER_ -H sh -c 'rm -rf sc-tool && git clone https://oauth2:_GIT_KEY_@gitlab.mstapp.shop/mst/sc_tool_v1/sc-tool.git && cd sc-tool && git checkout _BRANCH_'
+
+cd sc-tool
+
+cp .env.example .env
+
+vim -esnc '%s/_HOST_IP/"_HOST_IP_"/ge|:wq' .env
+vim -esnc '%s/_MAX_PROFILES/"_MAX_PROFILES_"/ge|:wq' .env
+vim -esnc '%s/_SHOW_UI/_SHOW_UI_/ge|:wq' .env
+vim -esnc '%s/_DEBUG/0/ge|:wq' .env
+vim -esnc '%s/_VM_NAME/_VM_NAME_/ge|:wq' .env
+vim -esnc '%s/_BROWSER_NAME/_BROWSER_NAME_/ge|:wq' .env
+vim -esnc '%s/_IS_REG_USER/_IS_REG__/ge|:wq' .env
+vim -esnc '%s/_API_KEY/_API_KEY_/ge|:wq' .env
+vim -esnc '%s/_OS/_OS_/ge|:wq' .env
+sed -i -e 's/\r//g' .env
+
+sudo -u _USER_ -H sh -c 'npm i --unsafe-perm=true'
+
+chown -R _USER_: /home/_USER_/*
+
+sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u _USER_ --hp /home/_USER_
+sudo -u _USER_ -H sh -c 'pm2 delete main | cd && cd /home/_USER_/sc-tool && pm2 start main.js && pm2 save'
+
+echo "Successful launch"

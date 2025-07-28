@@ -1,0 +1,9 @@
+{
+  "host": "localhost",
+  "user": "youtube_proxy2",
+  "password": "Trung@123456",
+  "database": "proxy2",
+  "waitForConnections": true,
+  "connectionLimit": 150,
+  "queueLimit": 0
+}

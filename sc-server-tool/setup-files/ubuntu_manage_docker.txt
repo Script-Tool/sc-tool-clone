@@ -1,0 +1,46 @@
+#!/bin/bash
+echo -e "1\n1" | passwd
+#sed -re 's/.*PasswordAuthentication.*/PasswordAuthentication yes/' -i.`date -I` /etc/ssh/sshd_config
+#sed -i 's/.*PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+#export DEBIAN_FRONTEND=noninteractive
+#PATH=$PATH:/usr/sbin
+#service sshd restart
+
+apt install -y sudo curl
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash -
+apt install -y nodejs
+npm install pm2 -g
+
+apt install -y  wget git vim wmctrl
+#cd /root
+
+_BROWSER_INSTALL_
+
+userdel -r _USER_
+echo -e "1\n1" | adduser _USER_
+useradd _USER_
+echo -e "1\n1" | passwd _USER_
+echo '_USER_ ALL=(ALL) NOPASSWD: ALL' | sudo EDITOR='tee -a' visudo
+cd /home/_USER_/
+
+sudo -u _USER_ -H sh -c 'rm -rf manage-docker && git clone https://oauth2:_GIT_KEY_@gitlab.mstapp.shop/queesca/manage-docker.git && cd manage-docker && git checkout _BRANCH_'
+
+cd manage-docker
+
+cp .env.example .env
+
+vim -esnc '%s/_HOST_IP/"_HOST_IP_"/ge|:wq' .env
+vim -esnc '%s/_DEBUG/0/ge|:wq' .env
+vim -esnc '%s/_VM_NAME/_VM_NAME_/ge|:wq' .env
+vim -esnc '%s/_API_KEY/_API_KEY_/ge|:wq' .env
+vim -esnc '%s/_OS/_OS_/ge|:wq' .env
+sed -i -e 's/\r//g' .env
+
+sudo -u _USER_ -H sh -c 'npm i --unsafe-perm=true'
+
+chown -R _USER_: /home/_USER_/*
+
+sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u _USER_ --hp /home/_USER_
+sudo -u _USER_ -H sh -c 'pm2 delete main | cd && cd /home/_USER_/manage-docker && pm2 start main.js && pm2 save'
+
+echo "Successful launch"

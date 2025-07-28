@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body class="wrapper">
+  <div class="screen">
+    <div class="container">
+      <% include ./form.ejs %>
+      <% include ./result.ejs %>
+    </div>
+    </div>
+  </div>
+  <% include ../common/js.ejs%>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <style>
+    .wrapper{
+      padding: 0px;
+      margin: 0px;
+      background-image: url(./img/bg-script.png);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .screen{
+      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+    .title{
+      color: #8685EF;
+      font-size: 30px;
+    }
+    .input{
+      color: white;
+      width: 100%;
+      background-color: #d8d8d836;
+      border-radius: 8px;
+      padding: 10px;
+      border-image: linear-gradient(to right, #8685EF, #FFFFFF) 1;
+    }
+  </style>
+</body>
+
+</html>

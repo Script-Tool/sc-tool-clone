@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<% include ../common/header%>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+  <!-- Sidebar -->
+  <% include ../common/customer-sidebar.ejs%>
+  <!-- End of Sidebar -->
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+        <br/>
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Đơn SUB</h1>
+          <button href="#" type="button" data-toggle="modal" id="showImportModalBtn" data-target="#importOrder"
+            class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            Tạo đơn SUB
+          </button>
+        </div>
+
+        
+        <!-- Content Row -->
+        
+
+      </div>
+      <!-- /.container-fluid -->
+      
+      <div class="filter d-flex align-items-end justify-content-between px-3">
+        <div class="d-flex">
+          <div class="form-group ml-2">
+            <label for="exampleFormControlSelect1">Type</label>
+            <select class="form-control" id="account-type">
+              <option value="">All</option>
+              <option value="running">Running</option>
+              <option value="wait_to_run">Wait to run</option>
+              <option value="complete">Complete</option>
+            </select>
+          </div>
+          <div class="form-group ml-2">
+            <label for="exampleFormControlInput1">Created time (Minutes)</label>
+            <div class="d-flex">
+              <input type="number" class="form-control" id="account-created-time" style="width: 200px">
+            </div>
+          </div>
+          <div class="form-group ml-2">
+            <label for="exampleFormControlInput1" class="text-success"><%=count%> records</label>
+            <button href="#" class="form-control" id="searchBtn" type="button" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i class="fas fa-remove fa-sm text-white-50"></i> 
+              Search
+            </button>
+          </div>
+        </div>
+
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li id="pre_page" class="page-item"><a class="page-link" href="#"><-</a></li>
+            <li class="page-item"><a class="page-link" href="#"><%=current_page%></a></li>
+            <li id="next_page" class="page-item"><a class="page-link" href="#">-></a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered" id="playlistTable" width="100%" cellspacing="0">
+          <thead>
+          <tr>
+            <th>Id</th>
+            <th>Tên lô</th>
+            <th>Tổng số kênh</th>
+            <th>Tổng số sub</th>
+            <th>Giá</th>
+            <th>Trạng thái</th>
+            <th>Thời gian tạo</th>
+            <th>Thao tác</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% orders.forEach(function(order){ %>
+          <tr>
+            <td><%=order.id%></td>
+            <td><%=order.group_name%></td>
+            <td><%= Object.keys(order.customer_values.channel_ids_data).length%></td>
+            <td><%= order.customer_values.total_value %></td>
+            <td><%=order.package.price%></td>
+            <td><%=order.status%></td>
+            <td><%=order.createdAt.toLocaleString()%></td>
+            <td>
+              <a href="#" class="btn btn-info a-btn-slide-text viewBtn" value="<%=order.id%>">Xem</a>
+              <a href="#" class="btn btn-info a-btn-slide-text addBtn" value="<%=order.id%>">Thêm kênh</a>
+              <% if (order.status == 'running') { %>
+                <a href="#" class="btn btn-warning a-btn-slide-text stopBtn" value="<%=order.id%>">Dừng</a>
+              <%}%>
+              <% if (order.status == 'stopped') { %>
+                <a href="#" class="btn btn-success a-btn-slide-text runBtn" value="<%=order.id%>"> Chạy </a>
+              <%}%>
+              <a href="#" class="btn btn-danger a-btn-slide-text deleteBtn" value="<%=order.id%>">Xóa</a>
+            </td>
+          </tr>
+          <%})%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <div id="importOrder" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <b>Import từ file CSV, (Hệ thống không check trùng từ file này)</b>
+            <a class="ml-3" href="https://docs.google.com/spreadsheets/d/14iSjkPYEsBkx0vLi7ADEwnqi9jgCwuMBcaVhODhTajA/edit#gid=1318038956">Tải file mẫu</a>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="scriptImportForm">
+              <div class="form-group">
+                <label for="exampleFormControlFile1">file</label>
+                <input type="file" class="form-control-file" id="importFile" name="importFile" accept=".csv">
+              </div>
+            </form>
+            <div class="d-none" id="dup_data_section">
+              <h3 class="text-danger">Đã chạy tất cả, ngoài những kênh sai định dạng bên dưới</h3>
+              <textarea class="w-100" id="dup_data" rows="10"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="text-danger d-none" id="help-text">Quá trình này có thể tốn nhiều thời gian, vui lòng đợi</div>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="saveImportBtn">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="detailOrder" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <p>Detail</p>
+          </div>
+          <div class="modal-body">
+            <table class="table table-bordered" id="playlistTable" width="100%" cellspacing="0">
+              <thead>
+              <tr>
+                <th>Channel ID</th>
+                <th>Sub ban đầu</th>
+                <th>Lượng sub</th>
+                <th>Log hiện tại</th>
+                <th>Service ID</th>
+              </tr>
+              </thead>
+              <tbody id="tbody">
+              </tbody>
+            </table>
+            <div class="d-none" id="dup_data_section">
+              <h3 class="text-danger">Có vài channel ID đã được chạy trên hệ thống</h3>
+              <textarea class="w-100" id="dup_data" rows="10"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="addSubBtn">Bổ sung SUB</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="confirmModal" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <p>Bổ sung sub</p>
+          </div>
+          <div class="modal-body">
+            <table class="table table-bordered" id="playlistTable" width="100%" cellspacing="0">
+              <thead>
+              <tr>
+                <th>Channel ID</th>
+                <th>Thông tin</th>
+                <th>Log hiện tại</th>
+                <th>Sub bổ sung</th>
+              </tr>
+              </thead>
+              <tbody id="tbodyConfirm">
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="confirmBtn">Xác nhận</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of Main Content -->
+
+    <% include ../common/footer%>
+
+  </div>
+  <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<% include ../common/js%>
+<script src="/js/bootbox.all.min.js"></script>
+<script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+<script src="/javascripts/utils.js"></script>
+<script>
+  let per_page = 50
+  let current_page = 1
+  let curentOrderID = null
+  let confirmData
+  let order_addition_id
+
+  function getQuery() {
+    let type = $('#account-type').val()
+    let createdTime = $('#account-created-time').val()
+
+    let qr = `?type=${type}&createdTime=${createdTime}&per_page=${per_page}&current_page=${current_page}`
+    return qr
+  }
+
+  function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  }
+
+  $(document).ready(function () {
+    $('#account-type').val(getParameterByName('type'))
+    $('#account-created-time').val(getParameterByName('createdTime') || '')
+
+    per_page = Number(getParameterByName('per_page') || 20)
+    current_page = Number(getParameterByName('current_page') || 1)
+  });
+
+  $('#playlistTable').on('click', 'tr .viewBtn', function () {
+    let id = $(this).attr('value')
+    
+    $.ajax({
+      url: "/admin/customer/order/admin/" + id,
+      type: "get",
+      contentType: 'application/json',
+    }).done(function (data) {
+      if (data.success) {
+        curentOrderID = id
+
+        let tbody = document.querySelector('#tbody')
+        let channel_ids_data = data.order.customer_values.channel_ids_data
+        let trs = ''
+        channel_ids_data.forEach(item => {
+          trs += `
+            <tr>
+              <td>${item.channel_id}</td>
+              <td>${item.fisrt_value_log}</td>
+              <td>${item.value}</td>
+              <td>${item.current_value || ''}</td>
+              <td>${item.service_id}</td>
+            </tr>
+          `
+        })
+        tbody.innerHTML = trs
+        $("#detailOrder").modal('show');
+      }
+    })
+  })
+
+  $('#playlistTable').on('click', 'tr .runBtn', function () {
+    let id = $(this).attr('value')
+    
+    bootbox.confirm('Chạy đơn hàng này ?', function (result) {
+      if (result) {
+        $.ajax({
+          url: `/admin/customer/order/admin/set-status/${id}?status=1`,
+          type: "get",
+          contentType: 'application/json',
+        }).done(function (data) {
+          if (data.success) {
+            location.reload()
+          }
+        })
+      }
+    })
+  })
+
+  $('#playlistTable').on('click', 'tr .stopBtn', function () {
+    let id = $(this).attr('value')
+    
+    bootbox.confirm('Dừng chạy đơn hàng này ?', function (result) {
+      if (result) {
+        $.ajax({
+          url: `/admin/customer/order/admin/set-status/${id}?status=0`,
+          type: "get",
+          contentType: 'application/json',
+        }).done(function (data) {
+          if (data.success) {
+            location.reload()
+          }
+        })
+      }
+    })
+  })
+
+  $('#playlistTable').on('click', 'tr .deleteBtn', function () {
+    let id = $(this).attr('value')
+    
+    bootbox.confirm('Xóa ?', function (result) {
+      if (result) {
+        $.ajax({
+          url: `/admin/customer/order/delete/${id}`,
+          type: "get",
+          contentType: 'application/json',
+        }).done(function (data) {
+          if (data.success) {
+            location.reload()
+          }
+        })
+      }
+    })
+  })
+
+  $("#showImportModalBtn").on('click', function (e) {
+    order_addition_id = null
+  })
+
+  $('#playlistTable').on('click', 'tr .addBtn', function () {
+    let id = $(this).attr('value')
+    order_addition_id = id
+    $("#importOrder").modal('show');
+  })
+  
+
+  $("#saveImportBtn").on('click', function (e) {
+    let url = "/admin/customer/order/import-sub-orders"
+    if (order_addition_id) {
+      url += `?order_addition=${order_addition_id}`
+    }
+
+    $.ajax({
+      url,
+      type: "POST",
+      data: new FormData($('#scriptImportForm')[0]),
+      processData: false,
+      contentType: false
+    }).done(function (data) {
+      if (!data.success && data.errorChannels) {
+        document.querySelector('#dup_data_section').classList.add('d-block')
+        document.querySelector('#dup_data').value = data.errorChannels.join('\n')
+      } else {
+        location.reload()
+      }
+    });
+    $("#saveImportBtn").addClass('d-none')
+    $("#help-text").addClass('d-block')
+  });
+
+  $('#pre_page').on('click', function (e) {
+    if (current_page > 1) {
+      current_page -= 1
+      let newPath = location.origin + location.pathname + getQuery()
+      location.replace(newPath)
+    }
+  })
+  $('#next_page').on('click', function (e) {
+    current_page += 1
+    let newPath = location.origin + location.pathname + getQuery()
+    location.replace(newPath)
+  })
+
+  $("#searchBtn").on('click', function (e) {
+    let newPath = location.origin + location.pathname + getQuery()
+    location.replace(newPath)
+  });
+
+  $("#addSubBtn").on('click', function (e) {
+    if (curentOrderID) {
+      $.ajax({
+        url: "/admin/customer/order/admin/additional-sub/"+curentOrderID,
+        type: "get"
+      }).done(function (data) {
+        if (data.success && data.confirmData) {
+          let tbody = document.querySelector('#tbodyConfirm')
+          confirmData = data.confirmData
+          let trs = ''
+          Object.keys(data.confirmData).forEach(key => {
+            trs += `
+              <tr>
+                <td>${confirmData[key].channel_id}</td>
+                <td>${confirmData[key].info}</td>
+                <td>${confirmData[key].current_value}</td>
+                <td>${confirmData[key].additional_value}</td>
+              </tr>
+            `
+          })
+          tbody.innerHTML = trs
+          $("#confirmModal").modal('show');
+          $("#detailOrder").modal('hide');
+        } else {
+          alert('Chưa có kênh nào hoàn tất.')
+        }
+      });
+    }
+  });
+
+  $("#confirmBtn").on('click', function (e) {
+    if (curentOrderID) {
+      $.ajax({
+        url: "/admin/customer/order/admin/additional-sub/confirm/"+curentOrderID,
+        type: "GET",
+        data: {
+          confirmData: confirmData
+        },
+        contentType: 'application/json',
+      }).done(function (data) {
+        $("#confirmModal").modal('hide');
+      });
+    }
+  });
+
+</script>
+
+</body>
+
+</html>

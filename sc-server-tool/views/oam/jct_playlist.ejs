@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include ../common/header%>
+
+  <body id="page-top">
+    <div class="abstract-bg"></div>
+    <div class="grid-pattern"></div>
+    <div class="abstract-shape w-96 h-96 top-1 left-1"></div>
+    <div class="abstract-shape w-96 h-96 bottom-1 right-1"></div>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <% include ../common/sidebar.ejs%>
+      <!-- End of Sidebar -->
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <br />
+            <!-- Page Heading -->
+            <div
+              class="d-sm-flex align-items-center justify-content-between mb-4"
+            >
+              <h1 class="font-weight-bold h3 mb-0 primary-text"><%=title%></h1>
+              <div>
+                <!-- Thêm vào đoạn HTML để tạo các nút Export và Import -->
+                <button id="exportPlaylists" class="btn btn-sm btn-primary">
+                  Export Playlists
+                </button>
+                <button
+                  id="importPlaylists"
+                  class="btn btn-sm btn-secondary ml-2"
+                >
+                  Import Playlists
+                </button>
+                <input
+                  type="file"
+                  id="importPlaylistFile"
+                  style="display: none"
+                />
+
+                <!-- Các phần tử HTML khác trong jct_playlist.ejs -->
+
+                <button
+                  id="deleteAll"
+                  href="#"
+                  type="button"
+                  class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"
+                >
+                  <i class="fas fa-remove fa-sm text-white-50"></i>
+                  Delete all
+                </button>
+              </div>
+            </div>
+            <div class="filter d-flex items-center justify-content-between">
+              <div class="d-flex flex-wrap">
+                <div class="form-group">
+                  <label for="tag">Tag</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    id="tag"
+                    placeholder="tag"
+                  />
+                </div>
+                <div class="form-group ml-2">
+                  <label for="typeCountVideo">Số lượng video</label>
+                  <div class="input-group input-group-sm">
+                    <select class="custom-select" id="typeCountVideo">
+                      <option value="$gt">Lớn hơn</option>
+                      <option value="=">Bằng</option>
+                      <option value="$lt">Nhỏ hơn</option>
+                    </select>
+                    <input type="number" class="form-control" id="countVideo" />
+                  </div>
+                </div>
+                <div class="form-group ml-2">
+                  <label for="typeCountView">Số lượng view</label>
+                  <div class="input-group input-group-sm">
+                    <select class="custom-select" id="typeCountView">
+                      <option value="$gt">Lớn hơn</option>
+                      <option value="=">Bằng</option>
+                      <option value="$lt">Nhỏ hơn</option>
+                    </select>
+                    <input type="number" class="form-control" id="countView" />
+                  </div>
+                </div>
+                <div class="form-group ml-2 align-self-end">
+                  <label for="searchBtn" class="text-success">
+                    <%=count%> records
+                  </label>
+                  <button
+                    id="searchBtn"
+                    type="button"
+                    class="btn btn-secondary btn-sm"
+                  >
+                    <i class="fas fa-search fa-sm"></i> Search
+                  </button>
+                </div>
+              </div>
+              <nav aria-label="Page navigation">
+                <ul class="pagination pagination-sm mb-0">
+                  <li id="pre_page" class="page-item">
+                    <a class="page-link" href="#"><%="<-"%></a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#"> <%=current_page%> </a>
+                  </li>
+                  <li id="next_page" class="page-item">
+                    <a class="page-link" href="#">-></a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+            <div class="d-flex mb-2 overflow-auto">
+              <select
+                class="custom-select custom-select-sm w-auto"
+                id="tagSelector"
+              >
+                <option value="">Tất cả TAG</option>
+                <% tags.forEach(function(tag){ %>
+                <option value="<%= tag._id %>">
+                  <%= tag._id %> (<%= tag.count %>)
+                </option>
+                <%})%>
+              </select>
+              <div class="ml-auto">
+                <button
+                  type="button"
+                  data-toggle="modal"
+                  data-target="#changeChannelIDPopup"
+                  class="btn btn-info btn-sm ml-2"
+                >
+                  Đổi ID kênh
+                </button>
+                <button
+                  id="loadJCTPlaylistData"
+                  type="button"
+                  class="btn btn-success btn-sm ml-2"
+                >
+                  Load Playlist Data
+                </button>
+              </div>
+            </div>
+
+            <div
+              class="relative overflow-hidden rounded-lg border border-slate-200/10 bg-slate-800/40 shadow-md backdrop-blur-xl"
+            >
+              <div class="overflow-x-auto">
+                <table class="w-full table-auto badge-soft-dark" id="tableList">
+                  <thead class="bg-slate-900/50">
+                    <tr>
+                      <th
+                        class="w-[70px] px-4 py-3 text-center text-sm font-medium text-white"
+                      >
+                        Số video
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Lượt xem
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Profile Mail
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Tag
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Name
+                      </th>
+                      <th
+                        class="w-[100px] px-4 py-3 text-center text-sm font-medium text-white"
+                      >
+                        URL
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-slate-100/10">
+                    <% rows.forEach(function(pl){ %>
+                    <tr
+                      class="<%=pl.is_block == true?'text-warning':''%> transition-all hover:bg-slate-700/30"
+                    >
+                      <td class="px-4 py-3"><%=pl.total_video%></td>
+                      <td class="px-4 py-3"><%=pl.total_view%></td>
+                      <td class="px-4 py-3"><%=pl.profile_email%></td>
+                      <td class="px-4 py-3"><%=pl.tag%></td>
+                      <td class="px-4 py-3"><%=pl.playlist_name%></td>
+                      <td class="px-4 py-3">
+                        <a
+                          href="https://www.youtube.com/playlist?<%=pl.url%>"
+                          target="_blank"
+                        >
+                          <%=pl.url%>
+                        </a>
+                      </td>
+                      <!-- <td>
+              <a href="#" class="btn btn-danger a-btn-slide-text deleteBtn" value="<%=pl._id%>">Delete</a>
+            </td> -->
+                    </tr>
+                    <%})%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+          <!-- End of Main Content -->
+          <!-- Modal đổi id kênh -->
+          <div
+            id="changeChannelIDPopup"
+            class="modal"
+            tabindex="-1"
+            role="dialog"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Đổi ID kênh</h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <div role="form">
+                    <div class="form-group">
+                      <label class="col-form-label"
+                        >ID Kênh (channel/abcdef)</label
+                      >
+                      <div>
+                        <input class="form-control" id="channel_id_change" />
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        id="saveChannelID"
+                      >
+                        Save changes
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <% include ../common/footer%>
+        </div>
+        <!-- End of Content Wrapper -->
+      </div>
+      <!-- End of Page Wrapper -->
+    </div>
+    <% include ../common/js%>
+    <script src="/js/bootbox.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+    <script src="https://unpkg.com/popper.js@1.15.0/dist/umd/popper.min.js"></script>
+    <script src="/javascripts/utils.js"></script>
+    <script src="/javascripts/jct_playlist.js"></script>
+  </body>
+</html>

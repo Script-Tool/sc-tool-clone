@@ -1,0 +1,9 @@
+{
+  "host": "localhost",
+  "user": "youtube_gcc",
+  "password": "Trung@123456",
+  "database": "gcc",
+  "waitForConnections": true,
+  "connectionLimit": 150,
+  "queueLimit": 0
+}

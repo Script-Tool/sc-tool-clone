@@ -1,0 +1,87 @@
+
+<div class="wrap-form" style="display: none" id="result-form">
+  <div class="title">Kịch Bản</div>
+  <div class="info-result"></div>
+  <br>
+  <textarea class="input textarea" id="result-script" placeholder="Kịch bản"></textarea>
+  <br>
+  <div class="title" style="margin-top: 30px">VIDEOS</div>
+  <div class="list-videos">
+  </div>
+  <button class="primary-button mb-5 align-items-center" id="startCreateScriptBtn" style="display: flex;justify-content: center;">
+    Tạo Kịch Bản Khác
+    <div class="logo-gpt"></div>
+  </button>
+</div>
+
+<style>
+  /* width */
+  ::-webkit-scrollbar {
+    width: 2x;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #8685EF; 
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #8685EF; 
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #8685EF; 
+  }
+
+  .video img{
+    width: 350px;
+    height: 250px;
+  }
+
+  .wrap-form{
+    width: fit-content;
+    padding-top: 3em;
+    text-align: center;
+    width: 100%;
+  }
+  .textarea{
+    width: 100% !important;
+    min-height: 400px;
+  }
+  .list-videos{
+    display: flex;
+    justify-content: space-between;
+    display: flex;
+    overflow-x: scroll;
+  }
+  .video-item{
+    color: white;
+    padding: 10px;
+  }
+  .video-item .video{
+    border: 1px solid #fff;
+    width: 100%;
+  }
+  .video-item .video-title{
+    margin-top: 10px;
+    text-align: left;
+    font-size: 18px;
+  }
+  .video-item .video-info{
+    text-align: left;
+    font-size: 16px;
+    display: flex;
+  }
+</style>
+<% include ../common/js%>
+<script>
+  document.querySelector('#startCreateScriptBtn').addEventListener('click', () => {
+    console.log('asdaf');
+    document.querySelector('#result-form').style.display = 'none'
+    document.querySelector('#result-script').value = ''
+    
+    document.querySelector('#form').style.display = 'block'
+  })
+</script>

@@ -1,0 +1,173 @@
+[
+  {
+    "label": "Chủ đề & Mô tả cụ thể",
+    "options": [
+      {
+        "label": "Hướng dẫn",
+        "explain": "Tạo một video hướng dẫn về cách làm một công việc cụ thể hoặc thực hiện một kỹ năn"
+      },
+      {
+        "label": "Giải trí",
+        "explain": "Tạo video vui nhộn, hài hước hoặc giải trí để làm khán giả cười và thư giã"
+      },
+      {
+        "label": "Giáo dục",
+        "explain": " Tạo video về một chủ đề giáo dục cụ thể, giải thích một khái niệm, hoặc chia sẻ kiến thức và thông tin hữu ích."
+      }
+    ],
+    "description": "Chủ đề: Chủ đề là một ý tưởng, một khía cạnh rộng lớn hoặc một vấn đề tổng quát mà một bài viết, một cuộc trò chuyện hoặc một tác phẩm nghệ thuật nhắm đến. Nó đại diện cho một khối kiến",
+    "description_full": "tác phẩm nghệ thuật nhắm đến. Nó đại diện cho một khối kiến thức hoặc một lĩnh vực rộng hơn mà có thể chứa nhiều miêu tả cụ thể Miêu tả cụ thể: Miêu tả cụ thể là một lời diễn giải hoặc mô tả chi tiết hơn về một khía cạnh nhất định của chủ đề. Nó tập trung vào việc cung cấp thông tin chi tiết, ví dụ và sự phân tích để giải thích một phần của chủ đề."
+  },
+  {
+    "label": "Nhân vật",
+    "options": [
+      {
+        "label": "Nhân vật chính",
+        "explain": "Đây là nhân vật tâm điểm của câu chuyện. Hành động và sự phát triển của nhân vật chính thường tạo nên trọng tâm của kịch bả"
+      },
+      {
+        "label": "Nhân vật phản diện",
+        "explain": "Nhân vật phản diện thường là kẻ thù chính của nhân vật chính. Họ thường có những mục tiêu và hành động xấu xa, tạo ra xung đột và gây khó khăn cho nhân vật chín"
+      },
+      {
+        "label": "Nhân vật phụ",
+        "explain": "Đây là những nhân vật không phải là nhân vật chính hoặc phản diện, nhưng có vai trò quan trọng trong cốt truyện. Họ có thể là bạn bè, gia đình, đồng nghiệp hoặc người hướng dẫn của nhân vật chính."
+      }
+    ],
+    "description": "Nhân vật là các thực thể hư cấu hoặc thực tế trong một tác phẩm nghệ thuật, như tiểu thuyết, truyện tranh, phim ảnh, vở kịch, trò chơi điện tử và nhiều hơn nữa. Nhân vật có thể là con người",
+    "description_full": "động vật, vật thể phi thực tế hoặc thậm chí ý niệm trừu tượng."
+  },
+  {
+    "label": "Đối tượng khán giả",
+    "options": [
+      {
+        "label": "Dưới 16 tuổi",
+        "explain": "\n - Trò chơi điện tử\n - Đọc sách và truyện tranh\n - Thể thao\n - Âm nhạc\n - Nghệ thuật và sáng tạo\n - Khoa học và công nghệ\n - Thiết kế và thời trang\n - Du lịch và khám phá\n - Nghệ thuật biểu diễn (hát, diễn xuất, nhảy…)\n - Động vật và thiên nhiên\n - Món ăn và nấu nướng\n - Nghệ thuật và sáng t"
+      },
+      {
+        "label": "Độ tuổi 18 – 24 tuổi",
+        "explain": "\n - Công nghệ và truyền thông\n - Giải trí và nghệ thuật\n - Mua sắm và thời trang\n - Thể thao và hoạt động ngoài trời\n - Tự phát triển và học hỏi\n - Xã hội và mạng xã hội\n - Sở thích về du lịch và khám phá\n - Sở thích về ẩm thực và đồ uống\n - Sở thích về âm nhạc và các sự kiện âm nhạc 10. Phát triển cá nhân và tư duy sáng tạo\n - Sở thích về phim ảnh và truyền hình\n - Sở thích về thể thao điện tử và ga"
+      },
+      {
+        "label": "Độ tuổi từ 25 – 34 tuổi",
+        "explain": "\n - Thích thời trang\n - Làm đẹp và chăm sóc da\n - Thích đi du lịch khám phá\n - Sở thích ăn uống và nấu ăn\n - Nghệ thuật, văn hóa, giải trí (điện ảnh, âm nhạc, sự kiện…)\n - Sức khỏe và thể dục\n - Sáng tạo và DIY (Sáng tạo làm đồ thủ công trang trí nhà cửa)\n - Tình yêu\n - Nghệ thuật sáng tạo (vẽ tranh, nhiếp ảnh…)\n - Âm nhạc"
+      }
+    ],
+    "description": "Đối tượng khán giả có thể được xác định dựa trên nhiều yếu tố khác nhau như độ tuổi, giới tính, vị trí địa lý, sở thích, giáo dục, thu nhập, nhóm dân tộc hoặc bất kỳ yếu tố nào khác.",
+    "description_full": "Việc hiểu rõ đối tượng khán giả là một phần quan trọng của quá trình phát triển và tiếp thị sản phẩm, dịch vụ hoặc sự kiện."
+  },
+  {
+    "label": "Phong cách diễn",
+    "options": [
+      {
+        "label": "Vui vẻ",
+        "explain": "là một trường phái diễn xuất mà các diễn viên thể hiện tính cách vui vẻ, lạc quan và mang lại niềm vui cho khán giả. Các diễn viên với phong cách này thường có khả năng tạo ra tiếng cười, sự hài hước và sự lạc quan trong các vai diễn của h"
+      },
+      {
+        "label": "Buồn tâm trạng",
+        "explain": "là một trường phái diễn xuất mà các diễn viên thể hiện sự đau khổ, nỗi buồn và tâm trạng u sầu của nhân vật. Các diễn viên với phong cách này có khả năng thể hiện sự đau đớn và khắc sâu vào tâm trí của khán gi"
+      },
+      {
+        "label": "Lạc quan",
+        "explain": "là một trường phái diễn xuất mà các diễn viên thể hiện tính cách lạc quan, niềm tin vào cuộc sống và khả năng nhìn nhận mặt tích cực của các tình huống. Các diễn viên với phong cách này thường mang đến sự sảng khoái, lạc quan và tạo ra một không khí tích cực cho khán giả."
+      }
+    ],
+    "description": " Phong cách diễn là cách mà một tác phẩm được biểu diễn hoặc trình bày. Nó thể hiện cái nhìn cá nhân của người nghệ sĩ hoặc nhóm nghệ sĩ và có thể ảnh hưởng đến cách tác phẩm được truyền đạt và tạo hiệu",
+    "description_full": "ứng lên khán giả. Ví dụ, trong diễn xuất, có nhiều phong cách diễn như hài hước, bi kịch, thực tế, múa, và nhiều hơn nữa. Trong âm nhạc, phong cách diễn có thể thể hiện qua cách ca hát, cách chơi nhạc cụ và cách sắp xếp âm nhạc."
+  },
+  {
+    "label": "Lời thoại/ Biểu cảm",
+    "options": [
+      {
+        "label": "Nói chuyện",
+        "explain": " Đây là kiểu lời thoại trong đó diễn viên đóng vai một cuộc hội thoại giữa hai hoặc nhiều nhân vật. Lời thoại nói chuyện thường thể hiện sự giao tiếp, tương tác và mối quan hệ giữa các nhân vậ"
+      },
+      {
+        "label": "Hài hước",
+        "explain": "Đây là kiểu lời thoại được sử dụng trong các tình huống hài hước và nhằm mục đích làm cho khán giả cười. Diễn viên sử dụng từ ngữ, ngữ điệu và giọng điệu mang tính chất hài hước để tạo nên hiệu ứng gây cười và mang lại niềm vui cho khán gi"
+      },
+      {
+        "label": "Nội tâm",
+        "explain": "Đây là kiểu lời thoại mà diễn viên nói ra trong tâm trí nhân vật mà không trực tiếp thể hiện ra bên ngoài. Lời thoại nội tâm thường được sử dụng để truyền đạt suy nghĩ, cảm xúc và ý nghĩa sâu bên trong của nhân vật."
+      }
+    ],
+    "description": "Lời thoại: Lời thoại là những từ, câu hoặc đoạn văn được diễn viên hoặc người biểu diễn sử dụng để truyền đạt thông điệp, tương tác với các nhân vật khác hoặc truyền tải câu chuyện trong một tác phẩm nghệ thuật. Lời thoại có ",
+    "description_full": "thể xuất hiện trong kịch, phim, truyện tranh, vở opera và nhiều loại tác phẩm khác. Biểu cảm: Biểu cảm là cách diễn viên hoặc người biểu diễn sử dụng cơ thể, khuôn mặt, giọng nói và cử chỉ để truyền đạt cảm xúc, ý nghĩa hoặc ý kiến trong một tác phẩm nghệ thuật. Nó là cách để diễn viên tạo ra sự kết nối với khán giả và tạo ra hiệu ứng nghệ thuật. Biểu cảm có thể bao gồm cách diễn viên di chuyển, nhảy múa, thể hiện kỹ năng vũ đạo, biểu diễn trên sân khấu hay sử dụng các kỹ thuật hóa trang và trang phục để tạo ra nhân vật độc đáo và truyền đạt thông điệp nghệ thuật."
+  },
+  {
+    "label": "Thông điệp",
+    "options": [
+      {
+        "label": "Tình người",
+        "explain": " Kịch bản có thể truyền tải thông điệp về tình yêu, lòng nhân ái và sự đoàn kết giữa con người. Nó có thể khám phá mối quan hệ, tình bạn, tình yêu gia đình và tình yêu tình dục"
+      },
+      {
+        "label": "Tính nhân văn",
+        "explain": " Kịch bản có thể khám phá sự đấu tranh, sự phát triển và sự trưởng thành của con người. Nó có thể truyền đạt thông điệp về sự tự chấp nhận, sự khám phá bản thân và khả năng thích nghi với môi trường xung quanh."
+      },
+      {
+        "label": "Xã hội và chính trị",
+        "explain": " Kịch bản có thể đề cập đến các vấn đề xã hội và chính trị quan trọng trong xã hội như bất công, phân biệt chủng tộc, cuộc sống trong xã hội đa văn hóa, sự bất bình đẳng và cuộc sống trong các hệ thống chính trị khác nhau."
+      }
+    ],
+    "description": "Thông điệp là ý nghĩa hoặc thông tin mà người gửi muốn truyền đạt đến người nhận thông qua một phương tiện truyền thông hoặc một hình thức giao tiếp. Thông điệp có thể được truyền tải bằng cách sử dụng ngôn ngữ nói, viết, ",
+    "description_full": "hình ảnh, âm thanh, biểu cảm cơ thể hoặc một sự kết hợp của chúng."
+  },
+  {
+    "label": "Thời lượng",
+    "options": [
+      {
+        "label": "15 giây – 60 giây",
+        "explain": "\n1.    Mở đầu hấp dẫn\n2.    Trình bày thông điệp chính\n3.    Sáng tạo và gây chú ý\n4.    Kết nối với khán giả\n5.    Kết thúc chắc chắn, ấn tượn"
+      },
+      {
+        "label": "5 phút – 10 phút",
+        "explain": "\n1.    Giới thiệu và mở đầu hấp dẫn.\n2.    Trình bày thông điệp chính và nội dung chính.\n3.    Cung cấp ví dụ và minh họa chi tiết.\n4.    Tóm tắt và kết luận.\n5.    Lời kết và gọi tác động để tạo sự tương tác với khán giả."
+      },
+      {
+        "label": "10 phút – 20 phút",
+        "explain": "\n1.    Giới thiệu và mở đầu hấp dẫn.\n2.    Trình bày các điểm chính và cung cấp thông tin chi tiết.\n3.    Thảo luận và phân tích (nếu cần).\n4.    Tóm tắt và kết luận.\n5.    Lời kết và gọi tác động để tạo sự tương tác với khán giả."
+      }
+    ],
+    "description": "Thông điệp là ý nghĩa hoặc thông tin mà người gửi muốn truyền đạt đến người nhận thông qua một phương tiện truyền thông hoặc một hình thức giao tiếp. Thông điệp có thể được truyền tải bằng cách sử dụng ngôn ngữ nói, viết, ",
+    "description_full": "hình ảnh, âm thanh, biểu cảm cơ thể hoặc một sự kết hợp của chúng."
+  },
+  {
+    "label": "Bối cảnh/ Góc quay",
+    "options": [
+      {
+        "label": "Phòng khách gia đình",
+        "explain": "Nơi các nhân vật chính gặp nhau, có thể là nơi diễn ra các cuộc trò chuyện quan trọng hoặc giới thiệu nhân vật."
+      },
+      {
+        "label": "Văn phòng",
+        "explain": "Một môi trường làm việc chung, nơi nhân vật có thể thực hiện các cuộc họp, xung đột, hoặc tiến hành công việc hàng ngày."
+      },
+      {
+        "label": "Bệnh viện",
+        "explain": "Môi trường này thường được sử dụng trong các tình huống y tế hoặc truyền thông liên quan đến sức khỏe."
+      }
+    ],
+    "description": "Bối cảnh là môi trường, thời gian và các yếu tố xung quanh một sự kiện, một cảnh quan hoặc một tác phẩm nghệ thuật. Nó đóng vai trò quan trọng trong việc xác định ngữ cảnh và tạo ra không gian và thời gian cho câu ",
+    "description_full": "chuyện hoặc hình ảnh. Bối cảnh có thể bao gồm văn hóa, xã hội, địa lý, lịch sử, và nhiều yếu tố khác. Trong điện ảnh, bối cảnh có thể được thiết lập bằng cách sử dụng bối cảnh địa điểm, trang phục, bối cảnh kỹ thuật số và thiết lập đèn. Góc quay đề cập đến cách mà máy quay hoặc máy ảnh được đặt và sử dụng để quay một cảnh hoặc một khung hình. Nó xác định góc nhìn và cung cấp độ cao, độ rộng và độ sâu cho hình ảnh. Góc quay có thể được sử dụng để tạo ra các hiệu ứng nghệ thuật, truyền tải cảm xúc và tạo ra sự tương tác giữa người xem và tác phẩm. Các góc quay thông thường bao gồm góc quay thấp, góc quay cao, góc quay ngang, góc quay nghiêng, góc quay gần, góc quay xa và nhiều hơn nữa."
+  },
+  {
+    "label": "Phân đoạn",
+    "options": [
+      {
+        "label": "Phân đoạn mở đầu",
+        "explain": "Đây là phân đoạn đầu tiên của câu chuyện, được sử dụng để giới thiệu khán giả vào thế giới của câu chuyện và thiết lập bối cảnh ban đầu"
+      },
+      {
+        "label": "Phân đoạn giới thiệu nhân vật",
+        "explain": " Một phân đoạn được sử dụng để giới thiệu các nhân vật chính trong câu chuyện, đặt họ vào ngữ cảnh và mô tả tính cách và mục tiêu của họ."
+      },
+      {
+        "label": "Phân đoạn xung đột",
+        "explain": "Một phân đoạn tập trung vào một xung đột hoặc mâu thuẫn giữa các nhân vật, tạo ra căng thẳng và đẩy mạnh câu chuyện."
+      }
+    ],
+    "description": "Phân đoạn trong một tác phẩm nghệ thuật, như kịch, phim, văn học hoặc âm nhạc, là sự chia nhỏ tác phẩm thành các đoạn nhỏ hơn. Mỗi phân đoạn thường tập trung vào một sự kiện, một tình huống",
+    "description_full": "hoặc một phần cụ thể trong câu chuyện."
+  }
+]

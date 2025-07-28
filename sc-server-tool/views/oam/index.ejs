@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include ../common/header%>
+
+  <body id="page-top">
+    <div class="abstract-bg"></div>
+    <div class="grid-pattern"></div>
+    <div class="abstract-shape w-96 h-96 top-1 left-1"></div>
+    <div class="abstract-shape w-96 h-96 bottom-1 right-1"></div>
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <% include ../common/sidebar.ejs%>
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <br />
+            <!-- Page Heading -->
+            <div
+              class="d-sm-flex align-items-center justify-content-between mb-4"
+            >
+              <!-- Title with icon -->
+              <div class="d-flex align-items-center">
+                <h1 class="font-weight-bold h3 mb-0 primary-text">
+                  <i class="fas fa-tachometer-alt mr-2"></i>
+                  <%=title%>
+                </h1>
+              </div>
+
+              <!-- Action buttons and status -->
+              <div class="d-flex align-items-center">
+                <% if (role == 'super_admin') { %>
+                <!-- VPS Status Badge -->
+                <div class="mr-3">
+                  <span class="badge badge-pill border primary-text p-2">
+                    <i class="fas fa-server fa-sm mr-1"></i>
+                    <span class="font-weight-bold"><%=total_updated%></span> VPS
+                    Updated
+                  </span>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="btn-group flex gap-3">
+                  <button
+                    id="checkVps"
+                    type="button"
+                    data-toggle="modal"
+                    data-target="#vps-check-modal"
+                    class="space-button inline-flex items-center px-3 py-1.5 text-sm rounded transition-all hover:bg-blue-500/20"
+                  >
+                    <i class="fas fa-sync-alt fa-sm mr-1"></i>
+                    Check VPS
+                  </button>
+
+                  <% if(is_updated_all){ %>
+                  <button
+                    id="restart-vps-btn"
+                    type="button"
+                    class="space-button inline-flex items-center px-3 py-1.5 text-sm rounded transition-all hover:bg-blue-500/20"
+                  >
+                    <i class="fas fa-redo fa-sm mr-1"></i>
+                    Restart All VPS
+                  </button>
+                  <% } else { %>
+                  <button
+                    id="cancel-restart-vps-btn"
+                    type="button"
+                    class="btn btn-danger btn-sm d-flex align-items-center"
+                  >
+                    <i class="fas fa-times fa-sm mr-1"></i>
+                    Cancel Restart
+                  </button>
+                  <% } %>
+                </div>
+                <% } %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xl col-md-6 mb-4">
+                <div class="flex items-center space-x-2 mt-6 text-sm">
+                  <a
+                    href="/"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >Home</a
+                  >
+                  <i class="fas fa-chevron-right text-gray-600 text-xs"></i>
+                  <a
+                    href="#"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >Analytics</a
+                  >
+                  <i class="fas fa-chevron-right text-gray-600 text-xs"></i>
+                  <span class="text-white">Dashboard</span>
+                </div>
+              </div>
+            </div>
+            <!-- Content Row -->
+            <div class="row">
+              <div class="col-xl col-md-6 mb-4">
+                <div class="space-card p-6 float">
+                  <div class="flex items-start justify-between">
+                    <div class="space-font">
+                      <p class="text-gray-400 text-sm">Active profiles</p>
+                      <h3 class="text-3xl font-bold mt-1">
+                        <span
+                          class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500"
+                        >
+                          <%=info.profilesRunning%>
+                        </span>
+                      </h3>
+                    </div>
+                    <div
+                      class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center"
+                    >
+                      <i
+                        class="bi bi-person-check text-primary"
+                        style="font-size: 2rem"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl col-md-6 mb-4">
+                <div class="space-card p-6 float" style="animation-delay: 0.2s">
+                  <div class="flex items-start justify-between">
+                    <div class="space-font">
+                      <p class="text-gray-400 text-sm">Active VPS</p>
+                      <h3 class="text-3xl font-bold mt-1">
+                        <span
+                          class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500"
+                        >
+                          <%=info.vpsRunning%>
+                        </span>
+                      </h3>
+                    </div>
+                    <div
+                      class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center"
+                    >
+                      <i
+                        class="bi bi-hdd-rack text-success"
+                        style="font-size: 2rem"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl col-md-6 mb-4">
+                <div class="space-card p-6 float" style="animation-delay: 0.4s">
+                  <div class="flex items-start justify-between">
+                    <div class="space-font">
+                      <p class="text-gray-400 text-sm">Total profiles</p>
+                      <h3 class="text-3xl font-bold mt-1">
+                        <span
+                          class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500"
+                        >
+                          <%=info.totalProfiles%>
+                        </span>
+                      </h3>
+                    </div>
+                    <div
+                      class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center"
+                    >
+                      <i
+                        class="bi bi-people text-info"
+                        style="font-size: 2rem"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl col-md-6 mb-4">
+                <div class="space-card p-6 float" style="animation-delay: 0.6s">
+                  <div class="flex items-start justify-between">
+                    <div class="space-font">
+                      <p class="text-gray-400 text-sm">Error profiles</p>
+                      <h3 class="text-3xl font-bold mt-1">
+                        <span
+                          class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500"
+                        >
+                          <%=info.errorProfiles%>
+                        </span>
+                      </h3>
+                    </div>
+                    <div
+                      class="w-12 h-12 rounded-xl bg-teal-500/10 flex items-center justify-center"
+                    >
+                      <i
+                        class="bi bi-exclamation-triangle text-warning"
+                        style="font-size: 2rem"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl col-md-6 mb-4">
+                <div class="space-card p-6 float" style="animation-delay: 0.8s">
+                  <div class="flex items-start justify-between">
+                    <div class="space-font">
+                      <p class="text-gray-400 text-sm">Total users</p>
+                      <h3 class="text-3xl font-bold mt-1">
+                        <span
+                          class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500"
+                        >
+                          <%=info.totalUsers %>
+                        </span>
+                      </h3>
+                    </div>
+                    <div
+                      class="w-12 h-12 rounded-xl bg-teal-500/10 flex items-center justify-center"
+                    >
+                      <i
+                        class="bi bi-person text-secondary"
+                        style="font-size: 2rem"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <div class="space-card p-4">
+                  <div class="flex justify-between items-start">
+                    <div>
+                      <h3 class="space-font text-lg font-bold mb-2 text-white">
+                        Thống kê Views/h:
+                      </h3>
+                    </div>
+                    <p class="text-gray-400">Phân tích theo thời gian</p>
+                  </div>
+
+                  <div class="chart-container h-80">
+                    <canvas
+                      id="growthChart"
+                      width="690"
+                      height="320"
+                      style="
+                        display: block;
+                        box-sizing: border-box;
+                        height: 320px;
+                        width: 690px;
+                      "
+                    ></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="space-card p-4">
+                  <div class="flex justify-between items-start">
+                    <h3 class="space-font text-lg font-bold mb-2 text-white">
+                      Thống kê VPS:
+                    </h3>
+                    <p class="text-gray-400">Phân tích theo thời gian</p>
+                  </div>
+
+                  <div class="chart-container h-80">
+                    <canvas
+                      id="myChart2"
+                      width="690"
+                      height="320"
+                      style="
+                        display: block;
+                        box-sizing: border-box;
+                        height: 320px;
+                        width: 690px;
+                      "
+                    ></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row my-4">
+              <div class="col-md-4">
+                <div class="space-card p-6">
+                  <div class="flex items-start justify-between mb-4">
+                    <div class="space-font">
+                      <p class="text-gray-400 text-sm primary-text">
+                        <i class="bi bi-youtube mr-2"></i>Youtube Logs
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <% for (sc of scriptLogs) { %>
+                    <div class="mb-4">
+                      <h6 class="text-primary mb-3"><%=sc.code%></h6>
+                      <% if (sc.code=='youtube_sub' ) { %>
+                      <div
+                        id="youtubeLogs"
+                        youtubeLogs="<%= JSON.stringify(sc.logs) %>"
+                      ></div>
+                      <% } %>
+                      <div class="d-flex flex-wrap">
+                        <% for (log of Object.keys(sc.logs)) { %>
+                        <span
+                          class="border rounded-lg py-2 px-3 mr-3 mb-2 bg-light text-gray-600"
+                        >
+                          <span class="font-weight-bold"> <%=log%>: </span>
+                          <%= sc.logs[log].totalView %>
+                          <a
+                            href="#"
+                            dateKey="<%=log%>"
+                            class="viewScriptLog text-primary ml-2"
+                          >
+                            <i class="bi bi-box-arrow-up-right"></i> Xem
+                          </a>
+                        </span>
+                        <% } %>
+                      </div>
+                    </div>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="space-card p-6">
+                  <div class="flex items-start justify-between mb-4">
+                    <div class="space-font">
+                      <p class="text-gray-400 text-sm primary-text">
+                        <i class="bi bi-pause-circle mr-2"></i> Số lượt sub bị
+                        tạm dừng
+                      </p>
+                    </div>
+                  </div>
+                  <div>
+                    <% for (sc of scriptLogs) { %>
+                    <div class="mb-4">
+                      <h6 class="text-danger mb-3"><%=sc.code%></h6>
+                      <% if (sc.code=='youtube_sub' ) { %>
+                      <div
+                        id="youtubeLogsSubMising"
+                        youtubeLogsSubMising="<%= JSON.stringify(sc.logsSubMissing) %>"
+                      ></div>
+                      <% } %>
+                      <div class="d-flex flex-wrap">
+                        <% for (subMissing of Object.keys(sc.logsSubMissing)) {
+                        %>
+                        <span
+                          class="border rounded-lg py-2 px-3 mr-3 mb-2 bg-light text-gray-600"
+                        >
+                          <span class="font-weight-bold">
+                            <%=subMissing%>:
+                          </span>
+                          <%=sc.logsSubMissing[subMissing].totalView %>
+                          <a
+                            href="#"
+                            dateKey="<%=subMissing%>"
+                            class="viewScriptLogSubMissing text-danger ml-2"
+                          >
+                            <i class="bi bi-box-arrow-up-right"></i> Xem
+                          </a>
+                        </span>
+                        <% } %>
+                      </div>
+                    </div>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="space-card p-6">
+                  <div class="flex items-start justify-between mb-4">
+                    <div class="space-font">
+                      <p class="text-gray-400 text-sm primary-text">
+                        <i class="bi bi-graph-up mr-2"></i> Logs bơm bảo hành
+                        sub tự động
+                      </p>
+                    </div>
+                  </div>
+                  <div>
+                    <% for (log of Object.keys(logBh)) { %>
+                    <span
+                      class="border rounded-lg py-2 px-3 mr-3 mb-2 bg-light text-gray-600"
+                    >
+                      <span class="font-weight-bold"> <%=log%>: </span>
+                      <%=logBh[log]%>
+                    </span>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+        <% include ../common/footer%>
+      </div>
+      <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <div id="vm-detail-modal" class="modal" tabindex="-2" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content bg-glass">
+          <div class="modal-header">
+            <h5 class="modal-title text-white">VM Detail</h5>
+            <button
+              type="button"
+              class="close text-white"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="d-flex">
+              <div class="text-gray-400">Updated:</div>
+              <div id="updatedInfo"></div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                id="cancelUpdateVmBtn"
+              >
+                Cancel update
+              </button>
+              <button type="button" class="btn btn-primary" id="updateVmBtn">
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="script-log-detail-modal" class="modal" tabindex="-2" role="dialog">
+      <div class="modal-dialog" style="max-width: 1100px" role="document">
+        <div class="modal-content bg-glass">
+          <div class="modal-header">
+            <h5 class="modal-title text-white">Thống kê theo giờ</h5>
+            <button
+              type="button"
+              class="close text-white"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="d-flex">
+              <canvas
+                id="scriptLogChart"
+                style="width: 100%; height: 400px"
+              ></canvas>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="script-log-missing-sub-detail-modal"
+      class="modal"
+      tabindex="-2"
+      role="dialog"
+    >
+      <div class="modal-dialog" style="max-width: 1100px" role="document">
+        <div class="modal-content premium-card bg-glass">
+          <div class="modal-header">
+            <h5 class="modal-title text-white">
+              Thống kê số lượng sub bị tạm dừng theo giờ
+            </h5>
+            <button
+              type="button"
+              class="close text-white"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="d-flex">
+              <canvas
+                id="scriptLogChartSibMissing"
+                style="width: 100%; height: 400px"
+              ></canvas>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="vps-check-modal" class="modal" tabindex="-2" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content bg-glass">
+          <div class="modal-header">
+            <h5 class="modal-title text-white">Check VPS</h5>
+            <button
+              type="button"
+              class="close text-white"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6 text-white">
+                Vps IP List
+                <textarea id="vps_ips" class="form-control" rows="20">
+<%= vps_ips.join('\n') %> </textarea
+                >
+              </div>
+              <div class="col-md-6 d-none" id="rsSection">
+                <span class="text-success" id="totalLive"></span>
+                <span class="text-danger ml-3" id="totalError"></span>
+                <div class="text-danger">Error VPS List</div>
+                <textarea
+                  id="error_ips"
+                  class="form-control"
+                  rows="15"
+                ></textarea>
+                <div class="my-2 d-flex">
+                  <button
+                    id="copyBtn"
+                    class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"
+                  >
+                    Copy
+                  </button>
+                  <div class="text-success ml-2" id="textCopied"></div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-danger" id="checkVPSBtn">
+                Check
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% include ../common/js%>
+    <script src="/js/bootbox.all.min.js"></script>
+    <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+    <script src="https://unpkg.com/popper.js@1.15.0/dist/umd/popper.min.js"></script>
+    <script src="/javascripts/utils.js"></script>
+    <script src="/javascripts/oam.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.0/chart.min.js"></script>
+
+    <script>
+      var userRole = "<%= role %>";
+      let viewScriptLogBtns = document.querySelectorAll(".viewScriptLog");
+      let hoursData = {};
+      let scriptLogsData = document.querySelector("#youtubeLogs");
+      if (scriptLogsData) {
+        hoursData = JSON.parse(scriptLogsData.getAttribute("youtubeLogs"));
+      }
+
+      viewScriptLogBtns.forEach((viewScriptLogBtn) => {
+        viewScriptLogBtn.addEventListener("click", function (e) {
+          let dateKey = viewScriptLogBtn.getAttribute("dateKey");
+          $("#script-log-detail-modal").modal("show");
+          let dataSet = [];
+          dataSet.push({
+            label: "Thống kê sub của ngày " + dateKey,
+            data: Object.values(hoursData[dateKey].hours),
+            borderColor: "#0981c7",
+            backgroundColor: "#0981c7",
+            stack: "combined",
+            type: "bar",
+          });
+
+          let chartData = {
+            labels: Object.keys(hoursData[dateKey].hours),
+            datasets: dataSet,
+          };
+
+          new Chart("scriptLogChart", {
+            type: "line",
+
+            data: chartData,
+            options: {
+              plugins: {
+                title: {
+                  display: true,
+
+                  text: "Chart.js Stacked Line/Bar Chart",
+                },
+              },
+              scales: {
+                y: {
+                  stacked: true,
+                },
+              },
+            },
+          });
+        });
+      });
+
+      // Hiển thị số sub bị tạm dừng
+      let viewScriptLogSubMising = document.querySelectorAll(
+        ".viewScriptLogSubMissing"
+      );
+      let hoursDataSubMising = {};
+      let scriptLogsDataSubMising = document.querySelector(
+        "#youtubeLogsSubMising"
+      );
+      if (scriptLogsDataSubMising) {
+        hoursDataSubMising = JSON.parse(
+          scriptLogsDataSubMising.getAttribute("youtubeLogsSubMising")
+        );
+      }
+
+      viewScriptLogSubMising.forEach((viewScriptLogBtn) => {
+        viewScriptLogBtn.addEventListener("click", function (e) {
+          let dateKey = viewScriptLogBtn.getAttribute("dateKey");
+          $("#script-log-missing-sub-detail-modal").modal("show");
+          let dataSet = [];
+          dataSet.push({
+            label: "Thống kê sub bị tạm dừng " + dateKey,
+            data: Object.values(hoursDataSubMising[dateKey].hours),
+            borderColor: "#0981c7",
+            backgroundColor: "#0981c7",
+            stack: "combined",
+            type: "bar",
+          });
+          let chartData = {
+            labels: Object.keys(hoursDataSubMising[dateKey].hours),
+            datasets: dataSet,
+          };
+
+          new Chart("scriptLogChartSibMissing", {
+            type: "line",
+
+            data: chartData,
+            options: {
+              plugins: {
+                title: {
+                  display: true,
+
+                  text: "Chart.js Stacked Line/Bar Chart",
+                },
+              },
+              scales: {
+                y: {
+                  stacked: true,
+                },
+              },
+            },
+          });
+        });
+      });
+
+      let copyBtn = document.querySelector("#copyBtn");
+      copyBtn.addEventListener("click", function (e) {
+        const area = document.querySelector("#error_ips");
+
+        area.select();
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(area.value);
+        } else {
+          document.execCommand("copy");
+        }
+        document.querySelector("#textCopied").innerHTML = "Đã copy";
+      });
+
+      function loadVpsInfo() {
+        let vps_ips = document.getElementById("vps_ips").value;
+        if (vps_ips) {
+          $.ajax({
+            url: "/admin/view/check-vps",
+            type: "POST",
+            data: { vps_ips },
+          }).done(function (data) {
+            document.querySelector("#rsSection").classList.add("d-block");
+            document.querySelector("#error_ips").value =
+              data.errorVps.join("\n");
+            document.querySelector("#totalLive").innerText =
+              "Live: " + data.liveVps.length;
+            document.querySelector("#totalError").innerText =
+              "Error: " + data.errorVps.length;
+          });
+        }
+      }
+
+      let checkVPSBtn = document.querySelector("#checkVPSBtn");
+      if (checkVPSBtn) {
+        checkVPSBtn.addEventListener("click", function () {
+          loadVpsInfo();
+        });
+      }
+
+      let checkVps = document.querySelector("#checkVps");
+      if (checkVps) {
+        checkVps.addEventListener("click", function () {
+          loadVpsInfo();
+        });
+      }
+
+      $.ajax({
+        url: "/admin/view/get-bat-logs",
+        type: "GET",
+      }).done(function (data) {
+        let xValues = [];
+        let yValues = [];
+
+        let batLogs = data.logs || [];
+
+        batLogs.forEach((log) => {
+          xValues.push(log.h + "h");
+          yValues.push(log.total_bat);
+        });
+
+        new Chart("batChart", {
+          type: "line",
+
+          data: {
+            labels: xValues,
+            datasets: [
+              {
+                backgroundColor: "#3f7da9",
+                borderColor: "#203beb",
+
+                data: yValues,
+              },
+            ],
+          },
+          options: {
+            legend: { display: false },
+          },
+        });
+      });
+
+      $.ajax({
+        url: "/admin/view/get-vm-logs",
+        type: "GET",
+      }).done(function (data) {
+        let updateVmFlag = data.updateVmFlag;
+        let xValues = [];
+        let vmNames = [];
+        let yValues = [];
+        let barColors = [];
+
+        let vpsNames = Object.keys(data.vms);
+        vpsNames = vpsNames.sort();
+        vpsNames.forEach((vm_name) => {
+          vmNames.push(vm_name);
+          xValues.push(vm_name + `-${data.vms[vm_name].totalPids} pids`);
+          yValues.push(data.vms[vm_name].totalVps);
+          if (updateVmFlag.some((_vm) => _vm.vm_name == vm_name)) {
+            barColors.push("#38396e");
+          } else {
+            barColors.push("#38396e");
+          }
+        });
+
+        let vmChartDataSet = [
+          {
+            label: "Vps",
+
+            backgroundColor: barColors,
+            data: yValues,
+          },
+        ];
+
+        var vmsChart = new Chart("vmsChart", {
+          type: "line",
+
+          data: {
+            labels: xValues,
+            datasets: vmChartDataSet,
+          },
+          options: {
+            title: {
+              display: true,
+
+              text: "Máy đang chạy",
+            },
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    beginAtZero: true,
+                  },
+                },
+              ],
+            },
+            onClick(e) {
+              if (userRole == "super_admin") {
+                const activePoints = vmsChart.getElementsAtEventForMode(
+                  e,
+                  "nearest",
+
+                  {
+                    intersect: true,
+                  },
+                  false
+                );
+                const [{ _index }] = activePoints;
+
+                //$('#vm-detail-modal').modal({show: true})
+
+                document.querySelector("#updateVmBtn").value = vmNames[_index];
+                document.querySelector("#cancelUpdateVmBtn").value =
+                  vmNames[_index];
+
+                let vmInfo = updateVmFlag.find(
+                  (_vm) => _vm.vm_name == vmNames[_index]
+                );
+                if (vmInfo) {
+                  document.querySelector("#updatedInfo").innerText =
+                    vmInfo.updated;
+                }
+
+                $("#vm-detail-modal").modal("show");
+              }
+            },
+          },
+        });
+      });
+
+      $.ajax({
+        url: "/admin/view/get-view-logs",
+        type: "GET",
+      }).done(function (data) {
+        let views = [];
+        let labels = [];
+        let logs = data.logs || [];
+
+        // Lấy dữ liệu views và labels theo giờ từ logs
+        logs.forEach((log) => {
+          labels.push(log.h + "h");
+
+          views.push(log.countView);
+        });
+
+        // Tạo biểu đồ growth với dữ liệu theo giờ
+
+        new Chart("growthChart", {
+          type: "line",
+
+          data: {
+            labels: labels, // Sử dụng labels theo giờ từ API
+            datasets: [
+              {
+                label: "Growth Trend",
+                data: views,
+                borderColor: "#0066FF",
+                backgroundColor: "rgba(0, 102, 255, 0.1)",
+
+                tension: 0.4,
+                fill: true,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false,
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: {
+                  color: "rgba(255, 255, 255, 0.1)",
+                },
+                ticks: {
+                  color: "#fff",
+                },
+              },
+              x: {
+                grid: {
+                  color: "rgba(255, 255, 255, 0.1)",
+                },
+                ticks: {
+                  color: "#fff",
+                },
+              },
+            },
+          },
+        });
+      });
+
+      // Distribution Chart
+
+      new Chart("distributionChart", {
+        type: "doughnut",
+        data: {
+          labels: ["Enterprise", "SME", "Startup", "Individual"],
+          datasets: [
+            {
+              data: [35, 25, 20, 20],
+              backgroundColor: ["#0066FF", "#00F0FF", "#6B00FF", "#FF00E5"],
+
+              borderWidth: 0,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: "bottom",
+              labels: {
+                color: "#fff",
+                padding: 20,
+                font: {
+                  family: "Montserrat",
+                },
+              },
+            },
+          },
+        },
+      });
+    </script>
+
+    <script>
+      // Create tooltip element
+      const getOrCreateTooltip = (chart) => {
+        let tooltipEl = chart.canvas.parentNode.querySelector("div");
+
+        if (!tooltipEl) {
+          tooltipEl = document.createElement("div");
+          tooltipEl.style.background = "rgba(0, 0, 0, 0.7)";
+          tooltipEl.style.borderRadius = "3px";
+          tooltipEl.style.color = "white";
+          tooltipEl.style.width = "auto";
+          tooltipEl.style.position = "absolute";
+          tooltipEl.style.pointerEvents = "none";
+          tooltipEl.style.transition = "0.15s";
+          tooltipEl.style.transform = "translate(-50%, 0)";
+          tooltipEl.style.padding = "8px";
+
+          const table = document.createElement("table");
+          table.style.margin = "0px";
+
+          tooltipEl.appendChild(table);
+          chart.canvas.parentNode.appendChild(tooltipEl);
+        }
+
+        return tooltipEl;
+      };
+
+      const externalTooltipHandler = (context) => {
+        // Tooltip Element
+        const { chart, tooltip } = context;
+        const tooltipEl = getOrCreateTooltip(chart);
+
+        // Hide if no tooltip
+        if (tooltip.opacity === 0) {
+          tooltipEl.style.opacity = 0;
+          return;
+        }
+
+        // Set Text
+        if (tooltip.body) {
+          const titleLines = tooltip.title || [];
+          const bodyLines = tooltip.body.map((b) => b.lines);
+
+          const tableHead = document.createElement("thead");
+
+          titleLines.forEach((title) => {
+            const tr = document.createElement("tr");
+
+            const th = document.createElement("th");
+            th.style.border = "none";
+            th.style.Width = "100%";
+            th.style.paddingBottom = "8px";
+            th.style.fontWeight = 500;
+            th.style.fontSize = "10px";
+            th.style.lineHeight = "12px";
+            th.style.textAlign = "left";
+            th.style.whiteSpace = "nowrap";
+
+            const p1 = document.createElement("p");
+            const p2 = document.createElement("p");
+
+            if (chart.tooltip.dataPoints[0].dataset.label == "Views") {
+              p1.style.color = "#F7D2FF";
+              p1.style.textShadow = "0px 0px 15px #FF82E2";
+              p1.style.display = "inline";
+              p1.innerText = chart.tooltip.dataPoints[0].dataset.label + " • ";
+              p2.style.color = "#AEACCC";
+              p2.style.display = "inline";
+              p2.innerText = title.substring(0, 3);
+            } else {
+              p1.style.color = "#8C54FF";
+              p1.style.textShadow = "0px 0px 15px #6E65FE69";
+              p1.style.display = "inline";
+              p1.innerText = chart.tooltip.dataPoints[0].dataset.label + " • ";
+              p2.style.color = "#AEACCC";
+              p2.style.display = "inline";
+              p2.innerText = title.substring(0, 3);
+            }
+
+            const span = document.createElement("span");
+            span.style.display = "inline";
+
+            span.appendChild(p1);
+            span.appendChild(p2);
+
+            th.appendChild(span);
+            tr.appendChild(th);
+            tableHead.appendChild(tr);
+          });
+
+          const tableBody = document.createElement("tbody");
+          bodyLines.forEach((body, i) => {
+            const tr = document.createElement("tr");
+            tr.style.borderWidth = 0;
+
+            const td = document.createElement("td");
+            td.style.borderWidth = 0;
+            td.style.lineHeight = "12px";
+            td.style.fontSize = "10px";
+            td.style.fontWeight = 600;
+            td.style.fontFamily = "Poppins";
+            td.style.color = "#FFFFFF";
+            td.style.display = "inline";
+            td.style.whiteSpace = "nowrap";
+            var price = body[0].replace("Investimento: ", "");
+
+            const text = document.createTextNode(price);
+
+            td.appendChild(text);
+            tr.appendChild(td);
+            tableBody.appendChild(tr);
+          });
+
+          const tableRoot = tooltipEl.querySelector("table");
+
+          // Remove old children
+          while (tableRoot.firstChild) {
+            tableRoot.firstChild.remove();
+          }
+
+          // Add new children
+          tableRoot.appendChild(tableHead);
+          tableRoot.appendChild(tableBody);
+        }
+
+        const { offsetLeft: positionX, offsetTop: positionY } = chart.canvas;
+
+        // Display, position, and set styles for font
+        tooltipEl.style.opacity = 1;
+
+        tooltipEl.style.left = positionX + tooltip.caretX + 75 + "px";
+        tooltipEl.style.top = positionY + tooltip.caretY - 75 + "px";
+        tooltipEl.style.font = tooltip.options.bodyFont.string;
+        tooltipEl.style.padding =
+          tooltip.options.padding + "px " + tooltip.options.padding + "px";
+      };
+
+      $.ajax({
+        url: "/admin/view/get-vm-logs",
+        type: "GET",
+      }).done(function (data) {
+        let updateVmFlag = data.updateVmFlag;
+        let xValues = [];
+        let vmNames = [];
+        let yValues = [];
+
+        // Lấy và sắp xếp dữ liệu VM
+        let vpsNames = Object.keys(data.vms);
+        vpsNames = vpsNames.sort();
+        vpsNames.forEach((vm_name) => {
+          vmNames.push(vm_name);
+          xValues.push(vm_name + `-${data.vms[vm_name].totalPids} pids`);
+          yValues.push(data.vms[vm_name].totalVps);
+        });
+
+        const ctx2 = document.getElementById("myChart2").getContext("2d");
+
+        // Tạo gradient giống myChart2
+        const gradientBg31 = ctx2.createLinearGradient(0, 0, 0, 300);
+        gradientBg31.addColorStop(0, "#ffffff");
+        gradientBg31.addColorStop(1, "#7C37fa");
+
+        let dataSet = [
+          {
+            label: "Vps",
+            data: yValues,
+            borderColor: "#00ffd5",
+
+            backgroundColor: gradientBg31,
+            borderRadius: 9,
+            categoryPercentage: 0.8,
+            barPercentage: 0.8,
+
+            type: "bar",
+
+            order: 2,
+          },
+        ];
+
+        let chartData = {
+          labels: xValues,
+          datasets: dataSet,
+        };
+
+        const myChart2 = new Chart(ctx2, {
+          type: "line",
+
+          data: chartData,
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: true,
+
+                position: "top",
+                align: "end",
+
+                labels: {
+                  boxWidth: 10,
+                  boxHeight: 10,
+                  borderRadius: 4,
+
+                  color: "#FFFFFF",
+                  font: {
+                    size: 9,
+                    family: "Poppins",
+
+                    weight: 500,
+                  },
+                },
+              },
+            },
+            scales: {
+              y: {
+                grid: {
+                  color: "rgba(255, 255, 255, 0.1)",
+                },
+                beginAtZero: true,
+                grace: "10%",
+                ticks: {
+                  color: "#FFFFFF",
+                  font: {
+                    size: 10,
+                    family: "Poppins",
+
+                    weight: 500,
+                  },
+                },
+              },
+              x: {
+                grid: {
+                  color: "rgba(255, 255, 255, 0.1)",
+                },
+                ticks: {
+                  color: "#FFFFFF",
+                  font: {
+                    size: 10,
+                    family: "Poppins",
+
+                    weight: 500,
+                  },
+                  maxTicksLimit: 8,
+                },
+              },
+            },
+            onClick(e) {
+              if (userRole == "super_admin") {
+                const activePoints = myChart2.getElementsAtEventForMode(
+                  e,
+                  "nearest",
+
+                  {
+                    intersect: true,
+                  },
+                  false
+                );
+                const [{ _index }] = activePoints;
+
+                document.querySelector("#updateVmBtn").value = vmNames[_index];
+                document.querySelector("#cancelUpdateVmBtn").value =
+                  vmNames[_index];
+
+                let vmInfo = updateVmFlag.find(
+                  (_vm) => _vm.vm_name == vmNames[_index]
+                );
+                if (vmInfo) {
+                  document.querySelector("#updatedInfo").innerText =
+                    vmInfo.updated;
+                }
+
+                $("#vm-detail-modal").modal("show");
+              }
+            },
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

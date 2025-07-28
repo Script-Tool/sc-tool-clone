@@ -1,0 +1,612 @@
+<div class="" id="form">
+  <div class="d-none" id="script_inputs_data"><%= JSON.stringify(script_inputs) %></div>
+  <center><div class="title" style="margin-top: 50px; font-size: 29px;">Thông Tin Kịch Bản</div></center>
+
+  <% if(manage == 1){ %>
+    <span style="color:#fff">
+      <%= gpt_script_template %>
+      &nbsp; <span class="" id="message_preview"></span>&nbsp; 
+      <%= gpt_script_template_suffix %>
+    </span>
+  <% } %>
+
+  <div class="row">
+    <% script_inputs.forEach(function(inputOption){ %>
+      <div class="col-md-6">
+        <div class="item dropdown" style="margin-top: 80px">
+          <div class="info d-flex justify-content-between align-items-center "
+            style="position: relative;"
+          >
+            <div class="d-flex" style="position: absolute; top: -40px">
+              <div class="item-title" style="color: #fff; font-size: 26px;">
+                <%= inputOption.label %>
+              </div>
+              <span 
+                class="detail-icon"
+                style="
+                  border: #fff solid 0.5px;
+                  border-radius: 50%;
+                  width: 16px;
+                  height: 16px;
+                  color: #fff;
+                  padding-left: 5px;
+                  margin-left: 10px;
+                  cursor: pointer;
+                  font-size: 10px;
+                  position: relative;
+                "
+              >
+                ?
+                <div
+                  class="detail-description" 
+                  style="z-index: 1; display: none; width: 400px; font-size: 11px; background-color: #272e3f; position: absolute; right: -401px; top: -65px; border-radius: 10px; border: #8685EF 1px solid; padding: 10px; max-width: 500px;transition: height 2s; "
+                >
+                  <%= inputOption.description %>
+                  <div class="viewDetailBtn mt-1" data-toggle="modal" data-target="#detail-<%= inputOption.code %>" style="font-size: 11px; color: #8685EF; cursor: pointer;">
+                    Tìm hiểu thêm
+                  </div>
+                </div>
+                <div class="modal fade" id="detail-<%= inputOption.code %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content" style="background-color: #272e3f;">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle"><%= inputOption.label %></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #fff;">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body" style="font-size: 20px;">
+                        <%= inputOption.description %>
+                        <%= inputOption.description_full %>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" style="background-color: #8685EF; color: #fff;" data-dismiss="modal">Đóng</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </span>
+            </div>
+            
+          </div>
+          <div class="d-flex w-100 pb-1 justify-content-end dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            style="border-bottom: 1px #fff solid;"
+          >
+            <div style="color: #fff; overflow: hidden; width: inherit;">
+              <input class="px-2 valueSelected-<%= inputOption.code %>" style="border: none; background: none; width: inherit; color: aliceblue;"/>
+            </div>
+            <div class="selector-icon ml-2" style="
+              border: 1px solid #fff;
+              background-color: #8685EF;
+              width: 25px;
+              height: 25px;
+              border-radius: 5px;
+              color: #fff;
+              font-size: 20px;
+              padding-left: 6px;">^
+            </div>
+            <% if(manage == 1){ %>
+              <button class="delete-item-btn-<%= inputOption.code %> btn btn-secondary py-1 ml-2" type="button">Xóa</button>
+              <button data-toggle="modal" data-target="#editItemModal" class="ml-2 edit-item-btn-<%= inputOption.code %> btn btn-secondary py-1" type="button" value="<%= inputOption.label %>">Sửa</button>
+              <button class="ml-2 edit-position-item-btn-<%= inputOption.code %> btn btn-secondary py-1" type="button" value="<%= inputOption.label %>">^</button>
+            <% } %>
+            
+          </div>
+          <div class="detail mt-2 p-1 dropdown-menu " aria-labelledby="dropdownMenuButton" style="border: 1.5px solid #fff; width: 100%; border-radius: 10px; background-color: #272e3f; max-height: 500px;">
+            <div class="row py-2 pt-1 w-100" style="width: 100%; margin-left: 0px; margin-right: 0px;">
+              <div class="col-6 px-2 pb-1 options-wraper-<%= inputOption.code %>" style="max-height: 390px; overflow: scroll;">
+                <% if(manage == 1){ %>
+                  <div class="d-flex">
+                    <input class="add-input-<%= inputOption.code %>"/>
+                    <button class="add-btn-<%= inputOption.code %> btn btn-secondary" type="button" style="background-color: #8685EF; color: #fff;" data-dismiss="modal">Thêm</button>
+                  </div>
+                <% } %>
+
+                <% inputOption.options.forEach(function(option){ %>
+                  <div
+                    optionCode="<%= option.code %>"
+                    itemCode="<%= inputOption.code %>"
+                    class="mt-2 px-2 py-1 itemOption itemOptionHover itemOption-<%= inputOption.code %>" 
+                    style="background-color: #a3a3a33d; cursor: pointer; color: #fff; width: 100%; height: 35px; font-size: 16px; border: 1.5px solid #fff; border-radius: 5px;">
+                    <% if(manage == 1){ %>
+                      <button class="delete-option-btn-<%= inputOption.code %>-<%= option.code %> btn btn-secondary py-1" type="button">Xóa</button>
+                    <% } %>
+                    
+                    <%= option.label %>
+                  </div>
+                <% }) %>
+              </div>
+              <div class="col-6 px-1 pr-2 pt-2 pb-1">
+                <div class="" style="border: 1px #fff solid; border-radius: 5px; background-color: #bcbcbc30; width: 100%; height: 100%;">
+                  <center>
+                    <div class="title option-title-<%= inputOption.code %>" style="color: #fff; font-size: 24px;"></div>
+
+                    <% if(manage == 1){ %>
+                      <button data-toggle="modal" data-target="#editItemExplainModal" class="ml-2 edit-item-explain-btn-<%= inputOption.code %> btn btn-secondary py-1" type="button">Sửa</button>
+                    <% } %>
+                  </center>
+                  <div class="p-2 option-des-<%= inputOption.code %>" style="color: #fff; font-size: 13px;">
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+  <div class="d-flex justify-content-end">
+    <% if(manage != 1){ %>
+      <button class="secondary-button" id="resetInfoBtn" style="display: flex;justify-content: center;">
+        Xóa thông tin
+      </button>
+      <button class="primary-button ml-2 align-items-center" id="generateBtn" style="display: flex; justify-content: center;">
+        Tạo Kịch Bản
+        <div class="logo-gpt"></div>
+      </button>
+    <% } else { %>
+      <% include ./modal-edit.ejs %>
+      
+      <button class="primary-button ml-2 align-items-center" data-toggle="modal" data-target="#importProfileModal">
+        Thêm dữ liệu
+      </button>
+    <% } %>
+  </div>
+
+  <div class="" style="margin-top: 50px"></div>
+</div>
+<script>
+  let script_inputs_data = []
+  let scriptInfo = {}
+
+  window.addEventListener("DOMContentLoaded", (event) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const myParam = urlParams.get('manager_sc')
+    const isManage = myParam == 'true'
+
+    script_inputs_data = JSON.parse(document.querySelector('#script_inputs_data').innerText)
+
+    function getListInfo () {
+      // handle prefix
+      let formData = JSON.parse(JSON.stringify(scriptInfo))
+      for (let key of Object.keys(formData)) {
+        let scriptItem = script_inputs_data.find(item => item.label == key)
+        let value = formData[key]
+        if (Array.isArray(value)) {
+          value = value.join(',')
+        }
+        if (value) {
+          if (scriptItem.prefix_content) {
+            value = `${scriptItem.prefix_content} ${value}`
+          }
+          if (scriptItem.suffix_content) {
+            value = `${value} ${scriptItem.suffix_content}`
+          }
+          formData[key] = value
+        }
+      }
+
+      let listInfo = []
+      script_inputs_data.forEach(script_input => {
+        if (formData[script_input.label] && formData[script_input.label].length) {
+          listInfo.push({
+            label: script_input.label,
+            value: formData[script_input.label],
+          })
+        }
+      })
+      return listInfo
+    }
+
+    function reloadPreviewMessage () {
+      let listInfo = getListInfo()
+      let message_preview = ''
+      listInfo.forEach(item => {
+        message_preview += `${item.label} ${item.value}.`
+      })
+      document.querySelector('#message_preview').innerText = message_preview
+    }
+
+    function selectOption (itemCode, optionCode) {
+      let item = script_inputs_data.find(_item => _item.code == itemCode)
+      if (item) {
+        let option = item.options.find(_option => _option.code == optionCode)
+        if (option) {
+          if (!scriptInfo[item.label]) {
+            scriptInfo[item.label] = []
+          }
+          let indexFound = scriptInfo[item.label].findIndex(_item => option.label == _item)
+          if (indexFound >= 0) {
+            scriptInfo[item.label].splice(indexFound, 1)
+          } else {
+            scriptInfo[item.label].push(option.label)
+          }
+        }
+      }
+    }
+    function reloadValueDisplay () {
+      script_inputs_data.forEach(script_input => {
+        if (!scriptInfo[script_input.label]) {
+          scriptInfo[script_input.label] = []
+        }
+        let optionsSelected = scriptInfo[script_input.label]
+        if (Array.isArray(scriptInfo[script_input.label])) {
+          optionsSelected = scriptInfo[script_input.label].join(' ,')
+        }
+        
+        document.querySelector(`.valueSelected-${script_input.code}`).value = optionsSelected
+        let options = document.querySelectorAll(`.itemOption-${script_input.code}`)
+        options.forEach(option => {
+          let isSelected = scriptInfo[script_input.label].includes(option.innerText)
+          if (isSelected) {
+            option.classList.add('itemOptionActive')
+          } else {
+            option.classList.remove('itemOptionActive')
+          }
+        })
+      })
+    }
+
+    function on(selector, eventCode, cb) {
+      let el = typeof selector == 'string'?document.querySelector(selector):selector
+      if (el) {
+        el.addEventListener(eventCode, (e) => {
+          cb(e.target)
+        })
+      }
+    }
+
+
+    function array_move(arr, old_index, new_index) {
+      if (new_index >= arr.length) {
+          var k = new_index - arr.length + 1;
+          while (k--) {
+              arr.push(undefined);
+          }
+      }
+      arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+      return arr
+    }
+    
+    function handleSaveScriptConfig() {
+      $.ajax({
+        url: "/api/ai-script/save",
+        type: "POST",
+        data: JSON.stringify(script_inputs_data),
+        contentType: "application/json; charset=utf-8",
+        headers: {
+          'api_key': 'k1wtr0ng'
+        }
+      }).done(function (data) {
+        location.reload();
+      })
+    }
+
+    if (isManage) {
+      on('#saveScriptExplainItemBtn', 'click', (e) => {
+        let newEx = document.querySelector('#script_item_explain_edit').value
+        let itemData = document.querySelector('#script_item_explain_code_edit').value
+
+        let itemCode = itemData.split('###')[0]
+        let optionCode = itemData.split('###')[1]
+
+        script_inputs_data.forEach(script_input => {
+          if (script_input.code == itemCode) {
+            script_input.options.forEach(option => {
+              if (option.code == optionCode) {
+                option.explain = newEx
+                option.label = document.querySelector('#script_item_option_label_edit').value
+              }
+            })
+          }
+        })
+        handleSaveScriptConfig()
+      })
+
+      on('#saveScriptItemBtn', 'click', (e) => {
+        let itemEl = document.querySelector('#script_item_name_edit')
+        let itemCodeEl = document.querySelector('#script_item_code_edit')
+        if (itemEl && itemEl.value) {
+          let itemEdit = script_inputs_data.find(item => item.code == itemCodeEl.value)
+          itemEdit.label = itemEl.value
+
+          if (document.querySelector('#script_item_before_content_edit')) {
+            itemEdit.prefix_content = document.querySelector('#script_item_before_content_edit').value
+          }
+
+          if (document.querySelector('#script_item_after_content_edit')) {
+            itemEdit.suffix_content = document.querySelector('#script_item_after_content_edit').value
+          }
+          
+          handleSaveScriptConfig()
+        }
+      })
+
+      script_inputs_data.forEach(script_input => {
+        on(`.add-btn-${script_input.code}`, 'click', (e) => {
+          let input = document.querySelector('.add-input-' + script_input.code)
+          if (input && input.value) {
+            let newOption = {
+              code: Date.now(),
+              label: input.value,
+              explain: ''
+            }
+            script_input.options.unshift(newOption)
+            handleSaveScriptConfig()
+          }
+        })
+
+        on(`.delete-item-btn-${script_input.code}`, 'click', (e) => {
+          script_inputs_data = script_inputs_data.filter(item => item.code != script_input.code)
+          handleSaveScriptConfig()
+        })
+
+        on(`.edit-item-btn-${script_input.code}`, 'click', (e) => {
+          let btnEdit = document.querySelector(`.edit-item-btn-${script_input.code}`)
+          if (btnEdit) {
+            let itemEdit = script_inputs_data.find(item => item.code == script_input.code)
+            if (itemEdit.prefix_content) {
+              document.querySelector('#script_item_before_content_edit').value = itemEdit.prefix_content
+            }
+            if (itemEdit.suffix_content) {
+              document.querySelector('#script_item_after_content_edit').value = itemEdit.suffix_content
+            }
+
+            document.querySelector('#script_item_name_edit').value = btnEdit.value
+            document.querySelector('#script_item_code_edit').value = script_input.code
+          }
+        })
+
+        on(`.edit-position-item-btn-${script_input.code}`, 'click', (e) => {
+          let btnEditPos = document.querySelector(`.edit-position-item-btn-${script_input.code}`)
+          if (btnEditPos) {
+            let itemEditIndex = script_inputs_data.findIndex(item => item.code == script_input.code)
+            let itemEdit = script_inputs_data.find(item => item.code == script_input.code)
+            if (itemEditIndex > 0) {
+              array_move(script_inputs_data, itemEditIndex, itemEditIndex - 1)
+              handleSaveScriptConfig()
+            }
+          }
+        })
+
+        on(`.edit-item-explain-btn-${script_input.code}`, 'click', (e) => {
+          let el = document.querySelector(`.edit-item-explain-btn-${script_input.code}`)
+          if (el && el.value) {
+            let optionCode = el.value
+            let explain = ''
+            let optionLabel = ''
+            script_input.options.forEach(option => {
+              if (option.code == optionCode) {
+                explain = option.explain
+                optionLabel = option.label
+              }
+            })
+            document.querySelector('#script_item_explain_edit').value = explain
+            document.querySelector('#script_item_option_label_edit').value = optionLabel
+            document.querySelector('#script_item_explain_code_edit').value = `${script_input.code}###${optionCode}`
+          }
+        })
+
+        script_input.options.forEach(option => {
+          on(`.delete-option-btn-${script_input.code}-${option.code}`, 'click', (e) => {
+            script_input.options = script_input.options.filter(_op => _op.code != option.code)
+            handleSaveScriptConfig()
+          })
+        })
+      })
+    }
+
+    let options = document.querySelectorAll('.itemOption')
+    options.forEach(option => {
+      on(option, 'mouseover', (e) => {
+        let itemCode = e.getAttribute('itemCode')
+        let optionCode = e.getAttribute('optionCode')
+        let item = script_inputs_data.find(_item => _item.code == itemCode)
+        if (item) {
+          let option = item.options.find(_option => _option.code == optionCode)
+          if (option) {
+            document.querySelector(`.option-title-${itemCode}`).innerText = option.label
+            document.querySelector(`.option-des-${itemCode}`).innerText = option.explain
+
+            if (isManage) {
+              document.querySelector(`.edit-item-explain-btn-${itemCode}`).value = option.code
+            }
+          }
+        }
+      })
+
+      on(option, 'click', (e) => {
+        let itemCode = e.getAttribute('itemCode')
+        let optionCode = e.getAttribute('optionCode')
+        selectOption (itemCode, optionCode)
+        if (isManage) {
+          reloadPreviewMessage()
+        }
+        reloadValueDisplay()
+      })
+    })
+
+    script_inputs_data.forEach(script_input => {
+      on(`.valueSelected-${script_input.code}`, 'change', (e) => {
+        scriptInfo[script_input.label] = e.value
+        if (isManage) {
+          reloadPreviewMessage()
+        }
+      })
+      on(`.select-btn-${script_input.code}`, 'click', (e) => {
+        let input = document.querySelector('.add-input-' + script_input.code)
+        if (input && input.value) {
+          let newOption = {
+            code: Date.now(),
+            label: input.value,
+            explain: ''
+          }
+          script_input.options.unshift(newOption)
+
+
+          selectOption(script_input.code, newOption.code)
+          reloadValueDisplay()
+        }
+      })
+    })
+
+    on('#resetInfoBtn', 'click', (e) => {
+      scriptInfo = {}
+      reloadValueDisplay()
+    })
+
+    on('#addScriptItemBtn', 'click', (e) => {
+      let itemEl = document.querySelector('#new_script_item_name')
+      if (itemEl && itemEl.value) {
+        script_inputs_data.push({
+          label: itemEl.value,
+          options: []
+        })
+        handleSaveScriptConfig()
+      }
+    })
+
+    on('#generateBtn', 'click', (e) => {
+      document.querySelector('#generateBtn').innerHTML = `
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Đang khởi tạo ...
+      `
+      document.querySelector('#generateBtn').disabled = true
+      let listInfo = getListInfo()
+      $.ajax({
+        url: "/api/ai-script",
+        type: "POST",
+        data: JSON.stringify(listInfo),
+        contentType: "application/json; charset=utf-8",
+        headers: {
+          'api_key': 'k1wtr0ng'
+        }
+      }).done(function (data) {
+        document.querySelector('#generateBtn').innerText = 'Tạo kịch bản'
+        document.querySelector('#generateBtn').disabled = false
+        if (data) {
+          document.querySelector('#result-form').style.display = 'block'
+          document.querySelector('#result-script').value = data.script
+          
+          document.querySelector('#form').style.display = 'none'
+
+          let info = ''
+          // Object.keys(scriptInfo).forEach(key => {
+          //   info
+          // });
+          document.querySelector('.info-result').innerText = ''
+
+          // gen videos
+          let videoEls = ''
+          let count = 0
+          
+          $.ajax({
+            url: "/api/ai-script/videos?name=" + data.video_name,
+            type: "GET",
+            headers: {
+              'api_key': 'k1wtr0ng'
+            }
+          }).done(function (data) {
+            if (data.videos) {
+              data.videos.forEach(video => {
+                videoEls += `
+                  <a href="https://www.youtube.com/watch?v=${video.id}">
+                    <div class="video-item">
+                      <div class="video">
+                        <img src="${video.thumbnail}"/>
+                      </div>
+                      <div class="video-title">${video.title}</div>
+                      <div class="video-info">
+                        <div class="">${video.viewCount} Views</div>
+                        <div class="" style="margin-left: 15px">${video.publish_time}</div>
+                      </div>
+                    </div>
+                  </a>
+                  `
+              });
+            }
+            document.querySelector('.list-videos').innerHTML = videoEls
+          })
+        }
+      })
+    })
+  })
+</script>
+<style>
+.itemOptionActive{
+  background-color: #8685EF !important;
+}
+.itemOptionHover:hover {
+  background-color: #8685EF !important;
+}
+.detail-icon:hover .detail-description{
+  transition: height 2s !important; 
+  display: block !important;
+}
+.detail-description:hover{
+  display: block !important;
+}
+
+.logo-gpt{
+  margin-left: 5px;
+  background-image: url(./img/gpt-logo.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px;
+}
+.form-item{
+  margin-top: 10px;
+  width: 100%;
+}
+.form-item .form-label{
+  font-size: 35px;
+  color: white;
+  margin-top: 25px;
+}
+.input{
+  margin-top: 10px;
+  width: 700px !important;
+}
+.primary-button{
+  background-color: #8685EF;
+  color: white;
+  padding: 5px 10px;
+  margin-top: 20px;
+  border: solid 1px #fff;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.secondary-button{
+  background-color: #a3a3a33d;
+  color: white;
+  padding: 5px 10px;
+  margin-top: 20px;
+  border: solid 1px #fff;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.suggests{
+  display: flex;
+  color: white;
+  margin-top: 8px;
+}
+.suggest{
+  margin-left: 10px;
+  border: 1px solid #fff;
+  border-radius: 3px;
+  padding: 3px;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: #d8d8d836;
+  cursor: pointer;
+}
+.suggest:hover{
+  background-color: #8685EF;
+  color: white;
+}
+</style>

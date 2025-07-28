@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include ../common/header%>
+
+  <body id="page-top">
+    <div class="abstract-bg"></div>
+    <div class="grid-pattern"></div>
+    <div class="abstract-shape w-96 h-96 top-1 left-1"></div>
+    <div class="abstract-shape w-96 h-96 bottom-1 right-1"></div>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <% include ../common/sidebar.ejs%>
+      <!-- End of Sidebar -->
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <h1>Image List</h1>
+            <div class="row mb-3">
+              <div class="col">
+                <button id="upload-button" class="btn btn-primary">
+                  Upload Image
+                </button>
+              </div>
+            </div>
+            <% if (images.length> 0) { %>
+            <div class="row">
+              <% images.forEach(function(image) { %>
+              <div class="col-md-4 mb-3" data-id="<%= image._id %>">
+                <div class="card">
+                  <div class="card-img-top position-relative">
+                    <img
+                      src="<%= image.path.replace('public', '') %>"
+                      alt="<%= image.name %>"
+                      class="card-img-top img-fluid"
+                      style="max-height: 400px; object-fit: cover"
+                    />
+
+                    <button
+                      type="submit"
+                      class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 delete-button"
+                      data-id="<%= image._id %>"
+                      style="top: 10px; right: 10px; z-index: 1"
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="mb-2">
+                      <span class="card-text" id="imageName_<%= image.id %>"
+                        ><%= image.name %></span
+                      >
+                      <span>
+                        <button
+                          class="btn btn-outline-secondary btn-sm"
+                          onclick="copyToClipboard(event)"
+                        >
+                          <i class="bi bi-clipboard"></i>
+                        </button>
+                      </span>
+                    </div>
+
+                    <form class="rename-form" data-id="<%= image._id %>">
+                      <div class="d-flex justify-content-between">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="New name"
+                          name="newName"
+                        />
+                        <button type="submit" class="btn btn-primary">
+                          Rename
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <% }); %>
+            </div>
+            <% } else { %>
+            <p>No images found.</p>
+            <% } %>
+
+            <form id="upload-form" style="display: none">
+              <input type="file" id="image-input" accept="image/*" multiple />
+            </form>
+          </div>
+        </div>
+        <!-- End of Main Content -->
+        <% include ../common/footer%> <%- include('../common/toast.ejs') %>
+      </div>
+      <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <% include ../common/js%>
+
+    <script>
+      $(document).ready(function () {
+        $('.delete-button').on('click', function (e) {
+          e.preventDefault(); // Ngăn chặn hành vi mặc định của nút (nếu có)
+          const imageId = $(this).data('id'); // Lấy id của ảnh từ nút được click
+
+          if (confirm('Bạn có chắc chắn muốn xóa ảnh này?')) {
+            // Xác nhận trước khi xóa
+            $.ajax({
+              url: '/admin/media/images/' + imageId,
+              type: 'DELETE',
+              headers: {
+                api_key: 'f3xQ8tLm', // Thay bằng api_key thực tế của bạn
+              },
+              success: function (result) {
+                console.log('ok', result);
+                // Xóa thẻ div chứa ảnh đã xóa
+                $('div[data-id="' + imageId + '"]').remove();
+                showToast('Xoá ảnh thành công', 'toast-error'); // Hiển thị thông báo thành công
+              },
+              error: function (xhr, status, error) {
+                console.log(xhr.responseText);
+                showToast('Xoá ảnh thất bại', 'toast-error'); // Hiển thị thông báo thất bại
+              },
+            });
+          }
+        });
+
+        $('#upload-button').on('click', function () {
+          $('#image-input').click();
+        });
+
+        $('#image-input').on('change', function () {
+          var file = $(this)[0].files[0];
+          var formData = new FormData();
+          formData.append('image', file);
+
+          $.ajax({
+            url: '/admin/media/upload-image',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+              api_key: 'f3xQ8tLm',
+            },
+            success: function (result) {
+              console.log('Image uploaded successfully', result);
+              // Tải lại trang sau khi tải lên ảnh thành công
+              showToast('Thêm ảnh thành công', 'success');
+              setTimeout(function () {
+                location.reload();
+              }, 2500);
+            },
+            error: function (xhr, status, error) {
+              console.log(xhr.responseText);
+              alert('Error uploading image');
+              showToast('Thêm ảnh lỗi', 'toast-error');
+            },
+          });
+        });
+
+        /*
+         * Đổi tên ảnh
+         */
+        $('.rename-form').on('submit', function (e) {
+          e.preventDefault();
+          const form = $(this);
+          const imageId = form.data('id');
+          let newName = form.find('input[name="newName"]').val();
+
+          newName = newName.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-');
+
+          // Thêm phần mở rộng .jpg nếu chưa có
+          if (!newName.endsWith('.jpg')) {
+            newName += '.jpg';
+          }
+          $.ajax({
+            url: `/admin/media/images/${imageId}/rename`, // Đường dẫn API đổi tên ảnh
+            type: 'PATCH',
+            headers: {
+              api_key: 'f3xQ8tLm',
+            },
+            contentType: 'application/json',
+            data: JSON.stringify({ newName: newName }),
+            success: function (result) {
+              console.log('ok', result);
+              // Cập nhật tên ảnh trong giao diện
+              const imageDiv = $('div[data-id="' + imageId + '"]');
+              imageDiv.find('.card-text').text(newName);
+
+              showToast('Đổi tên ảnh thành công', 'success');
+            },
+            error: function (xhr, status, error) {
+              console.log(xhr.responseText);
+              // Xử lý lỗi (ví dụ: hiển thị thông báo lỗi)
+              showToast('Đổi tên ảnh thất bại', 'toast-error');
+            },
+          });
+        });
+      });
+
+      function copyToClipboard(event) {
+        const spanElement = event.target
+          .closest('.mb-2')
+          .querySelector('.card-text');
+        const textToCopy = spanElement.textContent;
+
+        const tempInput = document.createElement('input');
+        tempInput.value = textToCopy;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+      }
+    </script>
+
+    <script src="/js/bootbox.all.min.js"></script>
+  </body>
+</html>

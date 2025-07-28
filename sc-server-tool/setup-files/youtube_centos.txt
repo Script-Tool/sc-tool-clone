@@ -1,0 +1,92 @@
+#!/bin/bash
+echo -e "1\n1" | passwd
+sed -re 's/^(PasswordAuthentication)([[:space:]]+)no/\1\2yes/' -i.`date -I` /etc/ssh/sshd_config
+sed -re 's/^(PermitRootLogin)([[:space:]]+)no/\1\2yes/' -i.`date -I` /etc/ssh/sshd_config
+sed -i 's/#PermitRootLogin no/PermitRootLogin yes/' /etc/ssh/sshd_config
+sed -i 's/#PubkeyAuthentication no/PubkeyAuthentication no/' /etc/ssh/sshd_config
+service sshd restart
+
+echo "nameserver 8.8.8.8" > /etc/resolv.conf
+yum install -y epel-release
+sudo yum update -y
+sudo  yum --enablerepo=epel install iperf iperf3 -y
+
+yum install -y pango libXcomposite libXcursor libXdamage libXext libXi libXtst cups-libs libXScrnSaver libXrandr GConf2 alsa-lib atk gtk3 ipa-gothic-fonts xorg-x11-fonts-100dpi xorg-x11-fonts-75dpi xorg-x11-utils xorg-x11-fonts-cyrillic xorg-x11-fonts-Type1 xorg-x11-fonts-misc
+
+sudo dnf install -y libXinerama-devel libX11-devel libXtst-devel libpng-devel
+sudo dnf groupinstall -y "Development Tools"
+sudo dnf install epel-release -y
+sudo dnf install -y https://download1.rpmfusion.org/free/el/rpmfusion-free-release-9.noarch.rpm
+sudo dnf install -y https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-9.noarch.rpm
+
+
+sudo yum install -y ffmpeg ffmpeg-devel
+
+sudo dnf install -y procps-ng xorg-x11-server-utils xdotool
+
+
+
+yum install -y libXt
+yum install -y wget
+yum install -y htop
+yum install -y unzip
+yum install -y sshpass
+yum install -y rsync
+yum install -y tar
+yum install -y git
+yum install -y vim
+
+
+wget https://nodejs.org/dist/v18.17.0/node-v18.17.0-linux-x64.tar.xz
+tar --strip-components 1 -xJvf node-* -C /usr
+
+sudo npm install pm2@latest -g
+yum install -y xorg-x11-server-Xvfb
+yum install -y ImageMagick
+
+rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
+yum --enablerepo=nux-dextop --disablerepo="epel" install -y xdotool
+sudo yum install -y xclip
+sudo dnf install -y dnf-plugins-core
+sudo dnf install -y wget
+
+_BROWSER_INSTALL_
+
+# create user
+useradd _USER_
+echo -e "1\n1" | passwd _USER_
+echo '_USER_ ALL=(ALL) NOPASSWD: ALL' | sudo EDITOR='tee -a' visudo
+cd /home/_USER_/
+
+echo "59 23 * * * pm2 restart all" > /tmp/runuser_cron
+sudo -u _USER_ crontab /tmp/runuser_cron
+rm /tmp/runuser_cron
+
+sudo -u _USER_ -H sh -c 'rm -rf sc-tool & sleep 2 && git clone https://QueesQuees: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@github.com/QueesQuees/sc-tool.git && sleep 5 &&  cd sc-tool && sleep 1 && git checkout _BRANCH_'
+
+cd sc-tool
+cp .env.example .env
+
+vim -esnc '%s/_HOST_IP/"_HOST_IP_"/ge|:wq' .env
+vim -esnc '%s/_MAX_PROFILES/"_MAX_PROFILES_"/ge|:wq' .env
+vim -esnc '%s/_SHOW_UI/_SHOW_UI_/ge|:wq' .env
+vim -esnc '%s/_DEBUG/0/ge|:wq' .env
+vim -esnc '%s/_VM_NAME/_VM_NAME_/ge|:wq' .env
+vim -esnc '%s/_BROWSER_NAME/_BROWSER_NAME_/ge|:wq' .env
+vim -esnc '%s/_IS_REG_USER/_IS_REG__/ge|:wq' .env
+vim -esnc '%s/_API_KEY/_API_KEY_/ge|:wq' .env
+vim -esnc '%s/_OS/_OS_/ge|:wq' .env
+vim -esnc '%s/_VM_ID/$(date +%s)/ge|:wq' .env
+
+sed -i -e 's/\r//g' .env
+
+sudo -u _USER_ -H sh -c 'npm i --unsafe-perm=true'
+
+chown -R _USER_: /home/_USER_/*
+chmod +x /home/_USER_/sc-tool/*.sh
+vim -esnc '%s/SELINUX=enforcing/SELINUX=disabled/ge|:wq' /etc/sysconfig/selinux
+setenforce 0
+sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u _USER_ --hp /home/_USER_
+sudo -u _USER_ -H sh -c 'pm2 delete all; sleep 5; cd /home/_USER_/sc-tool; pm2 start main.js; pm2 save'
+
+echo "Successful launch"

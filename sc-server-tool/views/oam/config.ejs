@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include ../common/header%>
+
+  <head>
+    <link rel="stylesheet" href="/css/config.css">
+  </head>
+
+  <body id="page-top">
+    <div class="abstract-bg"></div>
+    <div class="grid-pattern"></div>
+    <div class="abstract-shape w-96 h-96 top-1 left-1"></div>
+    <div class="abstract-shape w-96 h-96 bottom-1 right-1"></div>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+      <!-- Sidebar -->
+      <% include ../common/sidebar.ejs%>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+          <!-- Main Content -->
+          <div id="content">
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+              <br />
+              <!-- Page Heading -->
+              <div class="py-4 ">
+                <!-- Header -->
+                <!-- Fixed Header -->
+                <div class="premium-stats rounded-xl shadow-sm my-2 p-3" style="position: fixed; top: 0; right: 0; left: 224px; z-index: 1040;">
+                  <div class="container-fluid px-2">
+                    <div class="d-sm-flex align-items-center justify-content-between">
+                      <h1 class="h3 font-weight-bold mb-0">
+                        <i class="fas fa-cogs fa-sm mr-2"></i>Cấu Hình Hệ Thống
+                      </h1>
+                      <% if (role=='super_admin' ) { %>
+                        <button id="saveConfig" class="btn btn-primary btn-sm space-button px-3 py-2">
+                          <i class="fas fa-save fa-sm mr-2"></i>Lưu Cấu Hình
+                        </button>
+                        <% } %>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Spacer -->
+                <div style="height: 70px;"></div>
+
+                <!-- Tool Settings -->
+                <div class="space-card p-4">
+                  <div class="flex justify-between items-start mb-6">
+                      <h3 class="space-font text-lg font-bold mb-2 text-white">  <i class="fas fa-tools fa-sm mr-2"></i>Cài Đặt Công Cụ</h3>
+                  </div>
+          
+                  <div>
+                    <!-- Row 1: Basic Settings -->
+                    <div class="row mb-4">
+                      <!-- Column 1 -->
+                      <div class="col-md-6">
+                        <!-- Interface Toggle -->
+                        <div class="form-group">
+                          <label class="font-weight-bold">Giao Diện</label>
+                          <div class="custom-control custom-switch ml-3">
+                            <input type="checkbox" class="custom-control-input" id="show_ui_config"
+                              <%=config.show_ui_config ? "checked" : "" %>>
+                            <label class="custom-control-label" for="show_ui_config">Bật/Tắt giao diện</label>
+                          </div>
+                        </div>
+
+                        <!-- Tool Status -->
+                        <div class="form-group">
+                          <label class="font-weight-bold">Trạng Thái</label>
+                          <div class="custom-control custom-switch ml-3">
+                            <input type="checkbox" class="custom-control-input" id="is_stop" <%=config.is_stop
+                              ? "checked" : "" %>>
+                            <label class="custom-control-label" for="is_stop">Tạm dừng công cụ</label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Column 2 -->
+                      <div class="col-md-6">
+                        <!-- Brave Update -->
+                        <div class="form-group">
+                          <label class="font-weight-bold">Cập Nhật Brave</label>
+                          <div class="custom-control custom-switch ml-3">
+                            <input type="checkbox" class="custom-control-input" id="update_browser_brave"
+                              <%=config.update_browser_brave ? "checked" : "" %>>
+                            <label class="custom-control-label" for="update_browser_brave">Tự động cập nhật khi tạm
+                              dừng</label>
+                          </div>
+                        </div>
+
+                        <!-- Installed Machines -->
+                        <div class="form-group">
+                          <label class="font-weight-bold">Số Máy Đã Cài Đặt Brave</label>
+                          <div class="input-group">
+                            <input type="number" class="form-control " id="installed_machines" value="0"
+                              readonly>
+                            <div class="input-group-append">
+                              <button type="button" class="btn btn-warning" id="resetInstalledMachines">
+                                <i class="fas fa-undo-alt mr-1"></i>Đặt Lại
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Row 2: Proxy & Captcha -->
+                    <div class="row mb-4">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="font-weight-bold">Cài Đặt Proxy</label>
+                          <div class="custom-control custom-switch ml-3">
+                            <input type="checkbox" class="custom-control-input" id="not_allow_use_proxy"
+                              <%=config.not_allow_use_proxy ? "checked" : "" %>>
+                            <label class="custom-control-label" for="not_allow_use_proxy">Vô hiệu hóa Proxy</label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="font-weight-bold">Captcha</label>
+                          <div class="custom-control custom-switch ml-3">
+                            <input type="checkbox" class="custom-control-input"
+                              id="client_config_use_recaptcha_for_login" <%=config.client_config_use_recaptcha_for_login
+                              ? "checked" : "" %>>
+                            <label class="custom-control-label" for="client_config_use_recaptcha_for_login">Bật Captcha
+                              khi đăng nhập</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Row 3: Profile Settings -->
+                    <div class="row mb-4">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="font-weight-bold">Số Luồng</label>
+                          <input class="form-control" type="number" id="max_current_profiles"
+                            value="<%= config.max_current_profiles %>">
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="font-weight-bold">Số Lượng Profile</label>
+                          <input type="number" class="form-control " id="max_total_profiles"
+                            value="<%= config.max_total_profiles %>">
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Row 4: Brave Link -->
+                    <div class="form-group mb-4">
+                      <label class="font-weight-bold">Link Trình Duyệt Brave</label>
+                      <input class="form-control " id="link_brave" value="<%= config.link_brave %>">
+                    </div>
+
+                    <!-- Row 5: Client Key -->
+                    <!-- Client Key Input Group -->
+                   
+
+
+                    <div class="row mb-4">
+                      <div class="form-group col-md-6">
+                        <label class="font-weight-bold">Khóa Khách Hàng</label>
+                        <div class="input-group">
+                          <input class="form-control " id="client_key" type="password"
+                            value="<%= config.client_key %>" readonly>
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-primary show-button">
+                              <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-outline-primary" onclick="copyClientKey()">
+                              <i class="fas fa-copy"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="font-weight-bold">Đổi Chromium version</label>
+                          <div class="custom-control custom-switch ml-3">
+                            <input type="checkbox" class="custom-control-input"
+                              id="change_chrome_version" <%=config.change_chrome_version
+                              ? "checked" : "" %>>
+                            <label class="custom-control-label" for="change_chrome_version">Bật Đổi Chromium version</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+
+              <!-- Mobile Configuration Section -->
+              <div class="space-card p-4  mb-4">
+                <div class="flex justify-between items-start mb-6">
+                  <h3 class="space-font text-lg font-bold mb-2 text-white">
+                    <i class="fas fa-mobile-alt fa-sm mr-2"></i>Cấu Hình Di Động 
+                  </h3>
+                </div>
+        
+                <div>
+                  <!-- Profile Count -->
+                  <div class="form-group mb-4">
+                    <label class="font-weight-bold">Số Lượng Profile cho Mobile</label>
+                    <input type="number" class="form-control " id="max_total_profiles_mobile"
+                      value="<%=config.max_total_profiles_mobile%>">
+                  </div>
+
+                  <!-- Platform Toggles -->
+                  <label class="font-weight-bold mb-3">Kích Hoạt Công Cụ</label>
+                  <div class="row">
+                    <!-- Twitter/X -->
+                    <div class="col-md-4 col-sm-6 mb-3">
+                      <div class="card h-100 border-left-info rounded-xl premium-card ">
+                        <div class="card-body py-3">
+                          <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="client_config_run_x"
+                              <%=config.client_config_run_x ? "checked" : "" %>>
+                            <label class="custom-control-label font-weight-bold text-white" for="client_config_run_x">
+                              <i class="fab fa-twitter mr-2"></i>Twitter/X
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Facebook -->
+                    <div class="col-md-4 col-sm-6 mb-3">
+                      <div class="card h-100 border-left-primary  rounded-xl premium-card">
+                        <div class="card-body py-3">
+                          <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="client_config_run_facebook"
+                              <%=config.client_config_run_facebook ? "checked" : "" %>>
+                            <label class="custom-control-label font-weight-bold text-white" for="client_config_run_facebook">
+                              <i class="fab fa-facebook mr-2"></i>Facebook
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Youtube -->
+                    <div class="col-md-4 col-sm-6 mb-3">
+                      <div class="card h-100 border-left-danger  rounded-xl premium-card">
+                        <div class="card-body py-3">
+                          <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="client_config_run_youtube"
+                              <%=config.client_config_run_youtube ? "checked" : "" %>>
+                            <label class="custom-control-label font-weight-bold text-white" for="client_config_run_youtube">
+                              <i class="fab fa-youtube  mr-2"></i>Youtube
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- TikTok -->
+                    <div class="col-md-4 col-sm-6 mb-3">
+                      <div class="card h-100 border-left-warning  rounded-xl premium-card">
+                        <div class="card-body py-3">
+                          <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="client_config_run_tiktok"
+                              <%=config.client_config_run_tiktok ? "checked" : "" %>>
+                            <label class="custom-control-label font-weight-bold text-white" for="client_config_run_tiktok">
+                              <i class="fab fa-tiktok mr-2"></i>TikTok
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Google Maps -->
+                    <div class="col-md-4 col-sm-6 mb-3">
+                      <div class="card h-100 border-left-success  rounded-xl premium-card">
+                        <div class="card-body py-3">
+                          <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="client_config_run_google_map"
+                              <%=config.client_config_run_google_map ? "checked" : "" %>>
+                            <label class="custom-control-label font-weight-bold text-white" for="client_config_run_google_map">
+                              <i class="fas fa-map-marker-alt mr-2"></i>Google Maps
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="space-card p-4 mb-4">
+                <div class="flex justify-between items-start mb-6">
+                    <h3 class="space-font text-lg font-bold mb-2 text-white"><i class="fab fa-windows fa-sm mr-2"></i>Cấu Hình Windows</h3>
+                </div>
+        
+                <div>
+                  <div class="row">
+                    <!-- Profile Change Time -->
+                    <div class="col-md-6 mb-3">
+                      <div class="form-group">
+                        <label class="font-weight-bold">Thời Gian Thay Profile</label>
+                        <div class="input-group">
+                          <input type="number" class="form-control " id="change_profile_time"
+                            value="<%=config.change_profile_time%>">
+                          <div class="input-group-append">
+                            <span class="input-group-text">giờ</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Auto Login -->
+                    <div class="col-md-6 mb-3">
+                      <div class="form-group">
+                        <label class="font-weight-bold">Đăng Nhập Tự Động</label>
+                        <div class="custom-control custom-switch ml-3">
+                          <input type="checkbox" class="custom-control-input" id="allow_win_login"
+                            <%=Number(config.allow_win_login)?"checked":""%>>
+                          <label class="custom-control-label" for="allow_win_login">
+                            Bật đăng nhập tự động trên Windows
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Proxy Usage -->
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="font-weight-bold">Proxy</label>
+                        <div class="custom-control custom-switch ml-3">
+                          <input type="checkbox" class="custom-control-input" id="is_use_proxy"
+                            <%=config.is_use_proxy==true?"checked":""%>>
+                          <label class="custom-control-label" for="is_use_proxy">
+                            Sử dụng Proxy
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+
+              <!-- ChatGPT Configuration -->
+              <div class="space-card p-4 mb-4">
+                <div class="flex justify-between items-start mb-6">
+                    <h3 class="space-font text-lg font-bold mb-2 text-white"><i class="fas fa-robot fa-sm mr-2"></i>Cấu Hình ChatGPT</h3>
+                </div>
+        
+                <div>
+                  <!-- API Key -->
+                  <div class="form-group mb-4">
+                    <label class="font-weight-bold">API Key</label>
+                    <div class="input-group">
+                      <input class="form-control " type="password" id="chat_gpt_api_key"
+                        value="<%=config.chat_gpt_api_key%>">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary toggle-password" type="button">
+                          <i class="fas fa-eye"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Content Template -->
+                  <div class="form-group mb-4">
+                    <label class="font-weight-bold">Mẫu Tạo Nội Dung</label>
+                    <div class="alert alert-info mb-2">
+                      <small>
+                        <i class="fas fa-info-circle mr-2"></i>
+                        Tạo bộ ${type} liên quan đến các nhóm hoặc chủ đề để seeding ${target} ${category},
+                        dành riêng cho từng nền tảng YouTube, TikTok, Facebook Phong cách ${style}.
+                      </small>
+                    </div>
+                    <input class="form-control " id="gpt_template" value="<%=config.gpt_template%>">
+                  </div>
+
+                  <!-- Video Script Template -->
+                  <div class="form-group">
+                    <label class="font-weight-bold">Mẫu Kịch Bản Video</label>
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label class="text-muted">Phần Mở Đầu</label>
+                        <input class="form-control " id="gpt_script_template"
+                          value="<%=config.gpt_script_template%>">
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="text-muted">Phần Kết Thúc</label>
+                        <input class="form-control " id="gpt_script_template_suffix"
+                          value="<%=config.gpt_script_template_suffix%>">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+
+              <!-- Facebook Configuration -->
+              <div class="space-card p-4 mb-4">
+                <div class="flex justify-between items-start mb-6">
+                    <h3 class="space-font text-lg font-bold mb-2 text-white"><i class="fab fa-facebook fa-sm mr-2"></i>Cấu Hình Facebook</h3>
+                </div>
+        
+                <div>
+                  <!-- Basic Settings -->
+                  <div class="row mb-4">
+                    <!-- Enable FB Tool -->
+                    <div class="col-md-6 mb-3">
+                      <div class="form-group">
+                        <label class="font-weight-bold">Trạng Thái Công Cụ</label>
+                        <div class="custom-control custom-switch ml-3">
+                          <input type="checkbox" class="custom-control-input" id="is_fb"
+                            <%=config.is_fb==true?"checked":""%>>
+                          <label class="custom-control-label" for="is_fb">
+                            Kích hoạt công cụ Facebook
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Page Count -->
+                    <div class="col-md-6 mb-3">
+                      <div class="form-group">
+                        <label class="font-weight-bold">Số Lượng Trang</label>
+                        <div class="input-group">
+                          <input type="number" class="form-control " id="total_page_created"
+                            value="<%=config.total_page_created%>">
+                          <div class="input-group-append">
+                            <span class="input-group-text">trang</span>
+                          </div>
+                        </div>
+                        <small class="text-muted">Số lượng trang được tạo khi đăng nhập</small>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Page & Profile Settings -->
+                  <div class="row mb-4">
+                    <!-- Allow Page Change -->
+                    <div class="col-md-6 mb-3">
+                      <div class="form-group">
+                        <label class="font-weight-bold">Quản Lý Trang</label>
+                        <div class="custom-control custom-switch ml-3">
+                          <input type="checkbox" class="custom-control-input" id="client_config_allow_change_fb_page"
+                            <%=config.client_config_allow_change_fb_page==true?"checked":""%>>
+                          <label class="custom-control-label" for="client_config_allow_change_fb_page">
+                            Cho phép thay đổi trang
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Allow Profile Change -->
+                    <div class="col-md-6 mb-3">
+                      <div class="form-group">
+                        <label class="font-weight-bold">Quản Lý Hồ Sơ</label>
+                        <div class="custom-control custom-switch ml-3">
+                          <input type="checkbox" class="custom-control-input" id="client_config_allow_change_fb_info"
+                            <%=config.client_config_allow_change_fb_info==true?"checked":""%>>
+                          <label class="custom-control-label" for="client_config_allow_change_fb_info">
+                            Cho phép thay đổi thông tin sau đăng nhập
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Profile Information -->
+                  <div class="glass-panel">
+                    <div class="card-body">
+                      <h5 class="font-weight-bold mb-3">Thông Tin Hồ Sơ</h5>
+                      <div class="row">
+                        <!-- First Name -->
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label class="font-weight-bold">Tên</label>
+                            <input class="form-control" id="client_config_fb_fisrt_name"
+                              value="<%=config.client_config_fb_fisrt_name%>" placeholder="Nhập tên">
+                          </div>
+                        </div>
+
+                        <!-- Last Name -->
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label class="font-weight-bold">Họ</label>
+                            <input class="form-control" id="client_config_fb_last_name"
+                              value="<%=config.client_config_fb_last_name%>" placeholder="Nhập họ">
+                          </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="col-12">
+                          <div class="form-group mb-0">
+                            <label class="font-weight-bold">Mô Tả</label>
+                            <textarea class="form-control" id="client_config_fb_description" rows="3"
+                              placeholder="Nhập mô tả"><%=config.client_config_fb_description%></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+
+              <!-- TikTok Configuration -->
+              <div class="space-card p-4 mb-4">
+                <div class="flex justify-between items-start mb-6">
+                    <h3 class="space-font text-lg font-bold mb-2 text-white"><i class="fab fa-tiktok fa-sm mr-2"></i>Cấu Hình TikTok</h3>
+                </div>
+        
+                <div>
+                  <div class="form-group mb-0">
+                    <label class="font-weight-bold">Trạng Thái Công Cụ</label>
+                    <div class="custom-control custom-switch ml-3">
+                      <input type="checkbox" class="custom-control-input" id="is_tiktok"
+                        <%=config.is_tiktok==true?"checked":""%>>
+                      <label class="custom-control-label" for="is_tiktok">
+                        Kích hoạt công cụ TikTok
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+
+              <!-- Advanced Settings Card -->
+              <div class="space-card p-4 mb-4">
+                <div class="flex justify-between items-start mb-6">
+                    <h3 class="space-font text-lg font-bold mb-2 text-white"><i class="fas fa-cog fa-sm mr-2"></i>Thiết Lập Nâng Cao</h3>
+                </div>
+        
+                <div>
+                  <div class="row">
+                    <!-- Left Column - General Settings -->
+                    <div class="col-md-6 flex flex-column gap-4">
+                      <!-- Authentication Settings -->
+                      <div class="glass-panel">
+                        <div class="card-body">
+                          <h5 class="text-white font-weight-bold mb-3">Xác Thực & Đăng Nhập</h5>
+
+                          <div class="form-group">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="allow_verify"
+                                <%=config.allow_verify==true?"checked":""%>>
+                              <label class="custom-control-label" for="allow_verify">Cho phép xác thực email</label>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="only_run_login"
+                                <%=config.only_run_login==true?"checked":""%>>
+                              <label class="custom-control-label" for="only_run_login">Chỉ cho phép đăng nhập</label>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="scan_check_recovery"
+                                <%=config.scan_check_recovery==true?"checked":""%>>
+                              <label class="custom-control-label" for="scan_check_recovery">Tìm email khôi phục khi
+                                sai</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Browser Settings -->
+                      <div class="glass-panel">
+                        <div class="card-body">
+                          <h5 class="text-white font-weight-bold mb-3">Cài Đặt Trình Duyệt</h5>
+
+                          <div class="form-group">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="useRobotJS"
+                                <%=config.useRobotJS==true?"checked":""%>>
+                              <label class="custom-control-label" for="useRobotJS">Sử dụng RobotJS</label>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="font-weight-bold">User Agent</label>
+                            <select class="custom-select" id="ua_type">
+                              <option value="" <%=config.ua_type=='' ?"selected":""%>>Không chọn</option>
+                              <option value="mobile" <%=config.ua_type=='mobile' ?"selected":""%>>Mobile</option>
+                              <option value="pc" <%=config.ua_type=='pc' ?"selected":""%>>PC</option>
+                            </select>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="use_adblock"
+                                <%=config.use_adblock?"checked":""%>>
+                              <label class="custom-control-label" for="use_adblock">Sử dụng AdBlock</label>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="is_setting_brave"
+                                <%=config.is_setting_brave?"checked":""%>>
+                              <label class="custom-control-label" for="is_setting_brave">Chặn vân tay trong
+                                Brave</label>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="is_clear_browser_data"
+                                <%=Number(config.is_clear_browser_data)?"checked":""%>>
+                              <label class="custom-control-label" for="is_clear_browser_data">Xóa dữ liệu trình duyệt
+                                khi đóng</label>
+                            </div>
+                          </div>
+
+                          <div class="form-group mb-0">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="skip_pau_history"
+                                <%=config.skip_pau_history?"checked":""%>>
+                              <label class="custom-control-label" for="skip_pau_history">Bỏ qua xóa lịch sử khi đăng
+                                nhập</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Proxy Settings -->
+                      <div class="glass-panel">
+                        <div class="card-body">
+                          <h5 class="text-white font-weight-bold mb-3">Cài Đặt Proxy</h5>
+
+                          <div class="form-group">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="check_proxy"
+                                <%=config.check_proxy?"checked":""%>>
+                              <label class="custom-control-label" for="check_proxy">Dùng proxy đã lưu để chạy
+                                tool</label>
+                            </div>
+                          </div>
+
+                          <div class="form-group mb-0">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="check_proxy_for_login"
+                                <%=config.check_proxy_for_login?"checked":""%>>
+                              <label class="custom-control-label" for="check_proxy_for_login">Dùng proxy đã lưu để đăng
+                                nhập</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- System Reset Settings -->
+                      <div class="glass-panel">
+                        <div class="card-body">
+                          <h5 class="text-white font-weight-bold mb-3">Cài Đặt Reset Hệ Thống</h5>
+
+                          <div class="form-group">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="reboot_on_update"
+                                <%=Number(config.reboot_on_update)?"checked":""%>>
+                              <label class="custom-control-label" for="reboot_on_update">Reset máy khi cập nhật</label>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="font-weight-bold">Thời Gian Reset Tự Động</label>
+                            <div class="input-group">
+                              <input type="number" min="0" class="form-control" id="reset_system_time"
+                                value="<%=config.reset_system_time%>" placeholder="Nhập số giờ">
+                              <div class="input-group-append">
+                                <span class="input-group-text">giờ</span>
+                              </div>
+                            </div>
+                            <div class="custom-control custom-switch mt-2">
+                              <input type="checkbox" class="custom-control-input" id="reset_profile_when_reset_system"
+                                <%=config.reset_profile_when_reset_system==true?"checked":""%>>
+                              <label class="custom-control-label" for="reset_profile_when_reset_system">
+                                Xóa profiles trước khi reset
+                              </label>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="font-weight-bold">Reset Profiles Định Kỳ</label>
+                            <div class="input-group">
+                              <input type="number" min="0" class="form-control" id="reset_profiles_time_interval"
+                                value="<%=config.reset_profiles_time_interval%>" placeholder="Nhập số giờ">
+                              <div class="input-group-append">
+                                <span class="input-group-text">giờ</span>
+                              </div>
+                            </div>
+                            <small class="text-muted">Nhập 0 để tắt tính năng này</small>
+                          </div>
+
+                          <div class="form-group mb-0">
+                            <label class="font-weight-bold">Khóa Cập Nhật</label>
+                            <input class="form-control" id="update_key" value="<%=config.update_key%>"
+                              placeholder="Nhập khóa cập nhật">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Right Column - Extensions -->
+                    <div class="col-md-6">
+                      <div class="glass-panel">
+                        <div class="card-body">
+                          <h5 class="text-white font-weight-bold mb-3">Tiện Ích Mở Rộng</h5>
+
+                          <div class="list-group">
+                            <% traceExs.forEach(function(traceEx){ %>
+                              <div class="list-group-item border-0 px-0 bg-transparent">
+                                <div class="custom-control custom-switch">
+                                  <input type="checkbox" class="custom-control-input traceInputs" id="<%=traceEx.name%>"
+                                    <%=traceEx.active?"checked":""%>>
+                                  <label class="custom-control-label" for="<%=traceEx.name%>">
+                                    <%=traceEx.name%>
+                                  </label>
+                                </div>
+                              </div>
+                              <%})%>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-card p-4 mb-4">
+                <div class="flex justify-between items-start mb-6">
+                    <h3 class="space-font text-lg font-bold mb-2 text-white"><i class="fas fa-key fa-sm mr-2"></i>API Keys Configuration</h3>
+                </div>
+        
+                <div>
+                  <div class="row">
+                    <% const apiServices=[ {id: 'thuesimgiare_api_key' , name: 'thuesimgiare.com' ,
+                      url: 'thuesimgiare.io' }, {id: 'ndline_api_key' , name: '2ndline.pro' , url: '2ndline.pro' },
+                      {id: 'codesim_api_key' , name: 'codesim.net' , url: 'http://codesim.net' },
+                      {id: 'chothuesimcode_api_key' , name: 'chothuesimcode.com' , url: 'http://chothuesimcode.com' },
+                      {id: 'viotp_api_key' , name: 'Viotp' , url: 'https://viotp.com/Account/ApiDocument2' },
+                      {id: 'gogetsms_api_key' , name: 'gogetsms' , url: 'https://www.gogetsms.com/eng' },
+                      {id: 'five_sim_api_key' , name: '5sim.net' , url: 'https://5sim.net' },
+                      {id: 'sms_activate_api_key' , name: 'sms-activate' , url: 'https://sms-activate.io' } ]; %>
+
+                      <% apiServices.forEach(function(service) { %>
+                        <div class="col-sm-6 col-md-4 col-lg-3">
+                          <div class="form-group">
+                            <label class="d-flex align-items-center mb-2">
+                              <span class="font-weight-bold">
+                                <%= service.name %>
+                              </span>
+                              <a href="<%= service.url %>" target="_blank" class="ml-2 text-muted">
+                                <i class="fas fa-external-link-alt fa-sm"></i>
+                              </a>
+                            </label>
+                            <div class="input-group">
+                              <input type="password" class="form-control api-key-input" id="<%= service.id %>"
+                                value="<%= config[service.id] %>">
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-secondary toggle-key" type="button">
+                                  <i class="fas fa-eye"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <% }); %>
+                  </div>
+                </div>
+              </div>
+
+              <!-- YouTube Configuration Section -->
+              <div class="space-card p-4 mb-4">
+                <div class="flex justify-between items-start mb-6">
+                    <h3 class="space-font text-lg font-bold mb-2 text-white">  <i class="fab fa-youtube fa-sm mr-2"></i>Cấu Hình YouTube</h3>
+                </div>
+        
+                <div>
+                  <!-- Profile & Channel Settings -->
+                  <div class="row mb-4">
+                    <!-- Profile Control -->
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="font-weight-bold" for="total_loop_find_ads">
+                          Tắt Profile Sau Khi Chọn Channel
+                        </label>
+                        <div class="input-group">
+                          <input type="number" class="form-control " id="total_loop_find_ads"
+                            value="<%=config.total_loop_find_ads%>">
+                          <div class="input-group-append">
+                            <span class="input-group-text">channels</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Proxy & Sub Settings -->
+                  <div class="row mb-4">
+                    <!-- Proxy Settings -->
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="font-weight-bold">Proxy Configuration</label>
+                        <div class="custom-control custom-switch ml-3">
+                          <input type="checkbox" class="custom-control-input" id="change_proxy_for_channel"
+                            <%=config.change_proxy_for_channel==true?"checked":""%>>
+                          <label class="custom-control-label" for="change_proxy_for_channel">
+                            Cho phép thay đổi proxy khi chọn channel
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Sub Rate -->
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="font-weight-bold" for="sub_percent">Tỷ Lệ Subscribe</label>
+                        <div class="input-group">
+                          <input type="number" class="form-control " id="sub_percent"
+                            value="<%=config.sub_percent%>">
+                          <div class="input-group-append">
+                            <span class="input-group-text">/1000</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- User Agent Settings -->
+                  <div class="form-group mb-4">
+                    <label class="font-weight-bold">User Agent</label>
+                    <div class="card ">
+                      <div class="card-body p-0">
+                        <textarea class="form-control border-0  font-monospace small" id="uas" rows="15"
+                          style="resize: vertical"><%=config.uas%></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- System Parameters -->
+                  <div class="form-group mb-0">
+                    <label class="font-weight-bold">System Parameters</label>
+                    <small class="text-muted d-block mb-2">Phân cách bởi ##</small>
+                    <div class="card ">
+                      <div class="card-body p-0">
+                        <textarea class="form-control border-0  font-monospace small" id="systemParams"
+                          rows="15" style="resize: vertical"><%=config.systemParams%></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+
+            <div id="file-run-modal" class="modal" role="dialog">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Tạo lệnh cài tool</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div role="form">
+                      <div class="form-group">
+                        <label class="col-form-label">Địa chỉ server (vd: http://138.68.169.225:8686)</label>
+                        <div>
+                          <input class="form-control" id="add_server" value="<%=IP%>:<%=PORT%>">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label">Tên user trên máy đang chạy (vd: thang, admin1 ...)</label>
+                        <div>
+                          <input class="form-control" id="user_name" value="">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label">Tên máy (vd : MAY_1, MAY_A ...)</label>
+                        <div>
+                          <input class="form-control" id="vm_name" value="DEFAULT">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-form-label">SETUP KEY</label>
+                        <div>
+                          <input class="form-control" id="setup_key" value="<%=setup_key%>">
+                        </div>
+                      </div>
+
+                      <div id="fileRunSec" class="d-none">
+                        <textarea id="file-run-data" rows="4" class="form-control"></textarea>
+                        <div class="my-2 d-flex">
+                          <button id="copyBtn" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">
+                            Copy
+                          </button>
+                          <div class="text-success ml-2" id="textCopied"></div>
+                        </div>
+                      </div>
+
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="getFileRun">Lấy lệnh cài</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End of Main Content -->
+
+              <%- include('../common/toast.ejs') %>
+
+                <% include ../common/footer%>
+            </div>
+            <!-- End of Content Wrapper -->
+
+          </div>
+          <!-- End of Page Wrapper -->
+
+          <% include ../common/js%>
+            <script src="/js/bootbox.all.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+            <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+            <script src="https://unpkg.com/popper.js@1.15.0/dist/umd/popper.min.js"></script>
+            <script src="/javascripts/utils.js"></script>
+            <script src="/javascripts/config.js"></script>
+            <script>
+              function copyClientKey() {
+                const clientKeyInput = document.getElementById('client_key');
+                clientKeyInput.select(); // Chọn toàn bộ văn bản trong input
+                document.execCommand('copy'); // Sao chép vào clipboard
+              }
+            </script>
+
+            <script>
+              // Toggle individual key visibility
+              document.querySelectorAll('.toggle-key').forEach(button => {
+                button.addEventListener('click', function () {
+                  const input = this.closest('.input-group').querySelector('input');
+                  const icon = this.querySelector('i');
+
+                  if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                  } else {
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                  }
+                });
+              });
+
+              // Toggle all keys
+              document.getElementById('toggleAllKeys').addEventListener('click', function () {
+                const inputs = document.querySelectorAll('.api-key-input');
+                const isHidden = inputs[0].type === 'password';
+
+                inputs.forEach(input => {
+                  input.type = isHidden ? 'text' : 'password';
+                });
+
+                document.querySelectorAll('.toggle-key i').forEach(icon => {
+                  if (isHidden) {
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                  } else {
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                  }
+                });
+
+                this.innerHTML = isHidden ?
+                  '<i class="fas fa-eye-slash fa-sm mr-1"></i>Hide All' :
+                  '<i class="fas fa-eye fa-sm mr-1"></i>Show All';
+              });
+            </script>
+
+  </body>
+
+</html>

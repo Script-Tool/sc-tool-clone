@@ -1,0 +1,8 @@
+#!/bin/bash
+apt install -y sudo curl && curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - && apt install -y nodejs && apt install -y imagemagick xdotool htop xvfb wget git vim
+snap install brave
+
+sudo -u _USER -H sh -c 'cd /home/_USER/ && git clone https://kimtrongdev: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@github.com/kimtrongdev/scripts.git && cd scripts && git checkout _BRANCH && vim -esnc "%s/HOSTIP/"_SERVER"/g|:wq" dev.json && vim -esnc "%s/MAX_PROFILE/"1"/g|:wq" dev.json && vim -esnc "%s/false/"1"/g|:wq" dev.json && sed -i -e "s/\r//g" dev.json && npm i'
+sudo -u _USER -H sh -c 'gsettings set org.gnome.desktop.session idle-delay 0'
+cd /home/_USER/scripts
+su _USER

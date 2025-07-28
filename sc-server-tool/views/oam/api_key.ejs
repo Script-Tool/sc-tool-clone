@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include ../common/header%>
+
+  <body id="page-top">
+    <div class="abstract-bg"></div>
+    <div class="grid-pattern"></div>
+    <div class="abstract-shape w-96 h-96 top-1 left-1"></div>
+    <div class="abstract-shape w-96 h-96 bottom-1 right-1"></div>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <% include ../common/sidebar.ejs%>
+      <!-- End of Sidebar -->
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <br />
+            <!-- Page Heading -->
+            <div
+              class="d-sm-flex align-items-center justify-content-between mb-4"
+            >
+              <h1 class="font-weight-bold h3 mb-0 primary-text">
+                3ND API Key ---- Tổng <%=count%> key
+              </h1>
+              <div class="">
+                <button
+                  id="deleteAll"
+                  href="#"
+                  type="button"
+                  class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"
+                >
+                  <i class="fas fa-remove fa-sm text-white-50"></i>
+                  Delete all
+                </button>
+                <button
+                  id="importProxyBtn"
+                  href="#"
+                  type="button"
+                  data-toggle="modal"
+                  data-target="#importProfileModal"
+                  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                >
+                  <i class="fas fa-upload fa-sm text-white-50"></i>
+                  Import
+                </button>
+
+                <button
+                  id="exportApiKey"
+                  href="#"
+                  type="button"
+                  data-target="#importProfileModal"
+                  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                >
+                  <i class="fas fa-upload fa-sm text-white-50"></i>
+                  Export
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+
+          <div
+            id="importProfileModal"
+            class="modal fade bd-example-modal-xl"
+            tabindex="-1"
+            role="dialog"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-xl" role="document">
+              <div class="modal-content bg-glass">
+                <div class="modal-header">
+                  <a class="text-gray-400">Api key template (api_key, type)</a>
+                  <button
+                    type="button"
+                    class="close text-white"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form id="ImportForm">
+                    <div class="form-group">
+                      <label for="exampleFormControlFile1" class="text-gray-400"
+                        >File</label
+                      >
+                      <input
+                        type="file"
+                        class="form-control-file"
+                        id="file"
+                        name="file"
+                        accept=".csv"
+                      />
+                    </div>
+                  </form>
+                  <table id="previewTable" class="table table-bordered"></table>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <!-- <button type="button" class="btn btn-primary" id="previewBtn">Preview</button> -->
+                  <button type="button" class="btn btn-primary" id="saveBtn">
+                    Save changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="relative overflow-hidden rounded-lg border border-slate-200/10 bg-slate-800/40 shadow-md backdrop-blur-xl mx-4"
+          >
+            <div class="overflow-x-auto">
+              <table
+                class="w-full table-auto badge-soft-dark"
+                id="playlistTable"
+              >
+                <thead class="bg-slate-900/50">
+                  <tr>
+                    <th
+                      class="px-4 py-3 text-left text-sm font-medium text-white"
+                    >
+                      API Key
+                    </th>
+                    <th
+                      class="px-4 py-3 text-left text-sm font-medium text-white"
+                    >
+                      Type
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-slate-100/10">
+                  <% rows.forEach(function(row){ %>
+                  <tr class="transition-all hover:bg-slate-700/30">
+                    <td class="px-4 py-3"><%=row.key%></td>
+                    <td class="px-4 py-3"><%=row.type%></td>
+                  </tr>
+                  <%})%>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- End of Main Content -->
+
+        <% include ../common/footer%>
+      </div>
+      <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <% include ../common/js%>
+    <script src="/js/bootbox.all.min.js"></script>
+    <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+    <script>
+      // Toggle the side navigation
+      $("#saveBtn").on("click", function (e) {
+        $.ajax({
+          url: "/admin/api-key/import",
+          type: "POST",
+          data: new FormData($("#ImportForm")[0]),
+          processData: false,
+          contentType: false,
+        }).done(function (data) {
+          //utils.alert('#ImportForm',JSON.stringify(data, null, 2));
+          location.reload();
+        });
+      });
+
+      $("#deleteAll").on("click", function (e) {
+        bootbox.confirm("Delete all proxy?", function (result) {
+          if (result) {
+            $.ajax({
+              url: "/admin/api-key/delete-all",
+              type: "GET",
+            }).done(function (data) {
+              location.reload();
+            });
+          }
+        });
+      });
+
+      $("#exportApiKey").on("click", function (e) {
+        bootbox.confirm("Export Youtube Key?", function (result) {
+          if (result) {
+            const newPath = `/admin/api-key/export-apikeys`;
+            window.open(newPath);
+            location.reload();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

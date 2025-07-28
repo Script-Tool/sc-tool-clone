@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<% include ../common/header%>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+  <!-- Sidebar -->
+  <% include ../common/sidebar.ejs%>
+  <!-- End of Sidebar -->
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+      <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="height: 0px;"></nav>
+
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="font-weight-bold h3 mb-0 text-gray-800">CHANNEL</h1>
+          <button id="importChannelBtn" href="#" type="button" data-toggle="modal" data-target="#importChannelModal" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-upload fa-sm text-white-50"></i> Add channels</button>
+        </div>
+
+        <div class="m-4">
+          <a href="/oam/channel?filter=0" class="btn btn-primary btn-sm active" role="button" aria-pressed="true"><i class="fas fa-filter fa-sm text-white-50"></i> Show all</a>
+          <button id="updateAll" href="#" type="button" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i class="fas fa-hourglass-end fa-sm text-white-50"></i> Update enough</button>
+          <button id="stopAll" href="#" type="button" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm"><i class="fas fa-stop-circle fa-sm text-white-50"></i> Stop all</button>
+          <button id="startAll" href="#" type="button" class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm"><i class="fas fa-stop-circle fa-sm text-white-50"></i> Start all</button>
+          <button id="deleteAll" href="#" type="button" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i class="fas fa-remove fa-sm text-white-50"></i> Delete all</button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered" id="channelTable" width="100%" cellspacing="0">
+            <thead>
+            <tr>
+              <th class="no-sort"><input type="checkbox" value="" id = "allCheck"></th>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Url</th>
+              <th>Keyword</th>
+              <th>Enable</th>
+              <th>Sub</th>
+              <th>Create time</th>
+              <th>Update time</th>
+              <th>Edit</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+              <th>Select</th>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Url</th>
+              <th>Keyword</th>
+              <th>Enable</th>
+              <th>Sub</th>
+              <th>Create time</th>
+              <th>Update time</th>
+              <th>Edit</th>
+            </tr>
+            </tfoot>
+            <tbody>
+            <% channels.forEach(function(channel){ %>
+            <tr>
+              <td><input type="checkbox" value="<%=channel.id%>"></td>
+              <td><%=channel.id%></td>
+              <td><%=channel.name%></td>
+              <td><a href="<%=channel.url%>"><%=channel.url%></a></td>
+              <td><%=channel.keywords%></td>
+              <td><%=channel.enable_sub%></td>
+              <td><%=channel.sub%></td>
+              <td><%=channel.create_time%></td>
+              <td><%=channel.update_time%></td>
+              <td><a class="channelEdit" href="#" class="btn btn-primary a-btn-slide-text" value="<%=channel.id%>">Edit</a></td>
+            </tr>
+            <%})%>
+            </tbody>
+          </table>
+        </div>
+
+        <div id="importChannelModal" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <a href="/oam/download?file=channel_template.csv">Channel template</a>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form id="channelImportForm">
+                  <div class="form-group">
+                    <label for="exampleFormControlFile1">Channels file</label>
+                    <input type="file" class="form-control-file" id="channelFile" name="channelFile" accept=".csv">
+                  </div>
+                </form>
+                <table id="previewTable" class="table table-bordered"></table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="previewBtn">Preview</button>
+                <button type="button" class="btn btn-primary" id="saveBtn">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="editChannelModal" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Edit channel</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div role="form">
+                  <input id="channelId" class="d-none">
+                  <div class="form-group row">
+                    <label for="channelName" class="col-sm-2 col-form-label">name</label>
+                    <div class="col-sm-10">
+                      <input type="email" class="form-control" id="channelName">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="channelUrl" class="col-sm-2 col-form-label">url</label>
+                    <div class="col-sm-10">
+                      <input type="email" class="form-control" id="channelUrl">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="channelKeyword" class="col-sm-2 col-form-label">keyword</label>
+                    <div class="col-sm-10">
+                      <input type="email" class="form-control" id="channelKeyword">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="channelEnable" class="col-sm-2 col-form-label">enable</label>
+                    <div class="col-sm-10">
+                      <input type="email" class="form-control" id="channelEnable">
+                    </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveChannel">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+    <!-- End of Main Content -->
+
+    <% include ../common/footer%>
+
+  </div>
+  <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<% include ../common/js%>
+  <script src="/js/bootbox.all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+  <script src="https://unpkg.com/popper.js@1.15.0/dist/umd/popper.min.js"></script>
+<script src="/javascripts/channel.js"></script>
+<script src="/javascripts/utils.js"></script>
+
+
+</body>
+
+</html>

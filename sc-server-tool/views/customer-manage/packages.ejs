@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<% include ../common/header%>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+  <!-- Sidebar -->
+  <% include ../common/customer-sidebar.ejs%>
+  <!-- End of Sidebar -->
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+        <br/>
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Service Package Manager</h1>
+          <button href="#" type="button" data-toggle="modal" data-target="#editModel"
+            class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            Add Package
+          </button>
+        </div>
+
+        <br>
+        <div class="table-responsive">
+          <table class="table table-bordered" id="tableList" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Script</th>
+                <th>Name</th>
+                <th>Data</th>
+                <th>Price</th>
+                <th>VIP Price</th>
+                <th>Type</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% packages.forEach(function(pack){ %>
+                <tr class="<%= pack.is_gift == true ? 'text-danger' : '' %> ">
+                  <td>
+                    <%= pack.status %>
+                  </td>
+                  <td>
+                    <%= pack.script_code %>
+                  </td>
+                  <td>
+                    <%= pack.name %>
+                  </td>
+                  <td>
+                    <%= pack.value %> / <%= pack.unit %>
+                  </td>
+                  <td>
+                    <%= pack.price.toLocaleString('it-IT', {style : 'currency' , currency : 'VND' }); %>
+                  </td>
+                  <td>
+                    <%= (pack.vip_price ? pack.vip_price.toLocaleString('it-IT', {style : 'currency' , currency : 'VND' }) : '') %>
+                  </td>
+                  <td>
+                    <%= pack.type %>
+                  </td>
+                  <td>
+                    <a href="#" class="btn btn-danger a-btn-slide-text deleteBtn" value="<%=pack._id%>">Delete</a>
+                    <a href="#" class="btn btn-info a-btn-slide-text editBtn" data-toggle="modal" data-target="#editModel" value="<%=pack._id%>">Edit</a>
+                  </td>
+                </tr>
+                <%})%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="editModel" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Tạo gói dịch vụ</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+           
+            <div class="modal-body">
+              <div role="form">
+                <input class="form-control" id="_id" type="hidden"/>
+                <div class="form-group row">
+                  <label class="col-form-label">Status</label>
+                  <input class="form-control" id="status"/>
+                </div>
+                <div class="form-group row">
+                  <label class="col-form-label">Tên gói</label>
+                  <input class="form-control" id="name"/>
+                </div>
+                <div class="form-group row">
+                  <label class="col-form-label">Script Code</label>
+                  <input class="form-control" id="script_code">
+                </div>
+                <div class="form-group row">
+                  <label class="col-form-label">Dữ liệu (Số lượt, số ngày)</label>
+                  <input class="form-control" type="number" id="value">
+                </div>
+                <div class="form-group row">
+                  <label class="col-form-label">Đơn vị (lượt, ngày)</label>
+                  <input class="form-control" id="unit"/>
+                </div>
+                <div class="form-group row">
+                  <label class="col-form-label">Giá cũ</label>
+                  <input class="form-control" id="old_price"/>
+                </div>
+                <div class="form-group row">
+                  <label class="col-form-label">Giá hiện tại</label>
+                  <input class="form-control" id="price">
+                </div>
+                <div class="form-group row">
+                  <label class="col-form-label">Kiểu</label>
+                  <input class="form-control" id="type">
+                </div>
+                <div class="form-group row">
+                  <label class="col-form-label">Mô tả</label>
+                  <textarea class="form-control" id="description"></textarea>
+                </div>
+                <div class="form-group row">
+                  <label class=" col-form-label">Mô tả sau khi mua gói</label>
+                  <textarea class="form-control" id="after_description"></textarea>
+                </div>
+                <hr/>
+                <div class="form-group row">
+                  <label class=" col-form-label">JSON DATA</label>
+                  <textarea class="form-control" id="json_data"></textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveForm">Save</button>
+                <button type="button" class="btn btn-primary" id="addForm">Add</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    <% include ../common/footer%>
+
+  </div>
+  <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<% include ../common/js%>
+<script src="/js/bootbox.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+<script src="https://unpkg.com/popper.js@1.15.0/dist/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+<script>
+  $('#tableList').on('click', 'tr .deleteBtn', function () {
+    let id = $(this).attr('value')
+
+    bootbox.confirm('Confirm ?', function (result) {
+      if (result) {
+        $.ajax({
+          url: "/admin/customer/service-package/" + id,
+          type: "delete",
+          contentType: 'application/json',
+        }).done(function (data) {
+          if (data.success) {
+            location.reload();
+          }
+        })
+      }
+    })
+  })
+
+  $('#tableList').on('click', 'tr .editBtn', function () {
+    let id = $(this).attr('value')
+
+    $.ajax({
+      url: "/admin/customer/service-package/" + id,
+      type: "get",
+      contentType: 'application/json',
+    }).done(function (data) {
+      if (data.success) {
+        const pack = data.package
+        $('#_id').val(pack._id)
+        $('#status').val(pack.status)
+        $('#name').val(pack.name)
+        $('#script_code').val(pack.script_code)
+        $('#value').val(pack.value)
+        $('#unit').val(pack.unit)
+        $('#old_price').val(pack.old_price)
+        $('#price').val(pack.price)
+        $('#type').val(pack.type)
+        $('#description').val(pack.description)
+        $('#after_description').val(pack.after_description)
+      }
+    })
+  })
+  
+  $('#saveForm').on('click',function(){
+    let _id = $('#_id').val()
+    let data = {
+      package_id: _id,
+      description: $('#description').val(),
+      after_description: $('#after_description').val(),
+      name: $('#name').val(),
+      old_price: $('#old_price').val(),
+      price: $('#price').val(),
+      script_code: $('#script_code').val(),
+      script_name: $('#script_name').val(),
+      status: $('#status').val(),
+      type: $('#type').val(),
+      unit: $('#unit').val(),
+      value: $('#value').val(),
+    }
+    bootbox.confirm('Update ?', function(result){
+      if(result) {
+        $.ajax({
+          url: "/admin/customer/service-package/update",
+          type: "get",
+          data,
+          contentType: 'application/json',
+        }).done(function (data) {
+          if (data.success) {
+            location.reload();
+          }
+        })
+      }
+    })
+  })
+
+  $('#addForm').on('click',function(){
+    let data = null
+    const jsonData = $('#json_data').val()
+    if (jsonData) {
+      try {
+        data = JSON.parse(jsonData)
+      } catch (error) {
+        console.log(error);
+      }
+     
+    }
+    if (data) {
+      bootbox.confirm('Add new ?', function(result){
+        if(result) {
+          $.ajax({
+            url: "/admin/customer/service-package/add",
+            type: "get",
+            data,
+            contentType: 'application/json',
+          }).done(function (data) {
+            if (data.success) {
+              location.reload();
+            }
+          })
+        }
+      })
+    }
+  })
+</script>
+</body>
+
+</html>

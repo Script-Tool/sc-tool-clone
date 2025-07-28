@@ -1,0 +1,9 @@
+{
+    "host": "localhost",
+    "user": "youtube_luminati2",
+    "password": "Trung@123456",
+    "database": "luminati2",
+    "waitForConnections": true,
+    "connectionLimit": 150,
+    "queueLimit": 0
+}

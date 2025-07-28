@@ -1,0 +1,906 @@
+[
+  {
+    "label": "Chủ đề & Mô tả cụ thể1",
+    "options": [
+      {
+        "label": "Hướng dẫn",
+        "explain": " Tạo một video hướng dẫn về cách làm một công việc cụ thể hoặc thực hiện một kỹ năn"
+      },      {
+        "label": "Giải trí",
+        "explain": "        Tạo video vui nhộn, hài hước hoặc giải trí để làm khán giả cười và thư gi"
+      },      {
+        "label": "Giáo dục",
+        "explain": "          Tạo video về một chủ đề giáo dục cụ thể, giải thích một khái niệm, hoặc chia sẻ kiến thức và thông tin hữu íc"
+      },      {
+        "label": "Đánh giá sản phẩm",
+        "explain": "          Tạo video đánh giá, so sánh hoặc xem xét các sản phẩm, dịch vụ hoặc sự kiệ"
+      },      {
+        "label": "Tin tức và bản tin",
+        "explain": "          Tạo video về các tin tức, sự kiện hoặc câu chuyện nổi bật và chia sẻ thông tin mới nhất với khán gi"
+      },      {
+        "label": "Phỏng vấn",
+        "explain": "          Tạo video phỏng vấn các chuyên gia, người nổi tiếng hoặc nhân vật quan trọng để chia sẻ quan điểm, kinh nghiệm hoặc câu chuyện của h"
+      },      {
+        "label": "Phim ngắn",
+        "explain": "Tạo một phim ngắn, đặc biệt hoặc truyện ngắn với một cốt truyện, diễn xuất và sự phát triển nhân vậ"
+      },      {
+        "label": "Video âm nhạc",
+        "explain": "          Tạo video âm nhạc với phần hòa âm, biểu diễn hoặc sáng tác âm nhạc riêng của bạ"
+      },      {
+        "label": "Review",
+        "explain": "là một loại video mà người tạo chia sẻ ý kiến và đánh giá về một sản phẩm, dịch vụ hoặc sự kiện cụ thể. Nó cung cấp thông tin và trải nghiệm cá nhân, giúp khán giả có quyết định thông minh khi mua sắm hoặc sử dụn"
+      },      {
+        "label": "Thể thao và hành động",
+        "explain": "          Tạo video về hoạt động thể thao, mạo hiểm hoặc thể dục để truyền cảm hứng và giải trí cho khán gi"
+      },      {
+        "label": "Du lịch và khám phá",
+        "explain": "          Tạo video về các địa điểm du lịch, những trải nghiệm khám phá hoặc chia sẻ những góc nhìn độc đáo về thế giớ"
+      },      {
+        "label": "Phát triển cá nhân",
+        "explain": "          Tạo video về việc phát triển bản thân, nâng cao kỹ năng, tư duy tích cực và khám phá tiềm năng cá nhâ"
+      },      {
+        "label": "Cộng đồng và xã hội",
+        "explain": "          Tạo video về các vấn đề xã hội, gây nhận thức và khuyến khích sự thay đổi tích cực trong cộng đồn"
+      },      {
+        "label": "Truyền cảm hứng và động lực",
+        "explain": "          Tạo video để truyền cảm hứng, động viên và khích lệ khán giả, giúp họ vượt qua khó khăn và đạt được mục tiê"
+      },      {
+        "label": "Công nghệ và khoa học",
+        "explain": "          Tạo video về các xu hướng công nghệ mới, đánh giá sản phẩm công nghệ, hoặc giải thích các khái niệm khoa học và công nghệ phức tạp một cách đơn giả"
+      },      {
+        "label": "Môi trường và bảo vệ thiên nhiên",
+        "explain": "          Tạo video để tăng cường nhận thức về bảo vệ môi trường, thực hiện các hoạt động bảo vệ và khám phá vẻ đẹp thiên nhiê"
+      },      {
+        "label": "Nghệ thuật và sáng tạo",
+        "explain": "          Tạo video về nghệ thuật, thiết kế, sáng tạo và cách thể hiện bản thân thông qua nghệ thuậ"
+      },      {
+        "label": "Sự kiện đặc biệt",
+        "explain": "          Tạo video để ghi lại và chia sẻ các sự kiện đặc biệt như hôn lễ, sinh nhật, lễ kỷ niệm hoặc các sự kiện xã hội quan trọn"
+      },      {
+        "label": "Làm đẹp và thời trang",
+        "explain": "          Tạo video hướng dẫn về làm đẹp, trang điểm, làm tóc, hoặc chia sẻ các xu hướng thời trang mới nhất"
+      },      {
+        "label": "Tâm linh và truyền thống",
+        "explain": "          Tạo video về tâm linh, truyền thống, lễ hội và nghi lễ văn hóa đặc biệ"
+      },      {
+        "label": "Podcast và trò chuyện",
+        "explain": "          Tạo video podcast hoặc trò chuyện với khách mời đặc biệt về một chủ đề cụ thể hoặc để chia sẻ quan điểm và ý kiế"
+      },      {
+        "label": "Vlog",
+        "explain": "          Tạo video blog cá nhân để chia sẻ cuộc sống hàng ngày, kinh nghiệm du lịch, quan điểm cá nhân và những câu chuyện thú "
+      },      {
+        "label": "Cẩm nang ẩm thực",
+        "explain": "          Tạo video hướng dẫn nấu các món ăn ngon, chia sẻ công thức và kỹ thuật nấu ăn, hoặc khám phá ẩm thực đặc trưng của các vùng miề"
+      },      {
+        "label": "Phim tài liệu",
+        "explain": "          Tạo video tài liệu về một chủ đề cụ thể, điều tra, khám phá và chia sẻ thông tin sâu về một sự kiện, văn hóa, lịch sử hoặc hiện tượng đặc biệ"
+      },      {
+        "label": "Tự truyện",
+        "explain": "          Tạo video kể về cuộc sống, hành trình và trải nghiệm cá nhân của bạn hoặc người khác, chia sẻ câu chuyện đầy cảm hứng và học hỏ"
+      },      {
+        "label": "Hoạt hình",
+        "explain": "          Tạo video hoạt hình, truyền cảm hứng từ trẻ em đến người lớn, khám phá câu chuyện, giáo dục hoặc giải trí qua những hình ảnh động và đồ họa sáng tạ"
+      },      {
+        "label": "Thể thao mạo hiểm",
+        "explain": "          Tạo video về các hoạt động mạo hiểm như leo núi, leo tường đá, đi xe đạp địa hình, trượt tuyết, dù lượn, mang lại cảm giác mạo hiểm và hồi hộp cho khán gi"
+      },      {
+        "label": "Sức khỏe và cải thiện thể chất",
+        "explain": "          Tạo video về lối sống lành mạnh, bài tập, chăm sóc sức khỏe, tư vấn dinh dưỡng và các phương pháp để cải thiện cơ thể và tinh thầ"
+      },      {
+        "label": "Phong cách sống và thời trang",
+        "explain": "          Tạo video về phong cách sống, xu hướng thời trang, cách tạo phong cách cá nhân và chia sẻ những gợi ý về trang phục và phụ kiệ"
+      },      {
+        "label": "Trò chơi và eSports",
+        "explain": "          Tạo video về trò chơi điện tử, eSports, hướng dẫn chơi game, cung cấp đánh giá và thông tin về các tựa game phổ biế"
+      },      {
+        "label": "Điện ảnh và phim",
+        "explain": "          Tạo video về ngành công nghiệp điện ảnh, đánh giá phim, trò chuyện với các nhà làm phim hoặc chia sẻ bí quyết làm phim độc đá"
+      },      {
+        "label": "Video về chó mèo",
+        "explain": "          Tạo video về các loài động vật cưng như chó, mèo, cung cấp hướng dẫn chăm sóc, huấn luyện và chia sẻ những câu chuyện đáng yêu về thú cưn"
+      },      {
+        "label": "Tự nhiên và sinh vật học",
+        "explain": "          Tạo video về thiên nhiên, môi trường sống và các loài sinh vật, khám phá động vật hoang dã, quan sát chim và các môi trường tự nhiên độc đáo trên thế giớ"
+      },      {
+        "label": "Lối sống và phong cách sống",
+        "explain": "          Tạo video về các lĩnh vực như phong cách sống bền vững, minimalism, tổ chức không gian, làm đẹp tự nhiên, nghệ thuật sống hạnh phúc và tạo ra một lối sống thư thá"
+      },      {
+        "label": "Công việc và sự nghiệp",
+        "explain": "          Tạo video về chủ đề liên quan đến công việc và sự nghiệp, bao gồm hướng dẫn tìm việc, phát triển kỹ năng, lập kế hoạch sự nghiệp và xây dựng mạng lướ"
+      },      {
+        "label": "Thử thách và cuộc sống đầy thách thức",
+        "explain": "          Tạo video về việc vượt qua những thử thách trong cuộc sống, truyền cảm hứng và chia sẻ câu chuyện về sự vươn lên và khắc phục khó khă"
+      },      {
+        "label": "Nghệ thuật và văn hóa",
+        "explain": "          Tạo video về nghệ thuật, văn hóa địa phương, triển lãm nghệ thuật, các sự kiện văn hóa và khám phá đa dạng văn hóa trên thế giớ"
+      },      {
+        "label": "Kỹ năng sáng tạo",
+        "explain": "          Tạo video hướng dẫn về kỹ năng sáng tạo như vẽ tranh, chụp ảnh, trang trí nội thất, tạo mô hình và các hoạt động thủ côn"
+      },      {
+        "label": "Kỹ năng giao tiếp",
+        "explain": "          Tạo video về kỹ năng giao tiếp hiệu quả, truyền đạt ý kiến, thuyết trình, thương lượng và xây dựng mối quan hệ tố"
+      },      {
+        "label": "Chăm sóc bản thân và tình dục",
+        "explain": "          Tạo video về chăm sóc bản thân, tình dục an toàn, tình yêu và mối quan hệ, đề xuất các phương pháp giúp tăng cường sức khỏe và sự thăng hoa cá nhâ"
+      },      {
+        "label": "Khoa học xã hội và xã hội học",
+        "explain": "          Tạo video về các chủ đề liên quan đến xã hội, văn hóa, sự đa dạng, quyền con người và các vấn đề xã hội khá"
+      },      {
+        "label": "Tự nhiên và sinh vật học",
+        "explain": "          Tạo video về thiên nhiên, môi trường sống và các loài sinh vật, khám phá động vật hoang dã, quan sát chim và các môi trường tự nhiên độc đáo trên thế giớ"
+      },      {
+        "label": "Lối sống và phong cách sống",
+        "explain": "          Tạo video về các lĩnh vực như phong cách sống bền vững, minimalism, tổ chức không gian, làm đẹp tự nhiên, nghệ thuật sống hạnh phúc và tạo ra một lối sống thư th"
+      },      {
+        "label": "Công việc và sự nghiệp",
+        "explain": "          Tạo video về chủ đề liên quan đến công việc và sự nghiệp, bao gồm hướng dẫn tìm việc, phát triển kỹ năng, lập kế hoạch sự nghiệp và xây dựng mạng lướ"
+      },      {
+        "label": "Thử thách và cuộc sống đầy thách thức",
+        "explain": "          Tạo video về việc vượt qua những thử thách trong cuộc sống, truyền cảm hứng và chia sẻ câu chuyện về sự vươn lên và khắc phục khó khă"
+      },      {
+        "label": "Nghệ thuật và văn hóa",
+        "explain": "          Tạo video về nghệ thuật, văn hóa địa phương, triển lãm nghệ thuật, các sự kiện văn hóa và khám phá đa dạng văn hóa trên thế giớ"
+      },      {
+        "label": "Kỹ năng sáng tạo",
+        "explain": "          Tạo video hướng dẫn về kỹ năng sáng tạo như vẽ tranh, chụp ảnh, trang trí nội thất, tạo mô hình và các hoạt động thủ cô"
+      },      {
+        "label": "Kỹ năng giao tiếp",
+        "explain": "          Tạo video về kỹ năng giao tiếp hiệu quả, truyền đạt ý kiến, thuyết trình, thương lượng và xây dựng mối quan hệ tố"
+      },      {
+        "label": "Khoa học xã hội và xã hội học",
+        "explain": "          Tạo video về các chủ đề liên quan đến xã hội, văn hóa, sự đa dạng, quyền con người và các vấn đề xã hội khá"
+      },      {
+        "label": "Cảnh quay đẹp và du lịch",
+        "explain": "          Tạo video về cảnh quan tuyệt đẹp, các địa điểm du lịch hấp dẫn và những trải nghiệm du lịch thú vị trên khắp thế giới."
+      }    ],
+    "description": "Chủ đề: Chủ đề là một ý tưởng, một khía cạnh rộng lớn hoặc một vấn đề tổng quát mà một bài viết, một cuộc trò chuyện hoặc một tác phẩm nghệ thuật nhắm đến. Nó đại diện cho một khối kiến",
+    "description_full": "tác phẩm nghệ thuật nhắm đến. Nó đại diện cho một khối kiến thức hoặc một lĩnh vực rộng hơn mà có thể chứa nhiều miêu tả cụ thể Miêu tả cụ thể: Miêu tả cụ thể là một lời diễn giải hoặc mô tả chi tiết hơn về một khía cạnh nhất định của chủ đề. Nó tập trung vào việc cung cấp thông tin chi tiết, ví dụ và sự phân tích để giải thích một phần của chủ đề."
+  },
+  {
+    "label": "Nhân vật",
+    "options": [
+      {
+        "label": "Nhân vật chính",
+        "explain": " Đây là nhân vật tâm điểm của câu chuyện. Hành động và sự phát triển của nhân vật chính thường tạo nên trọng tâm của kịch bả"
+      },      {
+        "label": "Nhân vật phản diện",
+        "explain": "  Nhân vật phản diện thường là kẻ thù chính của nhân vật chính. Họ thường có những mục tiêu và hành động xấu xa, tạo ra xung đột và gây khó khăn cho nhân vật chín"
+      },      {
+        "label": "Nhân vật phụ",
+        "explain": "   Đây là những nhân vật không phải là nhân vật chính hoặc phản diện, nhưng có vai trò quan trọng trong cốt truyện. Họ có thể là bạn bè, gia đình, đồng nghiệp hoặc người hướng dẫn của nhân vật chín"
+      },      {
+        "label": "Nhân vật phụ tiêu biểu",
+        "explain": "   Đây là các nhân vật xuất hiện trong một số cảnh nhỏ hoặc chỉ có tác động nhỏ đến cốt truyện. Chúng có thể là người đi qua, nhân viên nhà hàng, nhân viên văn phòng, v."
+      },      {
+        "label": "Nhân vật thứ cấp",
+        "explain": " Đây là những nhân vật có vai trò quan trọng nhưng không phải là nhân vật chính. Họ có thể có một cốt truyện phụ riêng, góp phần phát triển câu chuyện chín"
+      },      {
+        "label": "Nhân vật phụ nhóm",
+        "explain": " Đây là nhóm nhân vật có vai trò tương đương và quan trọng trong câu chuyện. Mỗi nhân vật trong nhóm có thể có những đặc điểm và mục tiêu riêng, và họ thường tương tác với nhau trong suốt kịch bản"
+      }    
+    ],
+    "description": "Nhân vật là các thực thể hư cấu hoặc thực tế trong một tác phẩm nghệ thuật, như tiểu thuyết, truyện tranh, phim ảnh, vở kịch, trò chơi điện tử và nhiều hơn nữa. Nhân vật có thể là con người",
+    "description_full": "động vật, vật thể phi thực tế hoặc thậm chí ý niệm trừu tượng."
+  },
+  {
+    "label": "Đối tượng khán giả",
+    "options": [
+      {
+        "label": "Dưới 16 tuổi",
+        "explain": "\n- Trò chơi điện t\n- Đọc sách và truyện tranh\n- Thể thao\n- Âm nhạc\n- Nghệ thuật và sáng tạo\n- Khoa học và công nghệ\n- Thiết kế và thời trang\n- Du lịch và khám phá\n- Nghệ thuật biểu diễn (hát, diễn xuất, nhảy…)\n- Động vật và thiên nhiên\n- Món ăn và nấu nướng\n- Nghệ thuật và sáng tạ"
+      },
+      {
+        "label": "Độ tuổi 18 – 24 tuổi",
+        "explain": "\n- Công nghệ và truyền thôn\n- Giải trí và nghệ thuật\n- Mua sắm và thời trang\n- Thể thao và hoạt động ngoài trời\n- Tự phát triển và học hỏi\n- Xã hội và mạng xã hội\n- Sở thích về du lịch và khám phá\n- Sở thích về ẩm thực và đồ uống\n- Sở thích về âm nhạc và các sự kiện âm nhạc 10. Phát triển cá nhân và tư duy sáng tạo\n- Sở thích về phim ảnh và truyền hình\n- Sở thích về thể thao điện tử và gam"
+      },
+      {
+        "label": "Độ tuổi từ 25 – 34 tuổi",
+        "explain": "\n- Thích thời tran\n- Làm đẹp và chăm sóc da\n- Thích đi du lịch khám phá\n- Sở thích ăn uống và nấu ăn\n- Nghệ thuật, văn hóa, giải trí (điện ảnh, âm nhạc, sự kiện…)\n- Sức khỏe và thể dục\n- Sáng tạo và DIY (Sáng tạo làm đồ thủ công trang trí nhà cửa)\n- Tình yêu\n- Nghệ thuật sáng tạo (vẽ tranh, nhiếp ảnh…)\n- Âm nhạc"
+      }
+    ],
+    "description": "Đối tượng khán giả có thể được xác định dựa trên nhiều yếu tố khác nhau như độ tuổi, giới tính, vị trí địa lý, sở thích, giáo dục, thu nhập, nhóm dân tộc hoặc bất kỳ yếu tố nào khác.",
+    "description_full": "Việc hiểu rõ đối tượng khán giả là một phần quan trọng của quá trình phát triển và tiếp thị sản phẩm, dịch vụ hoặc sự kiện."
+  },
+  {
+    "label": "Phong cách diễn",
+    "options": [
+      {
+        "label": "Vui vẻ",
+        "explain": "      một trường phái diễn xuất mà các diễn viên thể hiện tính cách vui vẻ, lạc quan và mang lại niềm vui cho khán giả. Các diễn viên với phong cách này thường có khả năng tạo ra tiếng cười, sự hài hước và sự lạc quan trong các vai diễn của h"
+      },
+      {
+        "label": "Buồn tâm trạng",
+        "explain": "là một trường phái diễn xuất mà các diễn viên thể hiện sự đau khổ, nỗi buồn và tâm trạng u sầu của nhân vật. Các diễn viên với phong cách này có khả năng thể hiện sự đau đớn và khắc sâu vào tâm trí của khán giả"
+      },
+      {
+        "label": "Lạc quan",
+        "explain": "        là một trường phái diễn xuất mà các diễn viên thể hiện tính cách lạc quan, niềm tin vào cuộc sống và khả năng nhìn nhận mặt tích cực của các tình huống. Các diễn viên với phong cách này thường mang đến sự sảng khoái, lạc quan và tạo ra một không khí tích cực cho khán gi"
+      },
+      {
+        "label": "Tiêu cực",
+        "explain": "      Là một trường phái diễn xuất mà các diễn viên thể hiện tính cách tiêu cực, sự bi quan và sự đau khổ của nhân vật. Các diễn viên với phong cách này thường có khả năng thể hiện sự tiêu cực và tạo ra một không khí u ám cho khán gi"
+      },
+      {
+        "label": "Buồn",
+        "explain": "      là một trường phái diễn xuất mà các diễn viên thể hiện sự đau khổ, nỗi buồn và tâm trạng u sầu của nhân vật. Các diễn viên với phong cách này có khả năng thể hiện sự đau đớn và khắc sâu vào tâm trí của khán g"
+      },
+      {
+        "label": "Hài kịch",
+        "explain": "      Các diễn viên trong thể loại này thường có phong cách diễn hài hước, linh hoạt và có khả năng tạo tiếng cười cho khán giả. Họ có thể sử dụng các kỹ năng như phản ứng nhanh, trào lưu, độc thoại và cử chỉ hài hước để mang lại hiệu ứng giải tr"
+      },
+      {
+        "label": "Hành động",
+        "explain": "      Trong các bộ phim hành động, các diễn viên thường có phong cách diễn đậm chất hành động. Họ có thể thể hiện những cú đấm, cú đá, nhảy lầu và các cảnh hành động mãn nhãn khác. Phong cách diễn của họ thường đòi hỏi khả năng thể chất, tập luyện và kỹ thuật chiến đấ"
+      },
+      {
+        "label": "Kịch",
+        "explain": "      Trên sân khấu, các diễn viên thường có phong cách diễn chân thực và sâu sắc. Họ phải thể hiện cảm xúc, đối đáp và diễn đạt qua lời thoại và hành động. Phong cách diễn trong kịch thường tập trung vào sự tương tác trực tiếp với khán giả và khả năng biểu diễn trên sân khấ"
+      },
+      {
+        "label": "Lãng mạn",
+        "explain": "      Trong các bộ phim lãng mạn, các diễn viên thường có phong cách diễn tình cảm và ấm áp. Họ có thể sử dụng kỹ năng như ánh mắt, cử chỉ nhẹ nhàng và diễn đạt tình yêu, lòng trắc ẩn qua các cảnh tình cả"
+      },
+      {
+        "label": "Khoa học viễn tưởng",
+        "explain": "      Trong các bộ phim khoa học viễn tưởng, phong cách diễn của các diễn viên thường được tập trung vào việc diễn tả thế giới hư cấu, công nghệ tương lai và tương tác với hiệu ứng đặc biệt. Họ có thể phải thể hiện sự kỳ quặc, táo bạo và khám phá các khía cạnh không gian và thời gia"
+      },
+      {
+        "label": "Kinh dị",
+        "explain": "      Trong thể loại phim kinh dị, các diễn viên thường có phong cách diễn tạo cảm giác hoảng sợ và căng thẳng. Họ phải thể hiện sự sợ hãi, lo lắng và phản ứng đối mặt với tình huống đáng sợ. Phong cách diễn trong phim kinh dị thường tập trung vào việc tạo hiệu ứng ám ảnh và làm cho khán giả cảm thấy lo lắn"
+      },
+      {
+        "label": "Drama",
+        "explain": "      Trong các bộ phim drama, các diễn viên thường có phong cách diễn trưởng thành và chân thực. Họ phải thể hiện cảm xúc sâu sắc, tình yêu, sự đau khổ và đối mặt với các tình huống khó khăn. Phong cách diễn trong drama thường yêu cầu khả năng diễn xuất tinh tế và khả năng biểu đạt cảm xúc qua ngôn ngữ cơ thể và diễn xuất tâm l"
+      },
+      {
+        "label": "Hoạt hình",
+        "explain": "      Trong lĩnh vực hoạt hình, các diễn viên thường không xuất hiện trực tiếp trên màn hình, mà thể hiện giọng nói và tính cách của nhân vật hoạt hình. Phong cách diễn của họ phải truyền đạt rõ ràng và sáng tạo qua giọng điệu, phong cách diễn đạt và khả năng thể hiện các cảm xúc bằng giọng nó"
+      },
+      {
+        "label": "Truyền hình thực tế",
+        "explain": "      Trong các chương trình truyền hình thực tế như cuộc thi âm nhạc, chương trình nấu ăn hoặc chương trình thực tế, các diễn viên thường có phong cách diễn tự nhiên và thể hiện bản thân. Họ phải sử dụng kỹ năng giao tiếp và tạo ấn tượng với khán giả truyền hình qua các phần trình diễn, phỏng vấn và thể hiện cá nhâ"
+      },
+      {
+        "label": "Lịch sử",
+        "explain": "      Trong các bộ phim lịch sử, các diễn viên thường có phong cách diễn trang trọng và chân thực. Họ phải nghiên cứu và tái hiện lại các nhân vật lịch sử, ngôn ngữ và tình huống thời đại. Phong cách diễn trong phim lịch sử đòi hỏi khả năng tạo nét thời gian, tư duy cổ điển và khả năng thể hiện sự trang nghiêm của thời kỳ đ"
+      },
+      {
+        "label": "Hài lãng mạn",
+        "explain": " Đây là nhân vật tâm điểm của câu chuyện. Hành động và sự phát triển của nhân vật chính thường tạo nên trọng tâm của kịch bả"
+      },      {
+        "label": "Hành vi tội phạm",
+        "explain": "      Trong các bộ phim hành vi tội phạm, các diễn viên thường có phong cách diễn quyền lực và đáng sợ. Họ phải thể hiện sự tàn ác, sự lừa dối và tính cách bí ẩn của các nhân vật tội phạm. Phong cách diễn trong phim hành vi tội phạm thường đòi hỏi khả năng tạo sự căng thẳng và biểu đạt sự áp đặ"
+      },
+      {
+        "label": "Học đường",
+        "explain": "      Trong các bộ phim học đường, các diễn viên thường có phong cách diễn trẻ trung và sôi động. Họ phải thể hiện các tình huống, mối quan hệ và sự phát triển của nhân vật trong môi trường học đường. Phong cách diễn trong phim học đường thường tập trung vào sự năng động, cảm xúc trẻ thơ và tương tác giữa các nhân vật tr"
+      },
+      {
+        "label": "Hài gia đình",
+        "explain": "      Trong các bộ phim hài gia đình, các diễn viên thường có phong cách diễn đồng điệu và gần gũi. Họ phải thể hiện các tình huống hài hước trong cuộc sống gia đình, tương tác giữa các thành viên và tạo ra tiếng cười từ những tình huống hằng ngày. Phong cách diễn trong phim hài gia đình thường nhấn mạnh vào sự hài hước tự nhiên, đời thường và khả năng tạo sự đồng cảm với khán giả gia đìn"
+      },
+      {
+        "label": "Chiến tranh",
+        "explain": "      Trong các bộ phim chiến tranh, các diễn viên thường có phong cách diễn tràn đầy cảm xúc và mạnh mẽ. Họ phải thể hiện sự sợ hãi, lòng can đảm và trải qua những trạng thái tâm lý phức tạp trong môi trường chiến tranh. Phong cách diễn trong phim chiến tranh đòi hỏi khả năng tạo hiệu ứng tâm lý mạnh mẽ và khả năng thể hiện sự đau khổ và hy sin"
+      },
+      {
+        "label": "Tình cảm",
+        "explain": "      Trong các bộ phim tình cảm, các diễn viên thường có phong cách diễn tình tứ và lãng mạn. Họ phải thể hiện tình yêu, đau khổ và mối quan hệ giữa các nhân vật. Phong cách diễn trong phim tình cảm thường tập trung vào khả năng tạo sự kết nối tình cảm, tình huống lãng mạn và khả năng biểu hiện sự tương tác giữa các nhân vậ"
+      },
+      {
+        "label": "Bi kịch",
+        "explain": "      Trong các bộ phim bi kịch, các diễn viên thường có phong cách diễn trầm ủy và đầy cảm xúc. Họ phải thể hiện sự đau khổ, cảm giác mất mát và đối đầu với những khó khăn trong cuộc sống. Phong cách diễn trong phim bi kịch đòi hỏi khả năng thể hiện sự sâu sắc và khả năng biểu diễn cảm xúc mạnh m"
+      },
+      {
+        "label": "Phiêu lưu",
+        "explain": "      Trong các bộ phim phiêu lưu, các diễn viên thường có phong cách diễn năng động và thám hiểm. Họ phải thể hiện sự dũng cảm, khéo léo và trải qua những cuộc phiêu lưu mạo hiểm. Phong cách diễn trong phim phiêu lưu thường đòi hỏi khả năng tạo hiệu ứng hành động, tương tác với môi trường và khả năng đối mặt với các thách thức khó khă"
+      },
+      {
+        "label": "Hài đen",
+        "explain": "      Trong các bộ phim hài đen, các diễn viên thường có phong cách diễn châm biếm và đậm tính mỉa mai. Họ phải thể hiện sự hài hước từ những tình huống mờ ám, trái ngược và thể hiện một góc nhìn cười chế nhạo về những vấn đề nghiêm trọng. Phong cách diễn trong phim hài đen thường yêu cầu khả năng biểu diễn một cách sắc bén, châm biếm và tạo hiệu ứng hài hước từ những tình huống bất ng"
+      },
+      {
+        "label": "Tài liệu",
+        "explain": "      Trong phim tài liệu, các diễn viên thường có phong cách diễn tự nhiên và thực tế. Thay vì đóng vai nhân vật hư cấu, họ thường đóng vai chính bản thân mình hoặc vai diễn người thực sự. Phong cách diễn trong phim tài liệu tập trung vào việc truyền đạt thông tin, chia sẻ câu chuyện và tạo một trải nghiệm thực tế cho khán gi"
+      },
+      {
+        "label": "Hài spoof",
+        "explain": "      Trong phim hài spoof, các diễn viên thường có phong cách diễn châm biếm và lố bịch. Họ thường tạo ra các phiên bản chế giễu, nhại lại và châm biếm các tác phẩm, thể loại hoặc nhân vật nổi tiếng. Phong cách diễn trong phim hài spoof yêu cầu khả năng tạo hiệu ứng hài hước từ việc làm trò, lồng tiếng hài hước và chơi trên sự quen thuộc với nguyên tác gố"
+      },
+      {
+        "label": "Nghệ thuật",
+        "explain": "      Trong phim nghệ thuật, các diễn viên thường có phong cách diễn tinh tế và mang tính nghệ thuật cao. Họ thể hiện các cảnh quan, cảm xúc sâu sắc và ý nghĩa tượng trưng qua diễn xuất và biểu đạt cơ thể. Phong cách diễn trong phim nghệ thuật tập trung vào khả năng tạo sự thẩm mỹ, sự tỉ mỉ trong từng cử chỉ và tạo cảm giác trầm tư, triết lý cho khán gi"
+      },
+      {
+        "label": "Tội phạm",
+        "explain": "      Trong phim tội phạm, các diễn viên thường có phong cách diễn mạnh mẽ và đáng sợ. Họ thể hiện tính cách tội phạm, sự tàn ác và mưu mô trong nhân vật của mình. Phong cách diễn trong phim tội phạm đòi hỏi khả năng biểu diễn sự đe dọa, tạo sự căng thẳng và tạo hiệu ứng ám ảnh cho khán gi"
+      },
+      {
+        "label": "Thể thao",
+        "explain": "      Trong phim thể thao, các diễn viên thường có phong cách diễn năng động và sự kiên nhẫn. Họ thể hiện các kỹ năng thể thao, sự cạnh tranh và tinh thần thể thao trong vai diễn. Phong cách diễn trong phim thể thao yêu cầu khả năng thể hiện cảm xúc trong thể thao, tạo hiệu ứng hành động và tạo mối liên kết với khán giả qua niềm đam mê và cống hiế"
+      },
+      {
+        "label": "Hoạt hình hài",
+        "explain": "      Trong phim hoạt hình hài, các diễn viên thường có phong cách diễn lém lỉnh và hài hước. Họ thể hiện các giọng nói và nhân vật hoạt hình độc đáo, tạo ra tiếng cười và tình huống hài hước. Phong cách diễn trong phim hoạt hình hài tập trung vào khả năng làm chủ giọng điệu, giao tiếp hài hước và tạo ra những nhân vật đáng yêu và độc đá"
+      },
+      {
+        "label": "Trinh thám",
+        "explain": "      Trong phim trinh thám, các diễn viên thường có phong cách diễn sắc nét và tinh tế. Họ thể hiện các tình huống giải quyết bí ẩn, sự thông minh và sự tinh tường trong vai diễn. Phong cách diễn trong phim trinh thám đòi hỏi khả năng phân tích, diễn tả suy luận và tạo hiệu ứng bất ngờ cho khán gi"
+      },
+      {
+        "label": "Ca nhạc",
+        "explain": "      Trong phim ca nhạc, các diễn viên thường có phong cách diễn năng động và tạo hình sân khấu. Họ thể hiện các màn trình diễn âm nhạc, nhảy múa và tạo sự truyền cảm qua nghệ thuật biểu diễn. Phong cách diễn trong phim ca nhạc tập trung vào khả năng biểu diễn âm nhạc, tạo hiệu ứng trực quan và kết nối với khán giả qua nghệ thuật trình diễ"
+      },
+      {
+        "label": "Siêu anh hùng",
+        "explain": "      Trong phim siêu anh hùng, các diễn viên thường có phong cách diễn mạnh mẽ và hành động. Họ thể hiện các khả năng siêu nhiên, sức mạnh vượt trội và sự dũng cảm trong vai diễn. Phong cách diễn trong phim siêu anh hùng yêu cầu khả năng tạo hiệu ứng hành động, tương tác với hiệu ứng đặc biệt và mang đến sự hào hùng và sự cảm nhận sức mạnh cho khán gi"
+      },
+      {
+        "label": "Kịch tính",
+        "explain": "      Trong phim kịch tính, các diễn viên thường có phong cách diễn sôi động và mạnh mẽ. Họ thể hiện các tình huống căng thẳng, xung đột và sự đối đầu giữa các nhân vật. Phong cách diễn trong phim kịch tính đòi hỏi khả năng tạo sự căng thẳng, diễn xuất đầy cảm xúc và khả năng thể hiện sự hồi hộp và giữ chân khán gi"
+      },
+      {
+        "label": "Nhạc kịch",
+        "explain": "      Trong phim nhạc kịch, các diễn viên thường có phong cách diễn tinh tế và biểu diễn âm nhạc. Họ thể hiện câu chuyện qua âm nhạc, lời hát và biểu diễn sân khấu. Phong cách diễn trong phim nhạc kịch tập trung vào khả năng biểu diễn âm nhạc, tạo hiệu ứng sân khấu và kết hợp giữa diễn xuất và trình diễn âm nhạ"
+      },
+      {
+        "label": "Gia đình",
+        "explain": "      Trong phim gia đình, các diễn viên thường có phong cách diễn gần gũi và chân thực. Họ thể hiện các tình huống và mối quan hệ trong gia đình, tạo ra sự cảm thông và liên kết với khán giả. Phong cách diễn trong phim gia đình tập trung vào khả năng tạo sự gần gũi, biểu hiện tình cảm gia đình và tạo một môi trường phim đáng yêu và ấm á"
+      },
+      {
+        "label": "Kỳ ảo",
+        "explain": "      Trong phim kỳ ảo, các diễn viên thường có phong cách diễn sáng tạo và phantasmagoric. Họ thể hiện các thế giới hư cấu, nhân vật kỳ lạ và hiệu ứng đặc biệt. Phong cách diễn trong phim kỳ ảo yêu cầu khả năng sáng tạo, khám phá và khả năng thích ứng với các yêu cầu khác nhau trong môi trường ả"
+      },
+      {
+        "label": "Chính kịch",
+        "explain": "      Trong phim chính kịch, các diễn viên thường có phong cách diễn chân thực và sâu sắc. Họ thể hiện các tình huống đau khổ, xúc động và sự khắc nghiệt của cuộc sống. Phong cách diễn trong phim chính kịch đòi hỏi khả năng biểu diễn tinh tế, tạo hiệu ứng cảm xúc và khả năng kết nối với khán giả qua trải nghiệm nhân vă"
+      },
+      {
+        "label": "Thần thoại",
+        "explain": "      Trong phim thần thoại, các diễn viên thường có phong cách diễn hùng biện và ma mị. Họ thể hiện các nhân vật huyền thoại, thần thánh và các sự kiện siêu nhiên trong câu chuyện thần thoại. Phong cách diễn trong phim thần thoại đòi hỏi khả năng tạo hiệu ứng phép thuật, diễn xuất ma quái và khả năng tạo sự mê hoặc cho khán gi"
+      },
+      {
+        "label": "Chính trị",
+        "explain": "      Trong phim chính trị, các diễn viên thường có phong cách diễn sắc bén và sự nhạy bén với vấn đề xã hội. Họ thể hiện các nhân vật chính trị, lãnh đạo và các cuộc đấu tranh trong xã hội. Phong cách diễn trong phim chính trị đòi hỏi khả năng phân tích sự quyền lực, biểu diễn phản kháng và tạo hiệu ứng tác động xã hộ"
+      },
+      {
+        "label": "Dã sử",
+        "explain": "      Trong phim dã sử, các diễn viên thường có phong cách diễn quyền lực và can đảm. Họ thể hiện cuộc sống và những sự kiện trong quá khứ, tạo ra một hình ảnh trung thực về thời đại đó. Phong cách diễn trong phim dã sử đòi hỏi khả năng hòa nhập với môi trường lịch sử, biểu diễn truyền thống và khả năng thể hiện cuộc sống trong thời kỳ đó."
+      }
+    ],
+    "description": " Phong cách diễn là cách mà một tác phẩm được biểu diễn hoặc trình bày. Nó thể hiện cái nhìn cá nhân của người nghệ sĩ hoặc nhóm nghệ sĩ và có thể ảnh hưởng đến cách tác phẩm được truyền đạt và tạo hiệu",
+    "description_full": "ứng lên khán giả. Ví dụ, trong diễn xuất, có nhiều phong cách diễn như hài hước, bi kịch, thực tế, múa, và nhiều hơn nữa. Trong âm nhạc, phong cách diễn có thể thể hiện qua cách ca hát, cách chơi nhạc cụ và cách sắp xếp âm nhạc."
+  },
+  {
+    "label": "Lời thoại/ Biểu cảm",
+    "options": [
+      {
+        "label": "Nói chuyện",
+        "explain": " Đây là kiểu lời thoại trong đó diễn viên đóng vai một cuộc hội thoại giữa hai hoặc nhiều nhân vật. Lời thoại nói chuyện thường thể hiện sự giao tiếp, tương tác và mối quan hệ giữa các nhân vậ"
+      },      {
+        "label": "Hài hước",
+        "explain": " Đây là kiểu lời thoại được sử dụng trong các tình huống hài hước và nhằm mục đích làm cho khán giả cười. Diễn viên sử dụng từ ngữ, ngữ điệu và giọng điệu mang tính chất hài hước để tạo nên hiệu ứng gây cười và mang lại niềm vui cho khán g"
+      },
+      {
+        "label": "Nội tâm",
+        "explain": "   Đây là kiểu lời thoại mà diễn viên nói ra trong tâm trí nhân vật mà không trực tiếp thể hiện ra bên ngoài. Lời thoại nội tâm thường được sử dụng để truyền đạt suy nghĩ, cảm xúc và ý nghĩa sâu bên trong của nhân vậ"
+      },      {
+        "label": "Trực tiếp",
+        "explain": " Đây là kiểu lời thoại thông thường, khi diễn viên diễn xuất trực tiếp trên sân khấu hoặc trước camera. Họ sử dụng từ ngữ, ngữ điệu và giọng điệu để truyền đạt thông điệp và cảm xúc của nhân vậ"
+      },      {
+        "label": "Lời thoại monolog",
+        "explain": " Đây là kiểu lời thoại mà diễn viên diễn xuất một mình, không có sự tương tác với những người khác. Lời thoại monolog thường thể hiện suy nghĩ, trạng thái tâm lý và cảm xúc sâu của nhân vậ"
+      },      {
+        "label": "Cử chỉ cơ thể",
+        "explain": "      Sử dụng các cử chỉ, tư thế và di chuyển của cơ thể, diễn viên có thể tạo ra các biểu cảm sâu sắc và truyền đạt cảm xúc của nhân vậ"
+      },
+      {
+        "label": "Khuôn mặt",
+        "explain": "      Diễn viên sử dụng các miểng mặt, mắt, mày, môi và cằm để tạo ra biểu cảm phù hợp với cảm xúc của nhân vậ"
+      },
+      {
+        "label": "Trang trọng",
+        "explain": " Đây là kiểu lời thoại được sử dụng trong các tình huống trang trọng, nghiêm túc và mang tính chất trọng đại. Diễn viên sử dụng từ ngữ, ngữ điệu và giọng điệu nghiêm túc để tạo ra hiệu ứng tác động mạnh mẽ và truyền đạt ý nghĩa sâu sắc đến khán g"
+      },      {
+        "label": "Đa dạng",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng nhiều phương pháp và kỹ thuật khác nhau để thể hiện đa dạng cảm xúc của nhân vật. Từ biểu cảm khuôn mặt, cử chỉ cơ thể, giọng điệu đến lời thoại, diễn viên tạo ra một phong cách biểu diễn đa chiều và đa tác độn"
+      },      {
+        "label": "Tưởng tượng",
+        "explain": " Đây là kiểu lời thoại trong đó diễn viên diễn tưởng tượng một tình huống hoặc cuộc trò chuyện mà không có sự hiện diện của người khác. Lời thoại tưởng tượng thường được sử dụng để truyền đạt suy nghĩ, tưởng tượng và những ý nghĩa sâu sắc của nhân vậ"
+      },      {
+        "label": "Lặng",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng sự im lặng để truyền đạt cảm xúc và ý nghĩa. Thông qua cử chỉ, khuôn mặt và cơ thể, diễn viên tạo ra một tác động mạnh mẽ mà không cần sử dụng lời tho"
+      },      {
+        "label": "Đối thoại",
+        "explain": " Đây là kiểu lời thoại được sử dụng trong các cuộc trò chuyện giữa hai hoặc nhiều nhân vật. Lời thoại đối thoại thường truyền đạt sự giao tiếp, tương tác và mối quan hệ giữa các nhân vậ"
+      },      {
+        "label": "Hành động",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng các hành động cụ thể để truyền đạt cảm xúc và ý nghĩa. Các hành động như vụt qua mắt, nhấp nháy, chậm rãi hay nhanh chóng có thể tạo ra một tác động mạnh mẽ và truyền tải cảm xúc một cách rõ ràn"
+      },      {
+        "label": "Hồi tưởng",
+        "explain": " Đây là kiểu lời thoại trong đó diễn viên diễn tưởng tượng lại một sự kiện hoặc kỷ niệm trong quá khứ của nhân vật. Lời thoại hồi tưởng thường được sử dụng để tái hiện lại những cảm xúc, ký ức và ý nghĩa đặc biệt của nhân v"
+      },      {
+        "label": "Đối lập",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng để tạo ra một sự tương phản giữa các cảm xúc đối lập. Ví dụ, diễn viên có thể thể hiện sự trái ngược giữa niềm vui và đau khổ, sợ hãi và sự can đảm, tạo ra một hiệu ứng mạnh mẽ và gây chú "
+      },      {
+        "label": "Nghẹn ngào",
+        "explain": " Đây là kiểu lời thoại trong đó diễn viên sử dụng giọng điệu cụ thể để tạo ra một hiệu ứng nghẹn ngào và truyền đạt cảm xúc sâu sắc của nhân vật. Lời thoại nghẹn ngào thường được sử dụng để truyền đạt sự cảm động, đau buồn hoặc sự đau khổ tâm l"
+      },      {
+        "label": "Tình yêu",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng để truyền đạt tình yêu, lòng trung thành và sự ấm áp của nhân vật. Các biểu cảm như cử chỉ âu yếm, mắt long lanh, và nụ cười hạnh phúc có thể mang đến một cảm giác lãng mạn và tình cảm cho khán gi"
+      },      {
+        "label": "Hồi đáp",
+        "explain": " Đây là kiểu lời thoại mà diễn viên sử dụng để trả lời hoặc phản ứng lại lời thoại hoặc tương tác của nhân vật khác. Lời thoại hồi đáp thường truyền đạt sự đồng tình, phản bác, hoặc tương tác trong một cuộc trò chuyện giữa các nhân vậ"
+      },      {
+        "label": "Sợ hãi",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng để truyền đạt sự sợ hãi, lo lắng và căng thẳng của nhân vật. Các biểu cảm như khuôn mặt mắt to tròn, cơ thể run rẩy và tiếng nói run rẩy có thể tạo ra một tác động mạnh mẽ để khán giả cảm nhận được tình trạng sợ hã"
+      },      {
+        "label": "Cảm thông",
+        "explain": " Đây là kiểu lời thoại mà diễn viên sử dụng để truyền đạt sự thông cảm và đồng cảm của nhân vật với những tình huống, cảm xúc hoặc khó khăn của người khác. Lời thoại đầy sự cảm thông thường được sử dụng để tạo ra một mối kết nối và sự gắn kết giữa nhân vật và khán gi"
+      },      {
+        "label": "Ngạc nhiên",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng để truyền đạt sự ngạc nhiên, kinh ngạc hoặc bất ngờ của nhân vật. Biểu cảm như miệng mở to, mắt tròn và sự giật mình có thể tạo ra một hiệu ứng đáng chú ý và thu hút sự chú ý của khán gi"
+      },      {
+        "label": "Cảm nhận",
+        "explain": " Đây là kiểu lời thoại mà diễn viên sử dụng để diễn tả và truyền đạt cảm xúc, suy nghĩ và trạng thái tâm lý của nhân vật một cách sâu sắc. Lời thoại cảm nhận thường tạo ra một sự kết nối tinh tế và sâu xa giữa nhân vật và khán gi"
+      },      {
+        "label": "Vui mừng",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng để truyền đạt sự vui mừng, hạnh phúc và sự phấn khởi của nhân vật. Các biểu cảm như nụ cười rạng rỡ, cử chỉ nhảy múa và giọng nói phấn khởi có thể mang lại một không khí lạc quan và niềm vui cho khán gi"
+      },      {
+        "label": "Đau khổ",
+        "explain": " Đây là kiểu lời thoại mà diễn viên sử dụng để truyền đạt sự đau khổ, khốn khó và cảm giác mất mát của nhân vật. Lời thoại đau khổ thường truyền đạt sự tuyệt vọng, sự đau đớn và trạng thái tâm lý khó khăn của nhân vậ"
+      },      {
+        "label": "Tự tin",
+        "explain": " Đây là kiểu lời thoại mà diễn viên sử dụng để truyền đạt sự tự tin, sự mạnh mẽ và lòng kiên nhẫn của nhân vật. Lời thoại đầy tự tin thường tạo ra một ấn tượng mạnh mẽ và khẳng định đẳng cấp của nhân vậ"
+      },      {
+        "label": "Tò mò",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng để truyền đạt sự tò mò, sự khám phá và sự hứng thú của nhân vật. Các biểu cảm như cái nhìn tò mò, cử chỉ khám phá và giọng điệu tò mò có thể tạo ra sự hứng thú và kích thích tò mò cho khán gi"
+      },      {
+        "label": "Quyết đoán",
+        "explain": " Đây là kiểu lời thoại mà diễn viên sử dụng để truyền đạt sự quyết đoán, sự quả quyết và lòng kiên nhẫn của nhân vật. Lời thoại quyết đoán thường tạo ra một ấn tượng mạnh mẽ và đem lại sự tôn trọng từ khán g"
+      },      {
+        "label": "Đau đớn",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng để truyền đạt sự đau đớn, khổ đau và sự bất lực của nhân vật. Biểu cảm như khuôn mặt bi thương, cử chỉ đau đớn và giọng nói lẩm bẩm có thể tạo ra một hiệu ứng đáng chú ý và cảm xúc sâu sắc cho khán g"
+      },
+      {
+        "label": "Hy vọng",
+        "explain": " Đây là kiểu lời thoại mà diễn viên sử dụng để truyền đạt sự hy vọng, lòng tin và sự lạc quan của nhân vật. Lời thoại đầy hy vọ"
+      },      {
+        "label": "Khát vọng",
+        "explain": " Đây là kiểu lời thoại mà diễn viên sử dụng để truyền đạt sự khao khát, hoài bão và sự quyết tâm của nhân vật. Lời thoại đầy khát vọng thường mang đến một tinh thần hăng hái, sự kiên trì và lòng say mê cho khán gi"
+      },      {
+        "label": "Hối hận",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng để truyền đạt sự hối hận, sự cảm thấy áy náy và sự xót xa của nhân vật. Biểu cảm như khuôn mặt đau khổ, cử chỉ tiếc nuối và giọng điệu xin lỗi có thể tạo ra một hiệu ứng cảm động và khó quên đối với khán gi"
+      },      {
+        "label": " Bí ẩn",
+        "explain": " Đây là kiểu lời thoại mà diễn viên sử dụng để truyền đạt sự bí ẩn, sự lắp ghép và sự gợi cảm của nhân vật. Lời thoại bí ẩn thường tạo ra sự tò mò, sự đặc biệt và khám phá cho khán gi"
+      },      {
+        "label": "Tàn nhẫn",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng để truyền đạt sự tàn nhẫn, sự lạnh lùng và sự độc ác của nhân vật. Các biểu cảm như khuôn mặt lạnh lùng, cử chỉ cắn rứt và giọng điệu sắc lạnh có thể tạo ra một hiệu ứng đáng sợ và tạo cảm giác khó chịu cho khán gi"
+      },      {
+        "label": "Đồng lòng",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng để truyền đạt sự đồng lòng, sự đoàn kết và tình yêu thương của nhân vật. Các biểu cảm như cử chỉ yêu thương, mắt ấm áp và giọng điệu đồng lòng có thể mang đến một cảm giác an lành và sự kết nối tình cảm cho khán gi"
+      },      {
+        "label": " Lắng đọng",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng để truyền đạt sự lắng đọng, sự tĩnh lặng và sự sâu sắc của nhân vật. Các biểu cảm như khuôn mặt trầm tư, cử chỉ chậm rãi và giọng điệu êm đềm có thể tạo ra một hiệu ứng tĩnh lặng và lôi cuốn đối với khán gi"
+      },      {
+        "label": "Bất ngờ",
+        "explain": " Đây là kiểu lời thoại mà diễn viên sử dụng để truyền đạt sự bất ngờ, sự shock và sự kinh ngạc của nhân vật. Lời thoại đầy bất ngờ thường tạo ra một sự gây chú ý và làm cho khán giả đặt câu hỏi về diễn biến của câu chuyệ"
+      },      {
+        "label": " Khó chịu",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng để truyền đạt sự khó chịu, sự bực bội và sự căng thẳng của nhân vật. Các biểu cảm như khuôn mặt tức giận, cử chỉ khó chịu và giọng nói căng thẳng có thể tạo ra một hiệu ứng mạnh mẽ và tạo cảm giác bất an cho khán gi"
+      },      {
+        "label": "Nhanh nhảu",
+        "explain": " Đây là kiểu lời thoại mà diễn viên sử dụng để truyền đạt sự nhanh nhẹn, sự hài hước và sự thông minh của nhân vật. Lời thoại nhanh nhảu thường tạo ra một tác động sắc bén và tạo cảm giác hứng thú cho khán gi"
+      },      {
+        "label": "Cảm kích",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng để truyền đạt sự cảm kích, sự xúc động và sự rung động của nhân vật. Biểu cảm như khuôn mặt đầy cảm xúc, cử chỉ run rẩy và giọng điệu rung cảm có thể tạo ra một hiệu ứng mạnh mẽ và gợi cảm giác sửng sốt cho khán gi"
+      },      {
+        "label": "Lời thoại truyền động lực",
+        "explain": " Đây là kiểu lời thoại mà diễn viên sử dụng để truyền đạt sự động lực, sự khích lệ và sự can đảm của nhân vật. Lời thoại truyền động lực thường tạo ra một tác động tích cực và thúc đẩy khán giả để tin tưởng và hâm mộ nhân vậ"
+      },      {
+        "label": "Tình huống",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng để truyền đạt sự phản ứng, sự phấn khởi và sự chấn động của nhân vật trong một tình huống cụ thể. Biểu cảm này có thể bao gồm các hành động, khuôn mặt và giọng điệu phản ánh cảm xúc của nhân vật đối với một sự kiện hoặc trạng thái xảy r"
+      },      {
+        "label": "Tình tứ",
+        "explain": " Đây là kiểu lời thoại mà diễn viên sử dụng để truyền đạt sự tình tứ, sự lãng mạn và sự yêu thương của nhân vật. Lời thoại tình tứ thường tạo ra một không khí lãng mạn và tạo cảm giác yêu đương cho khán gi"
+      },      {
+        "label": "Thất vọng",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng để truyền đạt sự thất vọng, sự chán nản và sự buồn bã của nhân vật. Biểu cảm như khuôn mặt buồn bã, cử chỉ nản lòng và giọng điệu mất mát có thể tạo ra một hiệu ứng đau buồn và tạo cảm giác đồng cảm trong khán gi"
+      },      {
+        "label": "Lạc quan",
+        "explain": " Đây là kiểu lời thoại mà diễn viên sử dụng để truyền đạt sự lạc quan, sự tin tưởng và sự lạc quan của nhân vật. Lời thoại lạc quan thường tạo ra một không khí tích cực và mang lại hy vọng cho khán g"
+      },      {
+        "label": "Khao khát",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng để truyền đạt sự khao khát, sự mong muốn và sự háo hức của nhân vật. Các biểu cảm như khuôn mặt phấn khởi, cử chỉ háo hức và giọng điệu hào hứng có thể tạo ra một hiệu ứng đầy sự tò mò và kích thích cho khán gi"
+      },      {
+        "label": "Đồng điệu",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng để truyền đạt sự đồng điệu, sự hòa nhập và sự thích ứng của nhân vật với môi trường xung quanh. Các biểu cảm như khuôn mặt thỏa mãn, cử chỉ hài lòng và giọng điệu hòa hợp có thể tạo ra một hiệu ứng tương hợp và sự gắn kết giữa nhân vật và khán gi"
+      },      {
+        "label": "Bối rối",
+        "explain": " Đây là kiểu lời thoại mà diễn viên sử dụng để truyền đạt sự bối rối, sự lúng túng và sự mất kiểm soát của nhân vật trong tình huống nào đó. Lời thoại bối rối thường mang đến một tình huống hài hước hoặc đem lại sự đồng cảm từ khán gi"
+      },      {
+        "label": "Vô tư",
+        "explain": " Đây là kiểu biểu cảm mà diễn viên sử dụng để truyền đạt sự vô tư, sự thoải mái và sự tự nhiên của nhân vật. Các biểu cảm như khuôn mặt thư thái, cử chỉ thảnh thơi và giọng điệu bình thản có thể tạo ra một hiệu ứng thư giãn và sự thoải mái cho khán gi"
+      },      {
+        "label": "Tình cảm",
+        "explain": " Đây là kiểu lời thoại mà diễn viên sử dụng để truyền đạt sự tình cảm, sự cảm kích và sự yêu thương của nhân vật đối với một người khác. Lời thoại tình cảm thường tạo ra một không khí lãng mạn và đem lại cảm giác yêu đương cho khán gi"
+      },      {
+        "label": "Khích lệ",
+        "explain": " Đây là kiểu lời thoại mà diễn viên sử dụng để truyền đạt sự khích lệ, sự động viên và sự hỗ trợ của nhân vật đối với người khác. Lời thoại khích lệ thường mang đến một thông điệp tích cực và đem lại niềm tin cho khán gi"
+      }    
+    ],
+    "description": "Lời thoại: Lời thoại là những từ, câu hoặc đoạn văn được diễn viên hoặc người biểu diễn sử dụng để truyền đạt thông điệp, tương tác với các nhân vật khác hoặc truyền tải câu chuyện trong một tác phẩm nghệ thuật. Lời thoại có ",
+    "description_full": "thể xuất hiện trong kịch, phim, truyện tranh, vở opera và nhiều loại tác phẩm khác. Biểu cảm: Biểu cảm là cách diễn viên hoặc người biểu diễn sử dụng cơ thể, khuôn mặt, giọng nói và cử chỉ để truyền đạt cảm xúc, ý nghĩa hoặc ý kiến trong một tác phẩm nghệ thuật. Nó là cách để diễn viên tạo ra sự kết nối với khán giả và tạo ra hiệu ứng nghệ thuật. Biểu cảm có thể bao gồm cách diễn viên di chuyển, nhảy múa, thể hiện kỹ năng vũ đạo, biểu diễn trên sân khấu hay sử dụng các kỹ thuật hóa trang và trang phục để tạo ra nhân vật độc đáo và truyền đạt thông điệp nghệ thuật."
+  },
+  {
+    "label": "Thông điệp",
+    "options": [
+      {
+        "label": "Tình người",
+        "explain": "      Kịch bản có thể truyền tải thông điệp về tình yêu, lòng nhân ái và sự đoàn kết giữa con người. Nó có thể khám phá mối quan hệ, tình bạn, tình yêu gia đình và tình yêu tình dụ"
+      },
+      {
+        "label": "Tính nhân văn",
+        "explain": "Kịch bản có thể khám phá sự đấu tranh, sự phát triển và sự trưởng thành của con người. Nó có thể truyền đạt thông điệp về sự tự chấp nhận, sự khám phá bản thân và khả năng thích nghi với môi trường xung quanh"
+      },
+      {
+        "label": "Xã hội và chính trị",
+        "explain": "        Kịch bản có thể đề cập đến các vấn đề xã hội và chính trị quan trọng trong xã hội như bất công, phân biệt chủng tộc, cuộc sống trong xã hội đa văn hóa, sự bất bình đẳng và cuộc sống trong các hệ thống chính trị khác nha"
+      },
+      {
+        "label": "Tầm nhìn và giấc mơ",
+        "explain": "      Kịch bản có thể truyền đạt thông điệp về sự khát vọng, sự mơ ước và sự định hướng trong cuộc sống. Nó có thể thúc đẩy khán giả để theo đuổi giấc mơ của mình, khám phá tiềm năng bản thân và đạt được mục tiêu cá nhâ"
+      },
+      {
+        "label": "Lòng dũng cảm và sự vượt qua",
+        "explain": "      Kịch bản có thể truyền tải thông điệp về sự dũng cảm, sự kiên nhẫn và khả năng vượt qua khó khăn. Nó có thể khám phá sự đối mặt với thử thách, sự chấp nhận sự thất bại và khả năng hồi phục sau những trận đau kh"
+      },
+      {
+        "label": "Ý nghĩa của cuộc sống",
+        "explain": "      Kịch bản có thể đặt câu hỏi về ý nghĩa của cuộc sống và mục đích tồn tại của con người. Nó có thể khám phá các giá trị cốt lõi như tình yêu, sự tử tế, sự hi sinh và sự truyền cảm hứn"
+      },
+      {
+        "label": "Tác động của hành động",
+        "explain": "      Kịch bản có thể truyền đạt thông điệp về tác động của hành động của chúng ta đối với chính mình và những người xung quanh. Nó có thể khám phá sự có trách nhiệm cá nhân và quyền lựa chọn của mỗi ngườ"
+      },
+      {
+        "label": "Sự tha thứ và sự hòa giải",
+        "explain": "      Kịch bản có thể mang thông điệp về sự tha thứ, sự giải tỏa và sự hòa giải trong các mối quan hệ. Nó có thể truyền đạt ý nghĩa về sự dung hòa, sự tái hợp và sự xây dựng lại một môi trường gắn kết h"
+      },
+      {
+        "label": "Giá trị của gia đình",
+        "explain": "      Kịch bản có thể tập trung vào giá trị gia đình, tình yêu thương và sự quan tâm đến nhau. Nó có thể đề cao ý nghĩa của một gia đình đoàn kết và khám phá các mối quan hệ gia đình đa dạng và phức tạ"
+      },
+      {
+        "label": "Sự hòa nhập và sự đa dạng",
+        "explain": "      Kịch bản có thể truyền đạt thông điệp về sự hòa nhập, sự đồng lòng và tôn trọng sự đa dạng trong xã hội. Nó có thể khám phá sự giao tiếp, sự chia sẻ và sự hiểu biết giữa các nhóm văn hóa, tôn giáo và chủng tộc khác nha"
+      },
+      {
+        "label": "Tầm quan trọng của môi trường",
+        "explain": "      Kịch bản có thể đặt câu hỏi về tầm quan trọng của môi trường tự nhiên và cảnh báo về những vấn đề như biến đổi khí hậu, ô nhiễm và sự suy thoái môi trường. Nó có thể khuyến khích sự tôn trọng và bảo vệ môi trường cho sự tồn tại của chúng ta và thế hệ tương laibả"
+      },
+      {
+        "label": "Tìm kiếm ý nghĩa và hạnh phúc",
+        "explain": "      Kịch bản có thể đặt câu hỏi về ý nghĩa của cuộc sống và tìm kiếm hạnh phúc cá nhân. Nó có thể khám phá sự cân bằng giữa công việc và cuộc sống, sự khám phá bản thân và khả năng tìm thấy niềm vui và ý nghĩa trong những điều đơn giản nhấ"
+      },
+      {
+        "label": "Tính cá nhân và tự do",
+        "explain": "      Kịch bản có thể khám phá ý nghĩa của tính cá nhân, quyền tự do và sự độc lập. Nó có thể truyền đạt thông điệp về sự khát khao tự do, quyền lựa chọn và sự tự chủ trong cuộc sốn"
+      },
+      {
+        "label": "Sự học hỏi và sự trưởng thành",
+        "explain": "      Kịch bản có thể truyền đạt ý nghĩa về sự học hỏi, sự phát triển và sự trưởng thành của con người. Nó có thể khuyến khích sự mở lòng, sự chấp nhận trách nhiệm và khả năng thích nghi với sự thay đ"
+      },
+      {
+        "label": "Sự quyết định và trách nhiệm",
+        "explain": "      Kịch bản có thể truyền đạt ý nghĩa về sự quyết định và trách nhiệm cá nhân. Nó có thể khám phá tầm quan trọng của việc lựa chọn đúng đắn và chịu trách nhiệm với hành động của mình, đồng thời nhắc nhở khán giả về hệ quả của những quyết định đ"
+      },
+      {
+        "label": "Tình bạn và sự đồng đội",
+        "explain": "      Kịch bản có thể mang đến thông điệp về tình bạn, sự đồng đội và sự hỗ trợ giữa những người bạn. Nó có thể khám phá tầm quan trọng của tình bạn trong cuộc sống và khả năng vượt qua khó khăn thông qua sự đoàn kết và sự tin tưởng vào nha"
+      },
+      {
+        "label": "Sự tự tin và phát triển bản thân",
+        "explain": "      Kịch bản có thể khuyến khích khán giả tìm thấy sự tự tin trong bản thân và khám phá tiềm năng của mình. Nó có thể truyền đạt ý nghĩa về sự phát triển cá nhân, khả năng vượt qua những giới hạn và tìm kiếm sự tự thự"
+      },
+      {
+        "label": " Sự chấp nhận và sự đa dạng",
+        "explain": "      Kịch bản có thể truyền đạt ý nghĩa về sự chấp nhận và sự đa dạng trong xã hội. Nó có thể khám phá giá trị của việc đối xử công bằng, tôn trọng những người khác biệt và xây dựng một cộng đồng đa dạng và hòa hợ"
+      },
+      {
+        "label": "Sự quản lý xung đột và hòa giải",
+        "explain": "      Kịch bản có thể truyền đạt ý nghĩa về sự quản lý xung đột và quá trình hòa giải. Nó có thể khám phá cách giải quyết mâu thuẫn, xây dựng sự hiểu biết và tạo điều kiện cho sự đối thoại và sự hòa giải trong các mối quan "
+      },
+      {
+        "label": "Sự khám phá và sự mạo hiểm",
+        "explain": "      Kịch bản có thể truyền đạt ý nghĩa về sự khám phá, sự mạo hiểm và sự phiêu lưu trong cuộc sống. Nó có thể khuyến khích khán giả vượt ra khỏi vùng an toàn, khám phá những điều mới mẻ và đối mặt với những thử thách để trưởng thành và trải nghiệm cuộc sống tối "
+      },
+      {
+        "label": "Tầm quan trọng của giáo dục",
+        "explain": "       Kịch bản có thể truyền đạt ý nghĩa về tầm quan trọng của giáo dục và việc học tập trong cuộc sống. Nó có thể khuyến khích khán giả đánh giá giá trị của tri thức, sự khám phá và sự phát triển cá nhân thông qua việc học hỏ"
+      },
+      {
+        "label": "Sự công bằng và quyền lợi xã hội",
+        "explain": "      Kịch bản có thể truyền đạt ý nghĩa về sự công bằng và quyền lợi xã hội. Nó có thể khám phá các vấn đề về sự bất bình đẳng xã hội, quyền lợi của các nhóm bị áp đặt và tìm kiếm sự công bằng và cải thiện điều kiện sống cho mọi ngư"
+      },
+      {
+        "label": "Sự đối mặt với sự thay đổi",
+        "explain": " Kịch bản có thể truyền đạt ý nghĩa về sự đối mặt với sự thay đổi và khả năng thích nghi. Nó có thể khám phá quá trình vượt qua sự chấp nhận, sự thay đổi và sự phát triển trong một môi trường không ổn định và thách thức"
+      },
+      {
+        "label": "Sự đồng cảm và lòng nhân ái",
+        "explain": "      Kịch bản có thể truyền đạt ý nghĩa về sự đồng cảm và lòng nhân ái. Nó có thể khuyến khích khán giả đặt mình vào vị trí của người khác, hiểu và chia sẻ cảm xúc của họ, và tạo ra một thế giới đáng sống với lòng nhân ái và sự hiểu biế"
+      },
+      {
+        "label": "Sự tự do và quyền tự quyết",
+        "explain": "      Kịch bản có thể truyền đạt ý nghĩa về sự tự do và quyền tự quyết. Nó có thể khám phá giá trị của quyền tự do cá nhân, sự lựa chọn và quyền tự quyết trong việc xây dựng cuộc sống của chính mì"
+      },
+      {
+        "label": "Sự khôi phục và sự hồi phục",
+        "explain": "      Kịch bản có thể truyền đạt ý nghĩa về sự khôi phục và sự hồi phục sau những thử thách và khó khăn. Nó có thể khám phá quá trình trở lại sau khi trải qua sự đau khổ và sự mất mát, và khuyến khích khán giả tin rằng sự hồi phục là có th"
+      },
+      {
+        "label": "Tầm quan trọng của lòng kiên nhẫn",
+        "explain": "      Kịch bản có thể truyền đạt ý nghĩa về tầm quan trọng của lòng kiên nhẫn và khả năng chịu đựng. Nó có thể khám phá quá trình vượt qua thời gian khó khăn, khả năng chịu đựng và lòng kiên nhẫn như một yếu tố quan trọng để đạt được thành công và hạnh ph"
+      },
+      {
+        "label": " Sự tương tác và giao tiếp",
+        "explain": "      Kịch bản có thể truyền đạt ý nghĩa về sự tương tác và giao tiếp hiệu quả. Nó có thể khám phá tầm quan trọng của sự lắng nghe, sự hiểu biết và khả năng tương tác xã hội để xây dựng và duy trì mối quan hệ tố"
+      },
+      {
+        "label": "Tính công bằng và đấu tranh cho quyền lợi",
+        "explain": "      Kịch bản có thể truyền đạt ý nghĩa về tính công bằng và đấu tranh cho quyền lợi. Nó có thể khám phá sự nỗ lực để xây dựng một xã hội công bằng và bình đẳng, đối mặt với sự bất công và đấu tranh cho quyền lợi của những người bị áp đặ"
+      },
+      {
+        "label": "Sự trân trọng và lòng biết ơn",
+        "explain": "      Kịch bản có thể truyền đạt ý nghĩa về sự trân trọng và lòng biết ơn đối với những điều quan trọng trong cuộc sống. Nó có thể khuyến khích khán giả đánh giá và trân trọng những giá trị gia đình, tình yêu, sự tử tế và những trải nghiệm đáng quý."
+      }
+    ],
+    "description": "Thông điệp là ý nghĩa hoặc thông tin mà người gửi muốn truyền đạt đến người nhận thông qua một phương tiện truyền thông hoặc một hình thức giao tiếp. Thông điệp có thể được truyền tải bằng cách sử dụng ngôn ngữ nói, viết, ",
+    "description_full": "hình ảnh, âm thanh, biểu cảm cơ thể hoặc một sự kết hợp của chúng."
+  },
+  {
+    "label": "Thời lượng",
+    "options": [
+      {
+        "label": "15 giây – 60 giây",
+        "explain": "\n1.    Mở đầu hấp dẫn2.    Trình bày thông điệp chính\n3.    Sáng tạo và gây chú ý\n4.    Kết nối với khán giả\n5.    Kết thúc chắc chắn, ấn tượn"
+      },
+      {
+        "label": "5 phút – 10 phút",
+        "explain": "\n1.    Giới thiệu và mở đầu hấp dẫn.2.    Trình bày thông điệp chính và nội dung chính.\n3.    Cung cấp ví dụ và minh họa chi tiết.\n4.    Tóm tắt và kết luận.\n5.    Lời kết và gọi tác động để tạo sự tương tác với khán giả."
+      },
+      {
+        "label": "10 phút – 20 phút",
+        "explain": "\n1.    Giới thiệu và mở đầu hấp dẫn.2.    Trình bày các điểm chính và cung cấp thông tin chi tiết.\n3.    Thảo luận và phân tích (nếu cần).\n4.    Tóm tắt và kết luận.\n5.    Lời kết và gọi tác động để tạo sự tương tác với khán giả"
+      },
+      {
+        "label": "Trên 20 phút",
+        "explain": "\n1.    Ý tưởng và kế hoạch video.2.    Chuẩn bị kịch bản và tài liệu.\n3.    Quay phim và thu âm.\n4.    Chỉnh sửa và biên tập video.\n5.    Hiệu chỉnh màu sắc và âm thanh.\n6.    Thêm hiệu ứng đặc biệt và đồ họa.\n7.    Chèn âm nhạc và âm thanh.\n8.    Kiểm tra và chỉnh sửa.\n9.    Đăng tải và quảng bá video."
+      }
+    ],
+    "description": "Thời lượng đề cập đến thời gian mà một tác phẩm nghệ thuật kéo dài. Đối với phim, thời lượng được tính bằng phút hoặc giờ. Đối với vở kịch, thời lượng có thể được tính bằng phần lớn thời gian diễn ra trên sân ",
+    "description_full": "khấu. Đối với các tác phẩm văn bản, thời lượng có thể được thể hiện bằng số lượng trang hoặc từ."
+  },
+  {
+    "label": "Bối cảnh",
+    "options": [
+      {
+        "label": "Phòng khách gia đình",
+        "explain": "      Nơi các nhân vật chính gặp nhau, có thể là nơi diễn ra các cuộc trò chuyện quan trọng hoặc giới thiệu nhân vậ"
+      },
+      {
+        "label": "Nhà hàng hoặc quán bar",
+        "explain": " Đây là một môi trường thông thường để các nhân vật gặp nhau, thảo luận vấn đề, hoặc tiến hành các cuộc "
+      },
+      {
+        "label": " Văn phòng",
+        "explain": "        Một môi trường làm việc chung, nơi nhân vật có thể thực hiện các cuộc họp, xung đột, hoặc tiến hành công việc hàng ngà"
+      },
+      {
+        "label": "Bệnh viện",
+        "explain": "      Môi trường này thường được sử dụng trong các tình huống y tế hoặc truyền thông liên quan đến sức khỏ"
+      },
+      {
+        "label": "Trường học",
+        "explain": "      Một bối cảnh thường xuất hiện trong các câu chuyện về tuổi teen hoặc câu chuyện liên quan đến giáo dụ"
+      },
+      {
+        "label": "Đường phố",
+        "explain": "Bối cảnh đô thị sầm uất, nơi diễn ra các sự kiện như cuộc biểu tình, truy đuổi, hoặc gặp gỡ tình c"
+      },
+      {
+        "label": "Căn hộ",
+        "explain": "Một môi trường sống cá nhân, thường được sử dụng để thể hiện các mối quan hệ gia đình hoặc các cuộc sống riêng tư của các nhân vậ"
+      },
+      {
+        "label": "Công viên",
+        "explain": "      Một không gian mở, thường được sử dụng để thể hiện các hoạt động giải trí, tạo cảnh quan hoặc các cuộc gặp gỡ ngẫu nhiê"
+      },
+      {
+        "label": "Trạm không gian hoặc trạm nghiên cứu",
+        "explain": "      Môi trường khoa học viễn tưởng, thường xuất hiện trong các câu chuyện về du hành vũ trụ hoặc nghiên cứu khoa học tiến b"
+      },
+      {
+        "label": "Biển",
+        "explain": "      Một bối cảnh tươi đẹp và rộng lớn, biển cung cấp một nền tảng hoàn hảo cho các tình huống như nghỉ ngơi, các cuộc phiêu lưu trên biển, hoặc các cảnh tình yêu lãng mạ"
+      },
+      {
+        "label": "Rừng rậm",
+        "explain": "      Môi trường thiên nhiên hoang dã và bí ẩn, rừng rậm thường là nơi diễn ra các cuộc phiêu lưu, trốn tránh hoặc các nhiệm vụ trinh thá"
+      },
+      {
+        "label": "Sân vận động",
+        "explain": "      Nơi diễn ra các sự kiện thể thao hoặc biểu diễn lớn, sân vận động tạo ra một không khí kịch tính và đầy cảm xúc, từ trận đấu bóng đá sôi động đến buổi hòa nhạc hào hùn"
+      },
+      {
+        "label": "Nông trại",
+        "explain": "      Một môi trường nông nghiệp với đồng cỏ và vườn trồng cây, nơi nhân vật có thể thể hiện sự lao động, gặp gỡ với nhau hoặc trải qua các sự kiện liên quan đến cuộc sống nông thô"
+      },
+      {
+        "label": "Trạm xe buýt hoặc ga tàu",
+        "explain": "Nơi diễn ra sự di chuyển, gặp gỡ người lạ và các cuộc phiêu lưu dọc theo đường đi. Đây là một bối cảnh phổ biến cho các câu chuyện về hành trình hoặc cuộc đối đầ"
+      },
+      {
+        "label": "Công viên giải trí",
+        "explain": "      Một không gian giải trí với các trò chơi, cuộc phiêu lưu và sự phấn khích, công viên giải trí thường được sử dụng để thể hiện niềm vui, kỷ niệm gia đình hoặc các cuộc hẹn hò"
+      },
+      {
+        "label": "Bệnh viện tâm thần",
+        "explain": "      Một môi trường đặc biệt và nghiêm ngặt, bệnh viện tâm thần thường được sử dụng trong các câu chuyện xoay quanh tâm lý, sự mất trí nhớ hoặc các cuộc chiến đấu với bệnh tật tâm thầ"
+      },
+      {
+        "label": "Núi",
+        "explain": "Một môi trường vĩ đại và mạnh mẽ, núi thường được sử dụng để thể hiện những thử thách, khám phá tự nhiên hoặc những cuộc phiêu lưu nguy hiể"
+      },
+      {
+        "label": "Đại học",
+        "explain": "      Một môi trường học tập và nghiên cứu, đại học thường được sử dụng trong các câu chuyện xoay quanh cuộc sống sinh viên, tình yêu đôi, hoặc các cuộc tranh luận và xung đột về tri th"
+      },
+      {
+        "label": "Sân golf",
+        "explain": "      Một môi trường thanh lịch và xanh tươi, sân golf thường được sử dụng để thể hiện sự thư giãn, giao tiếp xã hội hoặc các thương vụ kinh doanh quan trọn"
+      },
+      {
+        "label": "Hòn đảo hoang dã",
+        "explain": "      Một môi trường hoang sơ và bí ẩn, hòn đảo hoang dã thường là nơi diễn ra các cuộc sống cô đơn, cuộc phiêu lưu sinh tồn hoặc những bí ẩn đáng s"
+      },
+      {
+        "label": "Nhà thờ hoặc ngôi đền",
+        "explain": "      Nơi tín đồ tôn giáo tụ tập và cầu nguyện, nhà thờ hoặc ngôi đền thường được sử dụng để thể hiện sự tín ngưỡng, tâm linh hoặc các cuộc hành hươn"
+      },
+      {
+        "label": "Rạp hát hoặc nhà hát",
+        "explain": "      Nơi diễn ra các buổi biểu diễn nghệ thuật, rạp hát hoặc nhà hát tạo ra một không gian thú vị để thể hiện sự nghệ thuật, mơ mộng hoặc xung đột nghệ thuậ"
+      },
+      {
+        "label": "Trung tâm mua sắm",
+        "explain": "Môi trường thương mại và mua sắm phổ biến, trung tâm mua sắm thường là nơi gặp gỡ, mua sắm, hoặc diễn ra các sự kiện đặc biệt như khuyến mãi, cuộc thi hoặc sự kiện xã hộ"
+      },
+      {
+        "label": "Phòng thể dục hoặc phòng tập",
+        "explain": "      Môi trường tập thể dục và rèn luyện sức khỏe, phòng thể dục hoặc phòng tập thường được sử dụng để thể hiện sự cạnh tranh, quyết tâm hoặc sự phát triển cá nhân"
+      },
+      {
+        "label": " Ngôi làng hoặc thị trấn nhỏ",
+        "explain": "      Một cộng đồng nhỏ, ngôi làng hoặc thị trấn thường là nơi diễn ra những câu chuyện về đời sống cộng đồng, tình yêu hàng xóm hoặc cuộc sống nông thô"
+      },
+      {
+        "label": "Nhà máy hoặc nhà xưởng",
+        "explain": "      Một môi trường công nghiệp, nhà máy hoặc nhà xưởng thường được sử dụng để thể hiện công việc, sự sản xuất và các cuộc xung đột lao độn"
+      },
+      {
+        "label": "Phòng phỏng vấn",
+        "explain": "      Nơi diễn ra các cuộc phỏng vấn công việc, phòng phỏng vấn có thể tạo ra các tình huống căng thẳng, đối đầu hoặc quyết định quan trọng về sự nghiệ"
+      },
+      {
+        "label": "Đại lộ đô thị",
+        "explain": "      Một không gian công cộng lớn và đông đúc, đại lộ đô thị thường được sử dụng để thể hiện cuộc sống đô thị, sự đi lại và xung đột trong thành ph"
+      },
+      {
+        "label": "Bãi đỗ xe",
+        "explain": "      Nơi diễn ra sự di chuyển và gặp gỡ tạm thời, bãi đỗ xe có thể tạo ra các cuộc tình cờ, sự gặp gỡ hoặc các cuộc truy bắt thú v"
+      },
+      {
+        "label": "Khu du lịch hoặc resort",
+        "explain": "      Một môi trường nghỉ dưỡng và giải trí cao cấp, khu du lịch hoặc resort thường được sử dụng để thể hiện sự xa hoa, sự thư giãn hoặc các cảnh tình yêu lãng mạn."
+      }
+    ],
+    "description": "Bối cảnh là môi trường, thời gian và các yếu tố xung quanh một sự kiện, một cảnh quan hoặc một tác phẩm nghệ thuật. Nó đóng vai trò quan trọng trong việc xác định ngữ cảnh và tạo ra không gian và thời gian cho câu ",
+    "description_full": "chuyện hoặc hình ảnh. Bối cảnh có thể bao gồm văn hóa, xã hội, địa lý, lịch sử, và nhiều yếu tố khác. Trong điện ảnh, bối cảnh có thể được thiết lập bằng cách sử dụng bối cảnh địa điểm, trang phục, bối cảnh kỹ thuật số và thiết lập đèn."
+  },
+  {
+    "label": "Góc quay",
+    "options": [
+      {
+        "label": "Góc quay rộng (Wide shot)",
+        "explain": "      Góc quay này cho khán giả nhìn thấy toàn cảnh, không gian và các nhân vật trong một khung hình rộng. Nó thường được sử dụng để giới thiệu một bối cảnh hoặc tạo ra một cảm giác về không gia"
+      },
+      {
+        "label": "Góc quay gần (Close-up shot)",
+        "explain": "Góc quay này tập trung vào khuôn mặt hoặc một phần cơ thể của nhân vật, để truyền tải cảm xúc, chi tiết hoặc thể hiện sự tương tác giữa các nhân vậ"
+      },
+      {
+        "label": "Góc quay trên cao (High angle shot)",
+        "explain": "        Góc quay từ trên cao xuống, thường nhìn từ trên xuống, tạo ra một cảm giác quan sát hoặc ám chỉ sự yếu đuối, nhấn mạnh sự kiểm soát hoặc quyền lực của một nhân vật hoặc tình huốn"
+      },
+      {
+        "label": "Góc quay dưới thấp (Low angle shot)",
+        "explain": "      Góc quay từ dưới lên, tạo ra một cảm giác quyền lực, uy nghiêm hoặc sự mạnh mẽ của một nhân vật hoặc tình huống. Nó có thể được sử dụng để tạo ra sự tôn vinh, đồng thời tạo ra một sự kinh hoàng cho nhân vật chín"
+      },
+      {
+        "label": "Góc quay cận cảnh (Extreme close-up shot)",
+        "explain": "      Góc quay này tập trung sâu vào một chi tiết nhỏ hoặc một đặc điểm đặc biệt, tạo ra sự tập trung mạnh vào một yếu tố cụ thể trong cản"
+      },
+      {
+        "label": " Góc quay cắt kéo (Cutaway shot)",
+        "explain": "      Góc quay này thường là một cảnh phụ hoặc một đối tượng khác không liên quan trực tiếp đến cốt truyện chính. Nó được sử dụng để chuyển đổi giữa các cảnh, cung cấp thông tin bổ sung hoặc tạo ra một hiệu ứng hài hướ"
+      },
+      {
+        "label": "Góc quay POV (Point of View shot)",
+        "explain": "      Góc quay này được thực hiện từ quan điểm của một nhân vật, cho khán giả nhìn qua mắt nhân vật đó. Nó giúp khán giả trải nghiệm trực tiếp những gì nhân vật đó nhìn thấy và cảm nhậ"
+      },
+      {
+        "label": "Góc quay pan (Pan shot)",
+        "explain": "      Góc quay này di chuyển camera theo một đường ngang, quét qua cảnh từ một điểm đến điểm khác. Nó được sử dụng để tạo ra sự liên kết giữa các yếu tố trong một cảnh hoặc để theo dõi sự di chuyển của một nhân vật hoặc vật th"
+      },
+      {
+        "label": " Góc quay tilt (Tilt shot)",
+        "explain": "      Góc quay này di chuyển camera theo một đường dọc, từ trên xuống dưới hoặc từ dưới lên trên. Nó tạo ra một hiệu ứng chuyển động và thường được sử dụng để tạo cảm giác bất ngờ hoặc tạo ra sự căng thẳn"
+      },
+      {
+        "label": "Góc quay trạm (Static shot)",
+        "explain": "      Góc quay này giữ camera ở một vị trí tĩnh, không có chuyển động. Nó thường được sử dụng để truyền tải sự ổn định, tĩnh lặng hoặc để tạo ra một cảm giác của một sự kiện quan trọng diễn ra."
+      }
+    ],
+    "description": "Góc quay đề cập đến cách mà máy quay hoặc máy ảnh được đặt và sử dụng để quay một cảnh hoặc một khung hình. Nó xác định góc nhìn và cung cấp độ cao, độ rộng và độ sâu cho hình ảnh. Góc quay có thể được sử ",
+    "description_full": "dụng để tạo ra các hiệu ứng nghệ thuật, truyền tải cảm xúc và tạo ra sự tương tác giữa người xem và tác phẩm. Các góc quay thông thường bao gồm góc quay thấp, góc quay cao, góc quay ngang, góc quay nghiêng, góc quay gần, góc quay xa và nhiều hơn nữa."
+  },
+  {
+    "label": "Phân đoạn",
+    "options": [
+      {
+        "label": "Phân đoạn mở đầu",
+        "explain": " Đây là phân đoạn đầu tiên của câu chuyện, được sử dụng để giới thiệu khán giả vào thế giới của câu chuyện và thiết lập bối cảnh ban đầ"
+      },      {
+        "label": "Phân đoạn giới thiệu nhân vật",
+        "explain": " Một phân đoạn được sử dụng để giới thiệu các nhân vật chính trong câu chuyện, đặt họ vào ngữ cảnh và mô tả tính cách và mục tiêu của h"
+      },
+      {
+        "label": "Phân đoạn xung đột",
+        "explain": "        Một phân đoạn tập trung vào một xung đột hoặc mâu thuẫn giữa các nhân vật, tạo ra căng thẳng và đẩy mạnh câu chuyệ"
+      },
+      {
+        "label": "Phân đoạn tình cảm",
+        "explain": "Phân đoạn này tập trung vào mối quan hệ tình cảm giữa các nhân vật, như tình yêu, tình bạn hoặc xung đột gia đìn"
+      },
+      {
+        "label": "Phân đoạn hành động",
+        "explain": "      Một phân đoạn tạo ra những hành động căng thẳng, đấu tranh hoặc mạo hiểm của các nhân vật, thường đi kèm với một màn truy đuổi, trận đấu, hoặc sự đối đầ"
+      },
+      {
+        "label": "Phân đoạn hài hước",
+        "explain": "      Một phân đoạn mang tính chất hài hước để tạo tiếng cười và giải tỏa căng thẳng trong câu chuyệ"
+      },
+      {
+        "label": "Phân đoạn trọng đại",
+        "explain": "      Phân đoạn này tập trung vào sự kiện quan trọng hoặc sự thay đổi lớn trong câu chuyện, có thể thay đổi định hướng hoặc tạo ra những hậu quả về mặt tình huống hoặc cảm xúc của các nhân vậ"
+      },
+      {
+        "label": "Phân đoạn tuyến bên",
+        "explain": "      Một phân đoạn được sử dụng để giới thiệu hoặc phát triển một nhân vật phụ hoặc một tình tiết phụ không liên quan trực tiếp đến cốt truyện chín"
+      },
+      {
+        "label": "Phân đoạn tâm trạng",
+        "explain": "      Một phân đoạn tập trung vào tâm trạng và suy nghĩ của một nhân vật, thường thông qua monologues hoặc hồi tưởn"
+      },
+      {
+        "label": "Phân đoạn kết thúc",
+        "explain": "      Phân đoạn cuối cùng của câu chuyện, giúp đưa ra sự giải quyết cho cốt truyện và các mâu thuẫn chính, và kết thúc câu chuyện một cách thích hợp."
+      }
+    ],
+    "description": "Phân đoạn trong một tác phẩm nghệ thuật, như kịch, phim, văn học hoặc âm nhạc, là sự chia nhỏ tác phẩm thành các đoạn nhỏ hơn. Mỗi phân đoạn thường tập trung vào một sự kiện, một tình huống",
+    "description_full": "hoặc một phần cụ thể trong câu chuyện."
+  }
+]

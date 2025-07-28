@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include ../common/header%>
+
+  <body id="page-top">
+    <div class="abstract-bg"></div>
+    <div class="grid-pattern"></div>
+    <div class="abstract-shape w-96 h-96 top-1 left-1"></div>
+    <div class="abstract-shape w-96 h-96 bottom-1 right-1"></div>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <% include ../common/sidebar.ejs%>
+      <!-- End of Sidebar -->
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <br />
+            <!-- Page Heading -->
+            <div
+              class="d-sm-flex align-items-center justify-content-between mb-4"
+            >
+              <h1 class="font-weight-bold font-weight-bold h3 mb-0 text-white">
+                Scripts:
+                <span class="font-weight-bold primary-text">
+                  <%=script_type%>
+                </span>
+                <input
+                  type="hidden"
+                  value="<%=script_type%>"
+                  id="script_type"
+                />
+              </h1>
+              <div class="flex gap-2">
+                <% if (manage) { %>
+                <button
+                  id="importPlaylistBtn"
+                  href="#"
+                  type="button"
+                  data-toggle="modal"
+                  data-target="#editVideoModal"
+                  class="space-button px-3 py-1.5 d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                >
+                  <i class="fas fa-upload fa-sm text-white-50"></i> Add Script
+                </button>
+                <% } %>
+                <button
+                  id="importPlaylistBtn"
+                  href="#"
+                  type="button"
+                  data-toggle="modal"
+                  data-target="#importPlaylistModal"
+                  class="space-button flex items-center gap-2 px-3 py-1.5 text-sm transition-all hover:bg-blue-500/20"
+                >
+                  <i class="fas fa-upload fa-sm"></i>
+                  Import Sub
+                </button>
+                <!-- <button id="importPlaylistBtn" href="#" type="button" data-toggle="modal" data-target="#importWatchVideoModal" class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm"><i class="fas fa-upload fa-sm text-white-50"></i> 
+              Import Watch Video
+            </button> -->
+              </div>
+            </div>
+
+            <div
+              class="relative overflow-hidden rounded-lg border border-slate-200/10 bg-slate-800/40 shadow-md backdrop-blur-xl"
+            >
+              <div class="overflow-x-auto">
+                <table class="w-full table-auto badge-soft-dark" id="tableList">
+                  <thead class="bg-slate-900/50">
+                    <tr>
+                      <th
+                        class="px-4 py-3 text-center text-sm font-medium text-slate-200"
+                      >
+                        Position
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-slate-200"
+                      >
+                        Name
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-slate-200"
+                      >
+                        Code
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-slate-200"
+                      >
+                        Remaining
+                      </th>
+                      <th
+                        class="px-4 py-3 text-center text-sm font-medium text-slate-200"
+                      >
+                        Status
+                      </th>
+                      <th
+                        class="px-4 py-3 text-center text-sm font-medium text-slate-200"
+                      >
+                        Break
+                      </th>
+                      <th
+                        class="px-4 py-3 text-center text-sm font-medium text-slate-200"
+                      >
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="">
+                    <% scripts.forEach(function(script) { %>
+                    <tr class="transition-all hover:bg-slate-700/30">
+                      <td class="px-4 py-3 text-center">
+                        <div class="flex items-center justify-center space-x-2">
+                          <span class="text-slate-200">
+                            <%=script.position%>
+                          </span>
+                          <button
+                            class="inline-flex h-7 items-center justify-center rounded border border-blue-500/20 bg-blue-500/10 px-3 text-blue-400 transition-colors hover:bg-blue-500/20 positionBtn premium-btn"
+                            value="<%=script._id%>"
+                          >
+                            <i class="fas fa-arrow-up fa-sm"></i>
+                          </button>
+                        </div>
+                      </td>
+
+                      <td class="px-4 py-3">
+                        <span class="text-slate-200"> <%=script.name%> </span>
+                      </td>
+
+                      <td class="px-4 py-3">
+                        <span class="text-slate-200"> <%=script.code%> </span>
+                      </td>
+
+                      <td class="px-4 py-3">
+                        <span class="text-slate-200">
+                          <%=script.remaining%>
+                        </span>
+                      </td>
+
+                      <td class="px-4 py-3 text-center">
+                        <div class="custom-control custom-switch">
+                          <input class="statusCheckbox custom-control-input"
+                          type="checkbox" id="<%=script._id%>"
+                          <%=script.status==true ? "checked" : "" %> >
+                          <label
+                            class="custom-control-label"
+                            for="<%=script._id%>"
+                          ></label>
+                        </div>
+                      </td>
+
+                      <td class="px-4 py-3 text-center">
+                        <div class="custom-control custom-switch">
+                          <input class="breakCheckbox" type="checkbox"
+                          id="<%=script._id%>" <%=script.is_break==true ?
+                          "checked" : "" %> >
+                        </div>
+                      </td>
+
+                      <td class="px-4 py-3 text-center">
+                        <div class="flex items-center justify-center space-x-2">
+                          <a
+                            href="/admin/view/script?code=<%=script.code%><%= ['youtube_sub', 'comment_youtube', 'like_youtube'].includes(script.code)?'&serviceStatus=running':''%>"
+                            class="ultra-button inline-flex items-center px-3 py-1.5 text-sm rounded border border-blue-500/20 bg-blue-500/10 text-blue-400 transition-all hover:bg-blue-500/20 premium-btn"
+                          >
+                            Manage
+                          </a>
+                          <% if (manage) { %>
+                          <button
+                            class="inline-flex h-7 items-center justify-center rounded border border-red-500/20 bg-red-500/10 px-3 text-red-400 transition-colors hover:bg-red-500/20 videoDelete"
+                            value="<%=script._id%>"
+                          >
+                            <i class="fas fa-trash fa-sm"></i>
+                          </button>
+                          <% } %>
+                        </div>
+                      </td>
+                    </tr>
+                    <% }); %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+
+          <div
+            id="importPlaylistModal"
+            class="modal fade bd-example-modal-xl"
+            tabindex="-1"
+            role="dialog"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-xl" role="document">
+              <div class="modal-content bg-glass">
+                <div class="modal-header text-white">
+                  <b>Import từ file CSV</b>
+                  <a
+                    class="ml-3"
+                    href="https://docs.google.com/spreadsheets/d/14iSjkPYEsBkx0vLi7ADEwnqi9jgCwuMBcaVhODhTajA/edit#gid=1318038956"
+                    >Xem file mẫu</a
+                  >
+                  <button
+                    type="button"
+                    class="close bg-glass"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form id="scriptImportForm">
+                    <div class="form-group">
+                      <label for="exampleFormControlFile1" class="text-white"
+                        >Scripts file</label
+                      >
+                      <input
+                        type="file"
+                        class="form-control-file"
+                        id="scriptFile"
+                        name="scriptFile"
+                        accept=".csv"
+                      />
+                    </div>
+                  </form>
+                  <div class="d-none" id="dup_data_section">
+                    <h3 class="text-danger">
+                      Có vài channel ID đã được chạy trên hệ thống
+                    </h3>
+                    <textarea class="w-100" id="dup_data" rows="10"></textarea>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="saveImportBtn"
+                  >
+                    Save changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="editVideoModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">New script</h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <div role="form">
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Name</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" id="script_name" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Code</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" id="script_code" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Is Break</label>
+                      <div class="col-sm-10">
+                        <input type="checkbox" id="script_break" />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label"
+                        >Example data</label
+                      >
+                      <div class="col-sm-10">
+                        <input class="form-control" id="script_example_data" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      id="saveVideo"
+                    >
+                      Save changes
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="importWatchVideoModal"
+            class="modal"
+            tabindex="-1"
+            role="dialog"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">
+                    Import Watch Video (channelID, remaining)
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <form id="watchVideoForm">
+                    <div class="form-group">
+                      <label for="exampleFormControlFile1">file</label>
+                      <input
+                        type="file"
+                        class="form-control-file"
+                        id="watchVideoFile"
+                        name="watchVideoFile"
+                        accept=".csv"
+                      />
+                    </div>
+                  </form>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      id="saveWatchVideoFile"
+                    >
+                      Save changes
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End of Main Content -->
+
+          <% include ../common/footer%>
+        </div>
+        <!-- End of Content Wrapper -->
+      </div>
+      <!-- End of Page Wrapper -->
+    </div>
+
+    <% include ../common/js%>
+    <script src="/js/bootbox.all.min.js"></script>
+    <script src="https://unpkg.com/popper.js@1.15.0/dist/umd/popper.min.js"></script>
+    <script src="/javascripts/utils.js"></script>
+    <script src="/javascripts/script.js"></script>
+    <script>
+      // $("#saveWatchVideoFile").on('click', function (e) {
+      //   $.ajax({
+      //     url: "/admin/script/watch_video/import",
+      //     type: "POST",
+      //     data: new FormData($('#watchVideoForm')[0]),
+      //     processData: false,
+      //     contentType: false
+      //   }).done(function (data) {
+      //     location.reload()
+      //   });
+      // });
+    </script>
+  </body>
+</html>

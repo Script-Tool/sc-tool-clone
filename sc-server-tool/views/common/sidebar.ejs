@@ -1,0 +1,506 @@
+<style>
+    :root {
+        --ultra-bg: radial-gradient(circle at top right, #0f172a, #6366f1);
+        --premium-gradient: linear-gradient(135deg, #3b82f6, #6366f1, #8b5cf6);
+    }
+
+    .sidebar {
+        min-height: 100vh;
+        transition: all 0.3s;
+        z-index: 1;
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #f4dcfa;
+        transition: all 0.2s;
+        padding: 0.5rem 1rem;
+        border-radius: 12px;
+        border: none;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), transparent);
+        backdrop-filter: blur(30px);
+        transform: translateZ(20px);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .nav-link::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 3px;
+        height: 0;
+        background: linear-gradient(135deg, #0066ff, #00f0ff);
+        transition: height 0.3s ease;
+    }
+
+    .nav-link:hover {
+        /* background: linear-gradient(90deg, rgba(255, 255, 255, 0.171), transparent); */
+        box-shadow: var(--neon-glow);
+    }
+
+    .nav-link:hover::before {
+        height: 100%;
+    }
+
+    .sidebar-heading {
+        font-size: 0.8rem;
+        letter-spacing: 0.1rem;
+        margin-bottom: 1rem;
+    }
+
+    .collapse {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .collapse .nav-link {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    #sidebarToggle {
+        color: #ecf0f1;
+        transition: transform 0.3s;
+    }
+
+    #sidebarToggle:hover {
+        color: #f39c12;
+    }
+
+    .sidebar.toggled #sidebarToggle {
+        transform: rotate(180deg);
+    }
+
+    .btn-link:hover,
+    .btn-link:focus {
+        text-decoration: none;
+    }
+
+    .fa-chevron-right {
+        transition: transform 0.3s;
+    }
+
+    .collapse.show + .btn .fa-chevron-right {
+        transform: rotate(90deg);
+    }
+
+    /* Thêm vào phần style hiện có */
+    .nav-link {
+        color: #ecf0f1;
+        transition: all 0.2s;
+        padding: 0.5rem 1rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Thêm hiệu ứng shine */
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+        transition: 0.6s;
+        z-index: 1;
+    }
+
+    .nav-link:hover::after {
+        left: 100%;
+    }
+
+    /* Thêm màu gradient cho icons */
+    .nav-link i {
+        /* background: linear-gradient(135deg, #06b6d4, #6366f1); */
+        background-color: #fff;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: all 0.3s ease;
+    }
+
+    .nav-icon {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .nav-link:hover .nav-icon {
+        transform: scale(1.1);
+    }
+
+    /* Fix màu cho các nav-link trong collapse */
+    .collapse .nav-link {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        color: #ecf0f1 !important;
+    }
+
+    /* Fix màu cho logout button */
+    #logoutBtn {
+        color: #ecf0f1 !important;
+    }
+</style>
+
+<!-- Sidebar -->
+<nav class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+    <!-- Brand -->
+    <div class="d-flex items-center justify-content-between px-2 py-2 mb-9 mt-2 gap-4">
+        <div class="flex items-center space-x-3">
+            <div
+                class="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center"
+            >
+                <span class="text-2xl">⚡</span>
+            </div>
+            <a class="premium-text text-decoration-none font-bold text-2xl" href="/admin/view/dashboard">
+                <span class="mb-0"><%=server_name%></span>
+            </a>
+        </div>
+        <button class="btn btn-link text-dark p-0 border-0" id="logoutBtn">
+            <i class="bi bi-box-arrow-left h4 mb-0"></i>
+        </button>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="nav-item">
+        <a class="nav-link" href="/admin/view/dashboard">
+            <div class="nav-icon bg-gradient-to-r from-blue-500 to-purple-500">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+            </div>
+            <span>Dashboard</span>
+        </a>
+    </div>
+
+    <div class="nav-item mt-2">
+        <a class="nav-link" href="/admin/view/analytics">
+            <div class="nav-icon" style="background: var(--primary-gradient)">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <span>Thống kê</span>
+        </a>
+    </div>
+
+    <!-- Manage Section -->
+    <div class="nav-section mt-3 flex flex-col gap-2">
+        <div class="sidebar-heading text-uppercase px-3 text-light">Manage</div>
+
+        <!-- Scripts Menu -->
+        <div class="nav-item">
+            <button
+                class="btn btn-link nav-link w-100 text-left d-flex align-items-center"
+                id="_scripts"
+                data-toggle="collapse"
+                data-target="#_collapseScripts"
+            >
+                <div class="nav-icon" style="background: var(--blue-to-white-gradient)">
+                    <i class="bi bi-code-square"></i>
+                </div>
+                <span>Scripts</span>
+            </button>
+
+            <div id="_collapseScripts" class="collapse rounded text-white">
+                <a class="nav-link py-2 w-100 text-white" href="/admin/view/scripts?script_type=youtube">
+                    <div class="nav-icon" style="background: var(--pink-to-orange-gradient)">
+                        <i class="bi bi-youtube"></i>
+                    </div>
+                    Youtube Scripts
+                </a>
+
+                <a class="nav-link py-2 w-100" href="/admin/view/scripts?script_type=facebook">
+                    <div class="nav-icon" style="background: var(--primary-gradient)">
+                        <i class="bi bi-facebook"></i>
+                    </div>
+                    Facebook Scripts
+                </a>
+                <a class="nav-link py-2 w-100" href="/admin/view/scripts?script_type=tiktok">
+                    <div class="nav-icon" style="background: var(--tiktok-gradient)">
+                        <i class="bi bi-tiktok"></i>
+                    </div>
+                    TikTok Scripts
+                </a>
+                <a class="nav-link py-2 w-100" href="/admin/view/scripts?script_type=x">
+                    <div class="nav-icon" style="background: var(--x-gradient-dark)">
+                        <i class="bi bi-twitter-x"></i>
+                    </div>
+                    X Scripts
+                </a>
+                <a class="nav-link py-2 w-100" href="/admin/view/scripts?script_type=google_map">
+                    <div class="nav-icon" style="background: var(--primary-gradient)">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+                    Google Map
+                </a>
+            </div>
+        </div>
+
+        <!-- Admin Only Section -->
+        <% if (role == 'super_admin') { %>
+        <!-- System Menu -->
+        <div class="nav-item">
+            <button
+                class="btn btn-link nav-link w-100 text-left d-flex align-items-center"
+                id="_system"
+                data-toggle="collapse"
+                data-target="#_collapseSystem"
+            >
+                <div class="nav-icon" style="background: var(--orange-to-yellow-gradient)">
+                    <i class="bi bi-gear-fill"></i>
+                </div>
+                <span>System</span>
+            </button>
+
+            <div id="_collapseSystem" class="collapse rounded">
+                <a class="nav-link py-2 w-100 text-white" href="/admin/view/system-scripts">
+                    <div class="nav-icon" style="background: var(--blue-to-white-gradient)">
+                        <i class="bi bi-code-square"></i>
+                    </div>
+                    System Scripts
+                </a>
+                <a class="nav-link w-100 text-white" href="/admin/view/browser-management">
+                    <div class="nav-icon" style="background: var(--primary-gradient)">
+                        <i class="bi bi-browser-edge"></i>
+                    </div>
+                    Browser Management
+                </a>
+            </div>
+        </div>
+        <% } %>
+
+        <!-- Profile Section -->
+        <div class="nav-item">
+            <a class="nav-link" href="/admin/view/profile?per_page=20&current_page=1">
+                <div class="nav-icon" style="background: var(--secondary-gradient)">
+                    <i class="bi bi-person-lines-fill"></i>
+                </div>
+                <span>Profiles</span>
+            </a>
+        </div>
+
+        <!-- Admin Only Items -->
+        <% if (role == 'super_admin') { %>
+        <!-- Proxy -->
+        <div class="nav-item">
+            <a class="nav-link" href="/admin/view/proxy">
+                <div class="nav-icon" style="background: var(--blue-to-white-gradient)">
+                    <i class="bi bi-bar-chart-line-fill"></i>
+                </div>
+                <span>Proxy</span>
+            </a>
+        </div>
+
+        <!-- Accounts -->
+        <div class="nav-item">
+            <a class="nav-link" href="/admin/view/accounts">
+                <div class="nav-icon" style="background: var(--orange-to-yellow-gradient)">
+                    <i class="bi bi-person-circle"></i>
+                </div>
+                <span>Accounts</span>
+            </a>
+        </div>
+
+        <!-- API Key -->
+        <div class="nav-item">
+            <a class="nav-link" href="/admin/view/api_key">
+                <div class="nav-icon" style="background: var(--secondary-gradient)">
+                    <i class="bi bi-key-fill"></i>
+                </div>
+                <span>3nd API KEY</span>
+            </a>
+        </div>
+        <% } %>
+
+        <!-- JCT Playlist -->
+        <div class="nav-item">
+            <a class="nav-link" href="/admin/view/jct_playlist">
+                <div class="nav-icon" style="background: var(--cyan-to-yellow-gradient)">
+                    <i class="bi bi-list-stars"></i>
+                </div>
+                <span>JCT Playlist</span>
+            </a>
+        </div>
+
+        <!-- Comments -->
+        <div class="nav-item">
+            <a class="nav-link" href="/admin/view/comments">
+                <div class="nav-icon" style="background: var(--blue-to-white-gradient)">
+                    <i class="bi bi-chat-left-dots"></i>
+                </div>
+                <span>Comments</span>
+            </a>
+        </div>
+
+        <!-- Facebook Menu -->
+        <div class="nav-item">
+            <button
+                class="btn btn-link nav-link w-100 text-left d-flex align-items-center"
+                id="_facebook"
+                data-toggle="collapse"
+                data-target="#_collapseFacebook"
+            >
+                <div class="nav-icon" style="background: var(--primary-gradient)">
+                    <i class="bi bi-facebook"></i>
+                </div>
+                <span>Facebook</span>
+            </button>
+
+            <div id="_collapseFacebook" class="collapse rounded">
+                <a class="nav-link py-2" href="/admin/view/fb_group_sets">
+                    <div class="nav-icon" style="background: var(--secondary-gradient)">
+                        <i class="bi bi-collection"></i>
+                    </div>
+                    FB Group Topic
+                </a>
+                <a class="nav-link py-2" href="/admin/view/fb_groups">
+                    <div class="nav-icon" style="background: var(--blue-to-white-gradient)">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    FB Groups
+                </a>
+                <a class="nav-link py-2" href="/admin/view/fb_pages">
+                    <div class="nav-icon" style="background: var(--orange-to-yellow-gradient)">
+                        <i class="bi bi-card-heading"></i>
+                    </div>
+                    FB Pages
+                </a>
+                <a class="nav-link py-2" href="/admin/view/fb_contents">
+                    <div class="nav-icon" style="background: var(--pink-to-orange-gradient)">
+                        <i class="bi bi-chat-right-text-fill"></i>
+                    </div>
+                    FB Contents
+                </a>
+                <a class="nav-link py-2" href="/admin/view/fb_profiles">
+                    <div class="nav-icon" style="background: var(--cyan-to-yellow-gradient)">
+                        <i class="bi bi-person-bounding-box"></i>
+                    </div>
+                    FB Profiles
+                </a>
+                <a class="nav-link py-2" href="/admin/view/image-list">
+                    <div class="nav-icon" style="background: var(--primary-gradient)">
+                        <i class="bi bi-images"></i>
+                    </div>
+                    Image
+                </a>
+            </div>
+        </div>
+
+        <!-- Admin Only Config -->
+        <% if (role == 'super_admin') { %>
+        <div class="nav-item">
+            <a class="nav-link" href="/admin/view/configs">
+                <div class="nav-icon" style="background: var(--orange-to-yellow-gradient)">
+                    <i class="bi bi-tools"></i>
+                </div>
+                <span>Config</span>
+            </a>
+        </div>
+        <% } %>
+
+        <!-- Partner API Docs -->
+        <div class="nav-item">
+            <a class="nav-link" href="/admin/view/partner-api-docs">
+                <div class="nav-icon" style="background: var(--secondary-gradient)">
+                    <i class="bi bi-file-earmark-code"></i>
+                </div>
+                <span>Partner API Docs</span>
+            </a>
+        </div>
+
+        <div class="nav-item">
+            <a class="nav-link" href="/admin/view/logs">
+                <div class="nav-icon" style="background: var(--blue-to-white-gradient)">
+                    <i class="far fa-file-alt"></i>
+                </div>
+                <span>Logs</span>
+            </a>
+        </div>
+
+    <!-- Sidebar Footer -->
+    <!-- <div class="text-center d-none d-md-inline">
+    <button class="btn btn-link rounded-circle border-0" id="sidebarToggle">
+      <i class="fas fa-angle-double-left"></i>
+    </button>
+  </div> -->
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get current page path and search params
+        const currentPath = window.location.pathname.split('/').pop();
+        const searchParams = new URLSearchParams(window.location.search);
+        const scriptType = searchParams.get('script_type');
+
+        // Set active menu item
+        let activeMenuId = '#' + currentPath;
+        if (scriptType) {
+            activeMenuId = '#scripts_' + scriptType;
+        }
+
+        const activeItem = document.querySelector(activeMenuId);
+        if (activeItem) {
+            activeItem.classList.add('nav-link-active_new');
+
+            // Open parent collapse if not reload
+            if (performance.navigation.type !== performance.navigation.TYPE_RELOAD) {
+                if (scriptType) {
+                    document.querySelector('#_collapseScripts').classList.add('show');
+                } else if (currentPath.startsWith('fb_')) {
+                    document.querySelector('#_collapseFacebook').classList.add('show');
+                } else if (currentPath === 'system-scripts' || currentPath === 'browser-management') {
+                    document.querySelector('#_collapseSystem').classList.add('show');
+                }
+            }
+        }
+
+        // Collapse menu handlers
+        const collapseTriggers = ['_scripts', '_system', '_facebook'];
+        collapseTriggers.forEach((triggerId) => {
+            const trigger = document.getElementById(triggerId);
+            const targetId = triggerId.replace('_', '_collapse');
+
+            if (trigger) {
+                trigger.addEventListener('click', function () {
+                    const isExpanded = document.getElementById(targetId).classList.contains('show');
+
+                    // Close other menus
+                    collapseTriggers.forEach((otherId) => {
+                        if (otherId !== triggerId) {
+                            document.getElementById(otherId.replace('_', '_collapse'))?.classList.remove('show');
+                        }
+                    });
+
+                    // Toggle current menu
+                    document.getElementById(targetId).classList.toggle('show');
+                    this.querySelector('.fa-chevron-right').style.transform = isExpanded
+                        ? 'rotate(0deg)'
+                        : 'rotate(90deg)';
+                });
+            }
+        });
+
+        // Logout handler
+        document.getElementById('logoutBtn').addEventListener('click', function () {
+            document.cookie = '_scripts_tool=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            window.location.replace('/login');
+        });
+
+        // Sidebar toggle
+        // document
+        //   .getElementById('sidebarToggle')
+        //   .addEventListener('click', function () {
+        //     document.getElementById('accordionSidebar').classList.toggle('toggled');
+        //   });
+    });
+</script>

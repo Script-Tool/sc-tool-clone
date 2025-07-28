@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<% include ../common/header%>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <% include ../common/sidebar.ejs%>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="height: 0px;"></nav>
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!--&lt;!&ndash; Page Heading &ndash;&gt;-->
+                <!--<h1 class="font-weight-bold h3 mb-2 text-gray-800">Channels</h1>-->
+
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <a class="d-inline h6 m-0 font-weight-bold text-primary" href = "#">SUB INCREASE INFO</a>
+                    </div>
+                    <div class="card-body">
+                        <%
+                            increase_sub = 0
+                            all_sub = 0
+                            channels.forEach(function(channel){
+                            increase_sub += channel.increase
+                            all_sub += channel.all_sub
+                        }) %>
+                        <div><%=increase_sub/all_sub%></div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Current Sub</th>
+                                    <th>Increase Sub</th>
+                                    <th>All sub</th>
+                                    <th>Url</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Current Sub</th>
+                                    <th>Increase Sub</th>
+                                    <th>All sub</th>
+                                    <th>Url</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                <% channels.forEach(function(channel){ %>
+                                    <tr>
+                                        <td><%=channel.channel_id%></td>
+                                        <td><%=channel.current_sub%></td>
+                                        <td><%=channel.increase%></td>
+                                        <td><%=channel.all_sub%></td>
+                                        <td><a href="<%=channel.url%>"><%=channel.url%></a></td>
+                                    </tr>
+                                <%})%>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <% include ../common/footer%>
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<% include ../common/js%>
+
+</body>
+
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<% include ../common/header%>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+  <!-- Sidebar -->
+  <% include ../common/customer-sidebar.ejs%>
+  <!-- End of Sidebar -->
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+        <br/>
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Customers Manager</h1>
+        </div>
+
+        <br>
+        <div class="filter d-flex align-items-end justify-content-between px-3">
+          <div class="d-flex">
+            <div class="form-group ml-2">
+              <label for="exampleFormControlSelect1">Type</label>
+              <select class="form-control" id="account-type">
+                <option value="">All</option>
+                <option value="vip">VIP</option>
+              </select>
+            </div>
+            <div class="form-group ml-2">
+              <label for="exampleFormControlInput1">ID</label>
+              <div class="d-flex">
+                <input type="number" class="form-control" id="customer_id" style="width: 200px">
+              </div>
+            </div>
+            <div class="form-group ml-2">
+              <label for="exampleFormControlInput1">Email</label>
+              <div class="d-flex">
+                <input class="form-control" id="customer_email" style="width: 200px">
+              </div>
+            </div>
+            <div class="form-group ml-2">
+              <label for="exampleFormControlInput1">Payment CODE</label>
+              <div class="d-flex">
+                <input class="form-control" id="payment_code" style="width: 200px">
+              </div>
+            </div>
+            <div class="form-group ml-2">
+              <label for="exampleFormControlInput1" class="text-success"><%=count%> records</label>
+              <button href="#" class="form-control" id="searchBtn" type="button" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i class="fas fa-remove fa-sm text-white-50"></i> 
+                Search
+              </button>
+            </div>
+          </div>
+  
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li id="pre_page" class="page-item"><a class="page-link" href="#"><-</a></li>
+              <li class="page-item"><a class="page-link" href="#"><%=current_page%></a></li>
+              <li id="next_page" class="page-item"><a class="page-link" href="#">-></a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered" id="tableList" width="100%" cellspacing="0">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Trạng thái</th>
+              <th>Payment Code</th>
+              <th>Tên</th>
+              <th>Email</th>
+              <th>Tổng đã nạp</th>
+              <th>Số dư ví</th>
+              <th>Vip</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% customers.forEach(function(customer){ %>
+              <tr>
+                <td> <%= customer.id %></td>
+                <td> <%= customer.is_active %></td>
+                <td> <%= customer.payment_code %></td>
+                <td> <%= customer.name %></td>
+                <td> <%= customer.verify_data %></td>
+                <td> <%= (customer.wallet ? customer.wallet.total_recharged:0).toLocaleString('it-IT', {style : 'currency', currency : 'VND'}); %></td>
+                <td> <%= (customer.wallet ? customer.wallet.balance:0).toLocaleString('it-IT', {style : 'currency', currency : 'VND'}); %></td>
+                <td>
+                  <div class="custom-control custom-switch">
+                    <input class="statusCheckbox custom-control-input" type="checkbox" id="<%=customer._id%>" <%=customer.is_partner == true?"checked":""%>>
+                    <label class="custom-control-label" for="<%=customer._id%>"></label>
+                  </div>
+                </td>
+                <td>
+                  <a href="#" class="btn btn-warning a-btn-slide-text updateBtn" data-toggle="modal" data-target="#editWallet" value="<%=customer._id%>">Update</a>
+                  <a href="/admin/customer/view/orders?customer_id=<%=customer.id%>" class="btn btn-info a-btn-slide-text">Xem đơn hàng</a>
+                </td>
+              </tr>
+            <%})%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="editWallet" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Update Wallet</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+           
+            <div class="modal-body">
+              <div role="form">
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">Name</label>
+                  <div class="col-sm-10">
+                    <input class="form-control" disabled id="customer_name">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">Total Balance</label>
+                  <div class="col-sm-10">
+                    <input class="form-control" disabled id="customer_balance">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">Add balance</label>
+                  <div class="col-sm-10">
+                    <input class="form-control" type="number" id="total_add_balance" placeholder="total">
+                  </div>
+                </div>
+
+                <input type="hidden" id="flag_customer_id"/>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveForm">Add</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    <% include ../common/footer%>
+
+  </div>
+  <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<% include ../common/js%>
+<script src="/js/bootbox.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+<script src="https://unpkg.com/popper.js@1.15.0/dist/umd/popper.min.js"></script>
+<script src="/javascripts/utils.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+<script>
+  $('#tableList').on('click', 'tr .statusCheckbox', function () {
+    $.ajax({
+      url: "/admin/customer/customer/update-vip?id=" + $(this).attr('id'),
+      type: "get",
+    }).done(function (data) {
+      location.reload();
+    });
+  })
+
+  $('#tableList').on('click','tr .updateBtn',function(){
+    let id = $(this).attr('value')
+    $.ajax({
+        url: "/admin/customer/customer/"+id,
+        type: "GET",
+        contentType: 'application/json',
+    }).done(function (data) {
+      if (data.success) {
+        $('#customer_balance').val(data.customer.wallet.balance)
+        $('#customer_name').val(data.customer.name)
+        $('#flag_customer_id').val(data.customer._id)
+      }
+    });
+  })
+
+  $('#saveForm').on('click',function(){
+    let total = $('#total_add_balance').val()
+    const customerId = $('#flag_customer_id').val()
+
+    if (total > 0 && customerId) {
+      bootbox.confirm('Confirm ?', function(result){
+        if(result) {
+          $.ajax({
+            url: "/admin/customer/customer/recharge",
+            type: "GET",
+            data: { total, customerId },
+            contentType: 'application/json',
+          }).done(function (data) {
+            if (data.success) {
+              location.reload();
+            }
+          })
+        }
+      })
+    }
+  })
+
+  let per_page = 50
+  let current_page = 1
+
+  function getQuery() {
+    let type = $('#account-type').val()
+    let createdTime = $('#account-created-time').val()
+    let order_id = $('#order_id').val()
+    let customer_id = $('#customer_id').val()
+    let payment_code = $('#payment_code').val() 
+    let customer_email = $('#customer_email').val() 
+
+    let qr = `?type=${type}&per_page=${per_page}&current_page=${current_page}`
+    if (customer_email) {
+      qr += `&email=${customer_email}`
+    }
+
+    if (order_id) {
+      qr += `&id=${order_id}`
+    }
+
+    if (customer_id) {
+      qr += `&customer_id=${customer_id}`
+    }
+    if (payment_code) {
+      qr += `&payment_code=${payment_code}`
+    }
+
+    return qr
+  }
+
+  function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  }
+
+  $(document).ready(function () {
+    $('#customer_email').val(getParameterByName('email'))
+    $('#account-type').val(getParameterByName('type'))
+    $('#order_id').val(getParameterByName('id') || '')
+    $('#customer_id').val(getParameterByName('customer_id'))
+    $('#payment_code').val(getParameterByName('payment_code'))
+    
+    per_page = Number(getParameterByName('per_page') || 50)
+    current_page = Number(getParameterByName('current_page') || 1)
+  });
+
+  $('#pre_page').on('click', function (e) {
+    if (current_page > 1) {
+      current_page -= 1
+      let newPath = location.origin + location.pathname + getQuery()
+      location.replace(newPath)
+    }
+  })
+  $('#next_page').on('click', function (e) {
+    current_page += 1
+    let newPath = location.origin + location.pathname + getQuery()
+    location.replace(newPath)
+  })
+
+  $("#searchBtn").on('click', function (e) {
+    let newPath = location.origin + location.pathname + getQuery()
+    location.replace(newPath)
+  });
+</script>
+</body>
+
+</html>

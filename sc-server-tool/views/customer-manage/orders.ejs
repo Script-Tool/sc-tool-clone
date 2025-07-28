@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<% include ../common/header%>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+  <!-- Sidebar -->
+  <% include ../common/customer-sidebar.ejs%>
+  <!-- End of Sidebar -->
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+        <br/>
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Orders</h1>
+          
+        </div>
+
+        
+        <!-- Content Row -->
+        
+
+      </div>
+      <!-- /.container-fluid -->
+      
+      <div class="filter d-flex align-items-end justify-content-between px-3">
+        <div class="d-flex">
+          <div class="form-group ml-2">
+            <label for="exampleFormControlSelect1">Type</label>
+            <select class="form-control" id="account-type">
+              <option value="">All</option>
+              <option value="running">Running</option>
+              <option value="wait_to_run">Wait to run</option>
+              <option value="complete">Complete</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+          <div class="form-group ml-2">
+            <label for="exampleFormControlInput1">Order ID</label>
+            <div class="d-flex">
+              <input type="number" class="form-control" id="order_id" style="width: 200px">
+            </div>
+          </div>
+          <div class="form-group ml-2">
+            <label for="exampleFormControlInput1">ID khách</label>
+            <div class="d-flex">
+              <input type="number" class="form-control" id="customer_id" style="width: 200px">
+            </div>
+          </div>
+          <div class="form-group ml-2">
+            <label for="exampleFormControlInput1">Created time (Minutes)</label>
+            <div class="d-flex">
+              <input type="number" class="form-control" id="account-created-time" style="width: 200px">
+            </div>
+          </div>
+          <div class="form-group ml-2">
+            <label for="exampleFormControlInput1" class="text-success"><%=count%> records</label>
+            <button href="#" class="form-control" id="searchBtn" type="button" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i class="fas fa-remove fa-sm text-white-50"></i> 
+              Search
+            </button>
+          </div>
+        </div>
+
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li id="pre_page" class="page-item"><a class="page-link" href="#"><-</a></li>
+            <li class="page-item"><a class="page-link" href="#"><%=current_page%></a></li>
+            <li id="next_page" class="page-item"><a class="page-link" href="#">-></a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered" id="playlistTable" width="100%" cellspacing="0">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tên khách</th>
+            <th>Dữ liệu ban đầu</th>
+            <th>Tên gói</th>
+            <th>Số lượt</th>
+            <th>Giá</th>
+            <th>Trạng thái</th>
+            <th>Ngày đặt</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% orders.forEach(function(order){ %>
+          <tr>
+            <td><%=order.id%></td>
+            <td><%=order.customer_name%></td>
+            <td><%=order.fisrt_value_log%></td>
+            <td><%=order.package.script_name%> -<small><%=order.package.name%></small></td>
+            <td><%=order.package.value%> <%=order.package.unit%></td>
+            <td><%=order.package.price%></td>
+            <td><%=order.status%></td>
+            <td><%=order.createdAt.toLocaleString()%></td>
+            <td>
+              <a href="#" class="btn btn-danger a-btn-slide-text deleteBtn" value="<%=order.id%>"> Xóa </a>
+              <% if (order.status == 'running') { %>
+                <a href="#" class="btn btn-warning a-btn-slide-text stopBtn" value="<%=order.id%>">Dừng</a>
+              <%}%>
+              <% if (order.status == 'stopped') { %>
+                <a href="#" class="btn btn-success a-btn-slide-text runBtn" value="<%=order.id%>"> Chạy </a>
+              <%}%>
+
+              <% if (['stopped', 'running'].includes(order.status)) { %>
+                <a href="#" class="btn btn-info a-btn-slide-text cancel" value="<%=order.id%>"> Hủy và hoàn tiền </a>
+              <%}%>
+            </td>
+          </tr>
+          <%})%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- End of Main Content -->
+
+    <% include ../common/footer%>
+
+  </div>
+  <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<% include ../common/js%>
+<script src="/js/bootbox.all.min.js"></script>
+<script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+<script src="/javascripts/utils.js"></script>
+<script>
+  let per_page = 50
+  let current_page = 1
+
+  function getQuery() {
+    let type = $('#account-type').val()
+    let createdTime = $('#account-created-time').val()
+    let order_id = $('#order_id').val()
+    let customer_id = $('#customer_id').val()
+
+    let qr = `?type=${type}&createdTime=${createdTime}&per_page=${per_page}&current_page=${current_page}`
+    if (order_id) {
+      qr += `&id=${order_id}`
+    }
+    if (customer_id) {
+      qr += `&customer_id=${customer_id}`
+    }
+
+    return qr
+  }
+
+  function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  }
+
+  $(document).ready(function () {
+    $('#account-type').val(getParameterByName('type'))
+    $('#account-created-time').val(getParameterByName('createdTime') || '')
+    $('#order_id').val(getParameterByName('id') || '')
+    $('#customer_id').val(getParameterByName('customer_id'))
+
+    per_page = Number(getParameterByName('per_page') || 20)
+    current_page = Number(getParameterByName('current_page') || 1)
+  });
+
+  $('#profileFilter').on('change', function (e) {
+    let filterVal = $('#profileFilter').val()
+    console.log(filterVal)
+    switch (filterVal) {
+      case 'error':
+
+        break;
+
+      default:
+        break;
+    }
+    let newPath = location.origin + location.pathname + '?filter=' + filterVal
+    location.replace(newPath)
+  })
+
+  $('#pre_page').on('click', function (e) {
+    if (current_page > 1) {
+      current_page -= 1
+      let newPath = location.origin + location.pathname + getQuery()
+      location.replace(newPath)
+    }
+  })
+  $('#next_page').on('click', function (e) {
+    current_page += 1
+    let newPath = location.origin + location.pathname + getQuery()
+    location.replace(newPath)
+  })
+
+  $("#searchBtn").on('click', function (e) {
+    let newPath = location.origin + location.pathname + getQuery()
+    location.replace(newPath)
+  });
+
+  $('#playlistTable').on('click', 'tr .deleteBtn', function () {
+    let id = $(this).attr('value')
+    
+    bootbox.confirm('Xóa đơn hàng này ?', function (result) {
+      if (result) {
+        $.ajax({
+          url: `/admin/customer/order/delete/${id}`,
+          type: "get",
+          contentType: 'application/json',
+        }).done(function (data) {
+          if (data.success) {
+            location.reload()
+          }
+        })
+      }
+    })
+  })
+
+  $('#playlistTable').on('click', 'tr .cancel', function () {
+    let id = $(this).attr('value')
+    
+    bootbox.confirm('Hủy và hoàn tiền cho đơn hàng này ?', function (result) {
+      if (result) {
+        $.ajax({
+          url: `/admin/customer/order/cancel/${id}`,
+          type: "get",
+          contentType: 'application/json',
+        }).done(function (data) {
+          if (data.success) {
+            location.reload()
+          } else {
+            console.log(data);
+          }
+        })
+      }
+    })
+  })
+
+  $('#playlistTable').on('click', 'tr .runBtn', function () {
+    let id = $(this).attr('value')
+    
+    bootbox.confirm('Chạy đơn hàng này ?', function (result) {
+      if (result) {
+        $.ajax({
+          url: `/admin/customer/order/admin/set-status/${id}?status=1`,
+          type: "get",
+          contentType: 'application/json',
+        }).done(function (data) {
+          if (data.success) {
+            location.reload()
+          }
+        })
+      }
+    })
+  })
+
+  $('#playlistTable').on('click', 'tr .stopBtn', function () {
+    let id = $(this).attr('value')
+    
+    bootbox.confirm('Dừng chạy đơn hàng này ?', function (result) {
+      if (result) {
+        $.ajax({
+          url: `/admin/customer/order/admin/set-status/${id}?status=0`,
+          type: "get",
+          contentType: 'application/json',
+        }).done(function (data) {
+          if (data.success) {
+            location.reload()
+          }
+        })
+      }
+    })
+  })
+</script>
+
+</body>
+
+</html>

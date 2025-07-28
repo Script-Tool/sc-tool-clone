@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include ../common/header %>
+
+  <body id="page-top">
+    <div class="abstract-bg"></div>
+    <div class="grid-pattern"></div>
+    <div class="abstract-shape w-96 h-96 top-1 left-1"></div>
+    <div class="abstract-shape w-96 h-96 bottom-1 right-1"></div>
+    <div id="wrapper">
+      <% include ../common/sidebar %>
+
+        <div id="content-wrapper" class="d-flex flex-column">
+          <div id="content">
+            <div class="container-fluid pt-4">
+              <!-- Page Header -->
+              <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 primary-text font-weight-bold">
+                  System Scripts
+                </h1>
+                <button id="saveConfig" class="btn btn-primary btn-sm shadow-sm space-button px-3 py-2">
+                  <i class="fas fa-save fa-sm mr-2"></i>Save Config
+                </button>
+              </div>
+
+              <!-- Config Cards -->
+              <div class="row">
+                <!-- Account Management Card -->
+                <!-- HTML Template -->
+                <div class="col-12 mb-4">
+                  <div class="space-card p-4">
+                    <div class="flex justify-between items-start mb-6">
+                      <h3 class="space-font text-lg font-bold mb-2 text-white">
+                        Version Chromium Management
+                      </h3>
+                      <div class="form-group d-flex align-items-center">
+                        <label class="text-gray-200 mr-2 mb-0">Change version every:</label>
+                        <input type="number" id="chrome_version_change_interval"
+                          class="form-control form-control-sm border-gray-600 text-gray-200" style="width: 80px;"
+                          min="1" value="<%=config.chrome_version_change_interval || 12%>">
+                        <label class="text-gray-200 ml-2 mb-0">hours</label>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="row">
+                        <div class="col-md-12 mb-3">
+                          <div class="input-group">
+                            <input type="text" id="new_chrome_version"
+                              class="form-control form-control-sm border-gray-600 text-gray-200"
+                              placeholder="Enter Chrome version (e.g., 132.0.6834.83)">
+                            <div class="input-group-append">
+                              <button class="btn btn-primary btn-sm" id="add_chrome_version">
+                                <i class="fas fa-plus mr-1"></i> Add Version
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <ul class="list-group" id="chrome_versions_list">
+                            <% if (config.chrome_versions && config.chrome_versions.length> 0) { %>
+                              <% config.chrome_versions.forEach(function(version) { %>
+                                <li
+                                  class="list-group-item d-flex justify-content-between align-items-center bg-gray-700 text-gray-200 border-gray-600">
+                                  <span>
+                                    <%= version %>
+                                  </span>
+                                  <div class="btn-group">
+                                    <button class="btn btn-info btn-sm move-to-top" data-version="<%= version %>"
+                                      title="Move to top">
+                                      <i class="fas fa-arrow-up"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm remove-version" data-version="<%= version %>">
+                                      <i class="fas fa-trash"></i>
+                                    </button>
+                                  </div>
+                                </li>
+                                <% }); %>
+                                  <% } %>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 mb-4">
+                  <div class="space-card p-4">
+                    <div class="flex justify-between items-start mb-6">
+                      <h3 class="space-font text-lg font-bold mb-2 text-white">
+                        Account Management
+                      </h3>
+                    </div>
+                    <div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="client_config_run_check_2fa"
+                                <%=config.client_config_run_check_2fa==true?"checked":""%>>
+                              <label class="custom-control-label font-weight-bold text-gray-200"
+                                for="client_config_run_check_2fa">Xác minh 2FA</label>
+                            </div>
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="client_config_create2FAGoogle"
+                                <%=config.client_config_create2FAGoogle==true?"checked":""%>>
+                              <label class="custom-control-label font-weight-bold text-gray-200"
+                                for="client_config_create2FAGoogle">Tạo mã 2FA Google</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="unsub_youtube"
+                                <%=config.unsub_youtube==true?"checked":""%>>
+                              <label class="custom-control-label font-weight-bold text-gray-200" for="unsub_youtube">Hủy
+                                đăng ký các kênh YouTube</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="is_change_pass"
+                                <%=config.is_change_pass==true?"checked":""%>>
+                              <label class="custom-control-label font-weight-bold text-gray-200"
+                                for="is_change_pass">Đổi mật khẩu hồ sơ</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Email Configuration Card -->
+                <div class="col-12 mb-4">
+                  <div class="space-card p-4">
+                    <div class="flex justify-between items-start mb-6">
+                      <h3 class="space-font text-lg font-bold mb-2 text-white">
+                        Email Configuration
+                      </h3>
+                    </div>
+
+                    <div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="is_recovery_mail"
+                                <%=config.is_recovery_mail==true?"checked":""%>>
+                              <label class="custom-control-label font-weight-bold text-gray-200"
+                                for="is_recovery_mail">Kháng mail</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <div class="custom-control custom-switch mb-2">
+                              <input type="checkbox" class="custom-control-input" id="is_check_mail_1"
+                                <%=config.is_check_mail_1==true?"checked":""%>>
+                              <label class="custom-control-label font-weight-bold text-gray-200"
+                                for="is_check_mail_1">Bật chế độ check mail 1</label>
+                            </div>
+                            <input type="text" id="check_mail_1_type"
+                              class="form-control form-control-sm border-gray-600 text-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                              placeholder="Mail Check Type" value="<%=config.check_mail_1_type%>" />
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <div class="custom-control custom-switch mb-2">
+                              <input type="checkbox" class="custom-control-input" id="channel_appeal"
+                                <%=config.channel_appeal==true?"checked":""%>>
+                              <label class="custom-control-label font-weight-bold text-gray-200"
+                                for="channel_appeal">Kháng cáo kênh qua email</label>
+                            </div>
+                            <input type="text" id="channel_appeal_content"
+                              class="form-control form-control-sm border-gray-600 text-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                              placeholder="Appeal Content" value="<%=config.channel_appeal_content%>" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Account Creation Card -->
+                <div class="col-12 mb-4">
+                  <div class="space-card p-4">
+                    <div class="flex justify-between items-start mb-6">
+                      <h3 class="space-font text-lg font-bold mb-2 text-white">
+                        Account Creation
+                      </h3>
+                    </div>
+
+                    <div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="changing_to_vietnamese_name"
+                                <%=config.changing_to_vietnamese_name==true?"checked":""%>>
+                              <label class="custom-control-label font-weight-bold text-gray-200"
+                                for="changing_to_vietnamese_name">
+                                Đổi tên Google sang tiếng Việt
+                              </label>
+                            </div>
+                          
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="is_reg_ga"
+                                <%=config.is_reg_ga==true?"checked":""%>>
+                              <label class="custom-control-label font-weight-bold text-gray-200" for="is_reg_ga">
+                                Bật đăng nhập email và đăng ký GA/ADS
+                              </label>
+                            </div>
+                          
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <div class="custom-control custom-switch mb-2">
+                              <input type="checkbox" class="custom-control-input" id="is_reg_account"
+                                <%=config.is_reg_account==true?"checked":""%>>
+                              <label class="custom-control-label font-weight-bold text-gray-200" for="is_reg_account">
+                                Bật tạo tài khoản (Gmail)
+                              </label>
+                            </div>
+                            <div class="row">
+                              <!-- <div class="col-md-4 mb-2">
+                                    <select id="new_account_type" class="form-control form-control-sm border-gray-600">
+                                      <option value="gmail" <%=config.new_account_type=='gmail' ?"selected":""%>>Gmail</option>
+                                      <option value="facebook" <%=config.new_account_type=='facebook' ?"selected":""%>>Facebook</option>
+                                      <option value="tiktok" <%=config.new_account_type=='tiktok' ?"selected":""%>>TikTok</option>
+                                    </select>
+                                  </div>
+                                  <div class="col-md-4 mb-2">
+                                    <select id="zone_name" class="form-control form-control-sm border-gray-600">
+                                      <option value="rd" <%=config.zone_name=='rd' ?"selected":""%>>Random</option>
+                                      <option value="vn" <%=config.zone_name=='vn' ?"selected":""%>>VN</option>
+                                      <option value="us" <%=config.zone_name=='us' ?"selected":""%>>US</option>
+                                    </select>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <select id="fb_verify_type" class="form-control form-control-sm border-gray-600">
+                                      <option value="rd" <%=config.fb_verify_type=='rd' ?"selected":""%>>Random</option>
+                                      <option value="phone" <%=config.fb_verify_type=='phone' ?"selected":""%>>Phone</option>
+                                      <option value="gmail" <%=config.fb_verify_type=='gmail' ?"selected":""%>>Gmail</option>
+                                    </select>
+                                  </div> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- YouTube Configuration Card -->
+                <div class="col-12 mb-4">
+                  <div class="space-card p-4">
+                    <div class="flex justify-between items-start mb-6">
+                      <h3 class="space-font text-lg font-bold mb-2 text-white">
+                        Bật tạo kênh YouTube
+                      </h3>
+                    </div>
+
+                    <div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <div class="custom-control custom-switch">
+                              <!-- <input type="checkbox" class="custom-control-input" id="is_reg_user"
+                                    <%=config.is_reg_user==true?"checked":""%>> -->
+                              <label class="custom-control-label font-weight-bold text-gray-200" for="is_reg_user">
+                                Enable YouTube Channel Creation
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="is_rename_channel"
+                                <%=config.is_rename_channel==true?"checked":""%>>
+                              <label class="custom-control-label font-weight-bold text-gray-200"
+                                for="is_rename_channel">
+                                Bật đổi tên kênh
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <div class="custom-control custom-switch mb-2">
+                              <div class="flex justify-between">
+
+                                <div class="custom-control custom-switch mb-2">
+                                  <input type="checkbox" class="custom-control-input" id="is_ver_mail"
+                                    <%=config.is_ver_mail==true?"checked":""%>>
+                                  <label class="custom-control-label font-weight-bold text-gray-200" for="is_ver_mail">
+                                    Bật xác minh email
+                                  </label>
+                                </div>
+                                <div class="custom-control custom-switch mb-2">
+                                  <input type="checkbox" class="custom-control-input" id="threeStepVerification"
+                                    <%=config.threeStepVerification==true?"checked":""%>>
+                                  <label class="custom-control-label font-weight-bold text-gray-200"
+                                    for="threeStepVerification">
+                                    Bật xác minh 3 bước (Đã có tạo 2fa) chuyển profile về error sau khi xác minh
+                                  </label>
+                                </div>
+
+                                <div class="custom-control custom-switch mb-2">
+                                  <input type="checkbox" class="custom-control-input" id="client_config_threeStepVerificationNoDelete"
+                                    <%=config.client_config_threeStepVerificationNoDelete==true?"checked":""%>>
+                                  <label class="custom-control-label font-weight-bold text-gray-200"
+                                    for="client_config_threeStepVerificationNoDelete">
+                                    Bật xác minh bước 2 Profile chuyển về SYNCED sử dụng tiếp
+                                  </label>
+                                </div>
+                              </div>
+                              
+                              <select id="phone_country" class="form-control form-control-sm border-gray-600" multiple>
+                                <% phone_countries.forEach((item) => { %>
+                                  <option value='<%= item.id %>' <%=config?.phone_country?.includes(item.id+'')?'selected': ''%>><%=item.name%></option>
+                                <% }); %>
+                              </select>
+                              <div class="flex items-center gap-2 mt-2">
+                                <input type="text" id="max_price"
+                                  class="form-control form-control-sm border-gray-600 text-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                                  placeholder="Max price" value="<%=config.max_price%>" />
+                                <button
+                                  class="px-3 py-2 space-button"
+                                  data-toggle="modal"
+                                  data-target="#addCountryModal"
+                                >
+                                  <i class="fas fa-plus fa-sm text-white"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Additional Settings Card -->
+                <div class="col-12 mb-4">
+                  <div class="space-card p-4">
+                    <div class="flex justify-between items-start mb-6">
+                      <h3 class="space-font text-lg font-bold mb-2 text-white">
+                        Additional Settings
+                      </h3>
+                    </div>
+
+                    <div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input"
+                                id="skip_phone_verification_when_creating_playlist"
+                                <%=config.skip_phone_verification_when_creating_playlist==true?"checked":""%>>
+                              <label class="custom-control-label font-weight-bold text-gray-200"
+                                for="skip_phone_verification_when_creating_playlist">
+                                Bỏ qua xác minh điện thoại khi tạo playlist
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="delete_profile_after_run_script"
+                                <%=config.delete_profile_after_run_script==true?"checked":""%>>
+                              <label class="custom-control-label font-weight-bold text-gray-200"
+                                for="delete_profile_after_run_script">
+                                Xóa hồ sơ sau khi chạy script
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <div class="custom-control custom-switch mb-2">
+                              <input type="checkbox" class="custom-control-input" id="khanh_kenh_account"
+                                <%=config.khanh_kenh_account==true?"checked":""%>>
+                              <label class="custom-control-label font-weight-bold text-gray-200"
+                                for="khanh_kenh_account">
+                                Kháng cáo kênh (youtube.com/account)
+                              </label>
+                            </div>
+                            <input type="text" id="khanh_kenh_account_noi_dung"
+                              class="form-control form-control-sm border-gray-600 text-gray-200"
+                              placeholder="Appeal Content" value="<%=config.khanh_kenh_account_noi_dung%>" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+            
+
+            
+              </div>
+            </div>
+
+            <!-- add profile Modal -->
+            <div
+              class="modal fade"
+              id="addCountryModal"
+              tabindex="-1"
+              role="dialog"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content bg-glass">
+                  <div class="modal-header">
+                    <h5 class="modal-title text-white">Thêm quốc gia</h5>
+                    <button
+                      type="button"
+                      class="close text-white"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+
+                  <div class="modal-body">
+                    <form id="addCountryForm">
+                      <div class="form-group">
+                        <label class="text-white">Quốc gia:</label>
+                        <textarea type="text" class="form-control" name="countries" required placeholder="12,United States,unitedstates"></textarea>
+                        <small class="text-muted">Enter country details in the format: ID,Name,Code (e.g., 12,United States,unitedstates)</small>
+                      </div>
+                      <div class="form-group mb-2">
+                        <label class="text-white">Loại</label>
+                        <select class="form-control" name="type" required>
+                          <option value="" selected disabled>-- Chọn loại --</option>
+                          <option value="smsactivate">sms-activate</option>
+                          <option value="fivesim">5sim.net</option>
+                          <option value="gogetsms">gogetsms</option>
+                          <option value="viotp">Viotp</option>
+                          <option value="chothuesimtot">chothuesimcode.com</option>
+                          <option value="codesim">codesim.net</option>
+                          <option value="2ndline">2ndline.pro</option>
+                          <option value="thuesimgiare">thuesimgiare.com</option>
+                        </select>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      id="submit-btn"
+                      onclick="addCountry()"
+                    >
+                      Add country
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <% include ../common/footer %>
+          </div>
+        </div>
+
+        <% include ../common/js %>
+          <script src="/js/bootbox.all.min.js"></script>
+          <script>
+            $(document).ready(function () {
+              // Save Configuration
+              // Xử lý nút Move to Top
+              $(document).on('click', '.move-to-top', function () {
+                const version = $(this).data('version');
+                const li = $(this).closest('li');
+                const ul = li.parent();
+
+                // Di chuyển phần tử lên đầu danh sách
+                li.fadeOut(200, function () {
+                  li.prependTo(ul).fadeIn(200);
+                });
+              });
+
+              // Thêm version mới
+              $('#add_chrome_version').on('click', function () {
+                const versionInput = $('#new_chrome_version');
+                const version = versionInput.val().trim();
+
+                // Basic version format validation
+                const versionRegex = /^\d+\.\d+\.\d+\.\d+$/;
+                if (!versionRegex.test(version)) {
+                  bootbox.alert({
+                    title: 'Invalid Version Format',
+                    message: 'Please enter a valid Chrome version (e.g., 132.0.6834.83)',
+                  });
+                  return;
+                }
+
+                // Add new version to list
+                const newItem = `
+      <li class="list-group-item d-flex justify-content-between align-items-center bg-gray-700 text-gray-200 border-gray-600">
+        <span>${version}</span>
+        <div class="btn-group">
+          <button class="btn btn-info btn-sm move-to-top" data-version="${version}" title="Move to top">
+            <i class="fas fa-arrow-up"></i>
+          </button>
+          <button class="btn btn-danger btn-sm remove-version" data-version="${version}">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </li>
+    `;
+                $('#chrome_versions_list').prepend(newItem);
+                versionInput.val('');
+              });
+
+              // Xóa version
+              $(document).on('click', '.remove-version', function () {
+                const li = $(this).closest('li');
+                li.fadeOut(200, function () {
+                  li.remove();
+                });
+              });
+
+              // Cập nhật xử lý Save Config
+              const updateSaveConfig = function () {
+                // Get all versions from the list in current order
+                const chrome_versions = [];
+                $('#chrome_versions_list li span').each(function () {
+                  chrome_versions.push($(this).text().trim());
+                });
+                return chrome_versions;
+              };
+
+
+              const originalSaveConfig = $('#saveConfig').attr('onclick');
+
+              $('#saveConfig').attr('onclick', '').on('click', function (e) {
+                // Get all versions from the list
+                const chrome_versions = [];
+                $('#chrome_versions_list li').each(function () {
+                  chrome_versions.push($(this).text().trim());
+                });
+
+                async function fetchExchangeRate() {
+                    const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+                    const data = await response.json();
+                    return data.rates.RUB;
+                }
+
+                async function convertUsdToRub(usd) {
+                    const exchangeRate = await fetchExchangeRate();
+                    const result = (usd * exchangeRate).toFixed(2);
+                    return result;
+                }
+
+                // Add to your existing config object
+                const config = {
+                  // ... your existing config properties ...
+                  chrome_versions: chrome_versions,
+                  chrome_version_change_interval: parseInt($('#chrome_version_change_interval').val()) || 12,
+                  // Account Management
+                  client_config_run_check_2fa: $('#client_config_run_check_2fa').is(
+                    ':checked'
+                  ),
+                  client_config_create2FAGoogle: $('#client_config_create2FAGoogle').is(
+                    ':checked'
+                  ),
+                  unsub_youtube: $('#unsub_youtube').is(':checked'),
+                  is_change_pass: $('#is_change_pass').is(':checked'),
+
+                  // Email Configuration
+                  is_recovery_mail: $('#is_recovery_mail').is(':checked'),
+                  is_check_mail_1: $('#is_check_mail_1').is(':checked'),
+                  check_mail_1_type: $('#check_mail_1_type').val(),
+                  channel_appeal: $('#channel_appeal').is(':checked'),
+                  channel_appeal_content: $('#channel_appeal_content').val(),
+
+                  // Account Creation
+                  changing_to_vietnamese_name: $('#changing_to_vietnamese_name').is(
+                    ':checked'
+                  ),
+                  is_reg_ga: $('#is_reg_ga').is(':checked'),
+                  is_reg_account: $('#is_reg_account').is(':checked'),
+                  new_account_type: $('#new_account_type').val(),
+                  zone_name: $('#zone_name').val(),
+                  fb_verify_type: $('#fb_verify_type').val(),
+
+                  // YouTube Configuration
+                  is_reg_user: $('#is_reg_user').is(':checked'),
+                  is_rename_channel: $('#is_rename_channel').is(':checked'),
+                  is_ver_mail: $('#is_ver_mail').is(':checked'),
+                  threeStepVerification: $('#threeStepVerification').is(':checked'),
+                  client_config_threeStepVerificationNoDelete: $('#client_config_threeStepVerificationNoDelete').is(':checked'),
+                  phone_country: $('#phone_country').val(),
+
+                  // Additional Settings
+                  skip_phone_verification_when_creating_playlist: $(
+                    '#skip_phone_verification_when_creating_playlist'
+                  ).is(':checked'),
+                  delete_profile_after_run_script: $(
+                    '#delete_profile_after_run_script'
+                  ).is(':checked'),
+                  khanh_kenh_account: $('#khanh_kenh_account').is(':checked'),
+                  khanh_kenh_account_noi_dung: $(
+                    '#khanh_kenh_account_noi_dung'
+                  ).val(),
+
+          
+
+                  
+                };
+
+                bootbox.confirm({
+                  title: 'Confirm Configuration Update',
+                  message: `<p>Are you sure you want to update the configuration?</p>
+                      <pre class="bg-light p-3 rounded" style="max-height: 300px; overflow-y: auto;">
+                      ${JSON.stringify(config, null, 2)}
+                      </pre>`,
+                  buttons: {
+                    confirm: {
+                      label: 'Yes, Update',
+                      className: 'btn-success',
+                    },
+                    cancel: {
+                      label: 'Cancel',
+                      className: 'btn-secondary',
+                    },
+                  },
+                  callback: async function (result) {
+                    config.max_price= await convertUsdToRub($('#max_price').val());
+                    console.log("result", config.max_price);
+                    if (result) {
+                      $.ajax({
+                        url: '/admin/config/post-update',
+                        type: 'POST',
+                        data: JSON.stringify(config),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (response) {
+                          bootbox.alert({
+                            title: 'Success',
+                            message: 'Configuration updated successfully!',
+                            callback: function () {
+                              // location.reload();
+                            },
+                          });
+                        },
+                        error: function (xhr, status, error) {
+                          bootbox.alert({
+                            title: 'Error',
+                            message:
+                              'Failed to update configuration. Please try again.',
+                          });
+                        },
+                      });
+                    }
+                  },
+                });
+              });
+
+              // Add tooltips to all switches for better UX
+              $('.custom-switch').each(function () {
+                const label = $(this).find('.custom-control-label').text().trim();
+                $(this).attr('title', label);
+              });
+
+              // Add form validation classes dynamically
+              $('input[type="text"]').addClass('form-control-sm');
+              $('select').addClass('form-control-sm');
+
+              // Initialize all select2 dropdowns for better UX
+              if ($.fn.select2) {
+                $('#phone_country').select2({
+                  theme: 'bootstrap4',
+                  placeholder: 'Select Country',
+                  width: '100%',
+                });
+              }
+            });
+          </script>
+
+          <script>
+            async function addCountry() {
+              const form = document.forms["addCountryForm"];
+              const submitBtn = document.querySelector("#submit-btn");
+
+              try {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML =
+                  '<i class="fas fa-spinner fa-spin fa-sm mr-2"></i>';
+
+                const countries = form.countries.value.split('\n');
+                const type = form.type.value;
+                  
+
+                const data = {    
+                  countries: countries.map(country => {
+                    const [id, name, code] = country.split(',');
+                    return { id, name, code, type };
+                  }),
+                };
+
+                $.ajax({
+                  url: `/admin/config/add-country`,
+                  method: "POST",
+                  data: data,
+                  success: function (response) {
+                    $("#addCountryModal").modal("hide");
+                    window.location.reload();
+                    showAlert("Updated successfully", "success");
+                  },
+                  error: function (err) {
+                    showAlert(err.responseJSON.message, "danger");
+                  },
+                });
+              } catch (error) {
+                console.error("Error updating content:", error);
+                showAlert("Error updating content", "danger");
+              } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = "Add profile";
+              }
+            }
+
+          </script>
+  </body>
+
+</html>

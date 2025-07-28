@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+      /* Constants */
+      :root {
+        --primary-color: #56baed;
+        --hover-color: #39ace7;
+        --form-bg: rgba(255, 255, 255, 0.95);
+        --footer-bg: rgba(246, 246, 246, 0.95);
+        --overlay-bg: rgba(0, 0, 0, 0.5);
+      }
+
+      /* Basic Layout */
+      body {
+        font-family: "Poppins", sans-serif;
+        height: 100vh;
+        margin: 0;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        position: relative;
+        transition: background-image 0.5s ease-in-out;
+      }
+
+      /* Background Overlay */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0; /* Shorthand for top, right, bottom, left: 0 */
+        background: var(--overlay-bg);
+        z-index: 0;
+      }
+
+      /* Container Layout */
+      .wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 100vh;
+        padding: 20px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Form Styling */
+      #formContent {
+        border-radius: 10px;
+        background: var(--form-bg);
+        padding: 30px;
+        width: 90%;
+        max-width: 450px;
+        box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+        text-align: center;
+      }
+
+      #formFooter {
+        background-color: var(--footer-bg);
+        border-top: 1px solid #dce8f1;
+        padding: 25px;
+        text-align: center;
+        border-radius: 0 0 10px 10px;
+      }
+
+      /* Input Styling */
+      input[type="button"],
+      input[type="submit"],
+      input[type="reset"] {
+        background-color: var(--primary-color);
+        border: none;
+        color: white;
+        padding: 15px 80px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        text-transform: uppercase;
+        font-size: 13px;
+        box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+        border-radius: 5px;
+        margin: 5px 20px 40px 20px;
+        transition: all 0.3s ease-in-out;
+      }
+
+      input[type="button"]:hover,
+      input[type="submit"]:hover,
+      input[type="reset"]:hover {
+        background-color: var(--hover-color);
+        transform: scale(1.02);
+      }
+
+      input[type="text"] {
+        background-color: #f6f6f6;
+        border: 2px solid #f6f6f6;
+        color: #0d0d0d;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 5px;
+        width: 85%;
+        border-radius: 5px;
+        transition: all 0.5s ease-in-out;
+      }
+
+      input[type="text"]:focus {
+        background-color: #fff;
+        border-bottom: 2px solid var(--primary-color);
+      }
+
+      /* Animation Classes */
+      .fadeIn {
+        animation: fadeIn ease-in 1s forwards;
+      }
+
+      /* Link Styling */
+      .underlineHover {
+        color: #92badd;
+        display: inline-block;
+        text-decoration: none;
+        font-weight: 400;
+        transition: color 0.3s ease;
+      }
+
+      .underlineHover:hover {
+        color: #0d0d0d;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      #formContent {
+        position: relative;
+        background: rgba(255, 255, 255, 0.12) !important;
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-radius: 20px;
+        padding: 40px 30px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: white;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      #formContent:before {
+        content: "";
+        position: absolute;
+        top: -20%;
+        left: -100%;
+        width: 25%;
+        height: 200%;
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.12) 70%
+        );
+        backdrop-filter: blur(10px);
+        transform: rotate(20deg);
+        z-index: -1;
+        transition: all 0.75s ease;
+      }
+
+      #formContent:hover:before {
+        animation: shine 1s;
+      }
+
+      @keyframes shine {
+        100% {
+          left: 125%;
+        }
+      }
+
+      #formContent:hover {
+        background: linear-gradient(
+          45deg,
+          rgba(0, 255, 255, 0.2),
+          rgba(255, 0, 255, 0.2)
+        );
+        box-shadow: 0 15px 30px rgba(0, 255, 255, 0.3);
+      }
+
+      #formContent .bi-person-circle {
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 25px;
+      }
+
+      #formContent input[type="text"] {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: white;
+        border-radius: 12px;
+        padding: 15px 25px;
+        width: 100%;
+        margin-bottom: 15px;
+        text-align: left;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      #formContent input[type="text"]::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      #formContent input[type="text"]:focus {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.25);
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+      }
+
+      /* Warm Golden-Brown Button Styles */
+      #formContent input[type="submit"] {
+        background: linear-gradient(
+          135deg,
+          rgba(205, 164, 94, 0.697) 0%,
+          rgba(160, 119, 66, 0.725) 100%
+        );
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: white;
+        padding: 15px 0;
+        width: 100%;
+        border-radius: 12px;
+        font-weight: 500;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+        margin: 20px 0;
+        transition: all 0.3s ease;
+        text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+      }
+
+      #formContent input[type="submit"]:hover {
+        background: linear-gradient(
+          135deg,
+          rgba(215, 174, 104, 0.95) 0%,
+          rgba(170, 130, 76, 0.95) 100%
+        );
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(205, 164, 94, 0.25);
+      }
+
+      #formContent input[type="submit"]:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 10px rgba(205, 164, 94, 0.15);
+      }
+
+      /* Change Password Button - Darker Variant */
+      #formContent #submitChangePassBtn {
+        background: linear-gradient(
+          135deg,
+          rgba(139, 108, 66, 0.9) 0%,
+          rgba(101, 78, 47, 0.9) 100%
+        );
+        box-shadow: 0 4px 15px rgba(139, 108, 66, 0.3);
+      }
+
+      #formContent #submitChangePassBtn:hover {
+        background: linear-gradient(
+          135deg,
+          rgba(149, 118, 76, 0.95) 0%,
+          rgba(111, 88, 57, 0.95) 100%
+        );
+        box-shadow: 0 6px 20px rgba(139, 108, 66, 0.4);
+      }
+
+      #formContent #text-failed {
+        color: rgba(255, 107, 107, 0.9);
+        font-size: 14px;
+        margin: 10px 0;
+      }
+
+      #formContent #text-success {
+        color: rgba(81, 207, 102, 0.9);
+        font-size: 14px;
+        margin: 10px 0;
+      }
+
+      #formContent #formFooter {
+        background: transparent;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 20px;
+        margin-top: 20px;
+      }
+
+      #formContent #formFooter a {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 14px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      #formContent #formFooter a:hover {
+        color: rgba(255, 255, 255, 0.9);
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+      }
+
+      #formContent .fadeIn {
+        animation: fadeInAnimation 0.5s forwards;
+        opacity: 0;
+      }
+
+      @keyframes fadeInAnimation {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div id="formContent">
+        <!-- Icon -->
+        <div class="fadeIn first mt-4 mb-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="50"
+            height="50"
+            fill="currentColor"
+            class="bi bi-person-circle"
+            viewBox="0 0 16 16"
+          >
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+            <path
+              fill-rule="evenodd"
+              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+            />
+          </svg>
+        </div>
+
+        <!-- Alert Messages -->
+        <div id="text-failed" class="text-danger"></div>
+        <div id="text-success" class="text-success"></div>
+
+        <!-- Login Form -->
+        <div id="loginSection">
+          <input
+            type="text"
+            id="username"
+            class="fadeIn second"
+            name="login"
+            placeholder="Username"
+          />
+          <input
+            type="text"
+            id="password"
+            class="fadeIn third"
+            name="password"
+            placeholder="Password"
+          />
+          <input
+            type="submit"
+            id="submitLoginBtn"
+            class="fadeIn fourth"
+            value="Log In"
+          />
+        </div>
+
+        <!-- Change Password Form -->
+        <div id="changePassSection" class="d-none">
+          <input
+            type="text"
+            id="username_change"
+            name="login"
+            placeholder="Username"
+          />
+          <input
+            type="text"
+            id="password_change"
+            name="password"
+            placeholder="Current Password"
+          />
+          <input
+            type="text"
+            id="new_password_change"
+            name="password2"
+            placeholder="New Password"
+          />
+          <input
+            type="submit"
+            id="submitChangePassBtn"
+            value="Update password"
+          />
+        </div>
+
+        <!-- Footer Links -->
+        <div id="formFooter">
+          <a class="underlineHover" id="changePassBtn" href="#"
+            >Change password?</a
+          >
+          <a class="d-none" id="goToLoginBtn" href="/login">Go to login</a>
+          <a class="d-none" id="goToAccountBtn" href="/">Go to account</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Background Configuration
+      const BackgroundManager = {
+        // List of high-quality background images
+        backgrounds: [
+          // Mountains & Alpine
+          "https://images.pexels.com/photos/1624496/pexels-photo-1624496.jpeg", // Mountain
+          "https://images.pexels.com/photos/933054/pexels-photo-933054.jpeg", // Snowy mountain range
+          "https://images.pexels.com/photos/1486974/pexels-photo-1486974.jpeg", // Mountain valley sunset
+          "https://images.pexels.com/photos/2335126/pexels-photo-2335126.jpeg", // Foggy mountains
+          "https://images.pexels.com/photos/552789/pexels-photo-552789.jpeg", // Mountain lake (nhẹ)
+          "https://images.pexels.com/photos/351448/pexels-photo-351448.jpeg", // Mountain view (nhẹ)
+          "https://images.pexels.com/photos/417173/pexels-photo-417173.jpeg", // Mountaintop (nhẹ)
+
+          // Ocean & Coastal
+          "https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg", // Ocean
+          "https://images.pexels.com/photos/1705254/pexels-photo-1705254.jpeg", // Turquoise ocean coast
+          "https://images.pexels.com/photos/1485894/pexels-photo-1485894.jpeg", // Sunset beach
+          "https://images.pexels.com/photos/1298684/pexels-photo-1298684.jpeg", // Ocean waves landscape
+          "https://images.pexels.com/photos/533923/pexels-photo-533923.jpeg", // Beach sunset (nhẹ)
+          "https://images.pexels.com/photos/462024/pexels-photo-462024.jpeg", // Ocean waves (nhẹ)
+          "https://images.pexels.com/photos/1456291/pexels-photo-1456291.jpeg", // Beach view (nhẹ)
+
+          // Forest & Nature
+          "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg", // Forest
+          "https://images.pexels.com/photos/957024/forest-trees-perspective-bright-957024.jpeg", // Forest path
+          "https://images.pexels.com/photos/1770809/pexels-photo-1770809.jpeg", // Misty forest
+          "https://images.pexels.com/photos/1567069/pexels-photo-1567069.jpeg", // Autumn forest
+          "https://images.pexels.com/photos/240040/pexels-photo-240040.jpeg", // Forest path (nhẹ)
+          "https://images.pexels.com/photos/454880/pexels-photo-454880.jpeg", // Green forest (nhẹ)
+
+          // Lakes & Reflections
+          "https://images.pexels.com/photos/1287145/pexels-photo-1287145.jpeg", // Mountain lake
+          "https://images.pexels.com/photos/147411/italy-mountains-dawn-daybreak-147411.jpeg", // Alpine lake reflection
+          "https://images.pexels.com/photos/2832034/pexels-photo-2832034.jpeg", // Crystal lake mountains
+          "https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg", // Mountain lake panorama
+
+          // Night & Sky
+          "https://images.pexels.com/photos/3293148/pexels-photo-3293148.jpeg", // Night sky
+          "https://images.pexels.com/photos/2469122/pexels-photo-2469122.jpeg", // Ocean night sky
+          "https://images.pexels.com/photos/1819650/pexels-photo-1819650.jpeg", // Starry mountain night
+          "https://images.pexels.com/photos/1694000/pexels-photo-1694000.jpeg", // Night sky over lake
+          "https://images.pexels.com/photos/1252890/pexels-photo-1252890.jpeg", // Northern lights
+          "https://images.pexels.com/photos/1287075/pexels-photo-1287075.jpeg", // Aurora
+
+          // Sunsets & Sunrises
+          "https://images.pexels.com/photos/33545/sunrise-phu-quoc-island-ocean.jpg", // Sunrise
+          "https://images.pexels.com/photos/1834399/pexels-photo-1834399.jpeg", // Mountain sunset
+          "https://images.pexels.com/photos/1237119/pexels-photo-1237119.jpeg", // Ocean sunset
+          "https://images.pexels.com/photos/1722183/pexels-photo-1722183.jpeg", // Desert sunset
+          "https://images.pexels.com/photos/66997/pexels-photo-66997.jpeg", // Simple sunset (nhẹ)
+
+          // Abstract & Other
+          "https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg", // Abstract
+        ],
+
+        // Get random background
+        getRandomBackground() {
+          const index = Math.floor(Math.random() * this.backgrounds.length);
+          return this.backgrounds[index];
+        },
+
+        // Set background image
+        setBackground() {
+          document.body.style.backgroundImage = `url('${this.getRandomBackground()}')`;
+        },
+      };
+
+      // Authentication Manager
+      const AuthManager = {
+        // Clear existing auth cookie
+        clearAuthCookie() {
+          document.cookie =
+            "_scripts_tool=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+        },
+
+        // Handle login submission
+        handleLogin(username, password) {
+          if (!username || !password) return;
+
+          $.ajax({
+            url: "/login",
+            type: "POST",
+            data: { username, password },
+          }).done(function (data) {
+            if (data.success && data.token) {
+              document.cookie = `${data.cookie_name}=${data.token}`;
+              window.location.replace("/admin/view/dashboard");
+            } else {
+              const error = data.error || "Login Failed.";
+              document.querySelector("#text-failed").innerHTML = error;
+            }
+          });
+        },
+
+        // Handle password change
+        handlePasswordChange(username, password, newPassword) {
+          if (!username || !password || !newPassword) {
+            document.querySelector("#text-failed").innerHTML =
+              "Please enter full data.";
+            return;
+          }
+
+          $.ajax({
+            url: "/change-pass",
+            type: "POST",
+            data: {
+              username,
+              password,
+              new_password: newPassword,
+            },
+          }).done(function (data) {
+            if (data.success && data.token) {
+              document.cookie = `${data.cookie_name}=${data.token}`;
+              document.querySelector("#text-success").innerHTML = data.message;
+              document
+                .querySelector("#goToAccountBtn")
+                .classList.add("d-block");
+            } else {
+              const error = data.error || "Update password failed.";
+              document.querySelector("#text-failed").innerHTML = error;
+            }
+          });
+        },
+      };
+
+      // UI Manager
+      const UIManager = {
+        // Initialize UI event listeners
+        init() {
+          // Change password button
+          const changePassBtn = document.querySelector("#changePassBtn");
+          if (changePassBtn) {
+            changePassBtn.addEventListener("click", () => {
+              document.querySelector("#loginSection").classList.add("d-none");
+              document
+                .querySelector("#changePassSection")
+                .classList.add("d-block");
+              changePassBtn.classList.add("d-none");
+              document.querySelector("#goToLoginBtn").classList.add("d-block");
+            });
+          }
+
+          // Login button
+          const submitLoginBtn = document.querySelector("#submitLoginBtn");
+          if (submitLoginBtn) {
+            submitLoginBtn.addEventListener("click", () => {
+              const username = document.querySelector("#username").value;
+              const password = document.querySelector("#password").value;
+              AuthManager.handleLogin(username, password);
+            });
+          }
+
+          // Change password submit button
+          const submitChangePassBtn = document.querySelector(
+            "#submitChangePassBtn"
+          );
+          if (submitChangePassBtn) {
+            submitChangePassBtn.addEventListener("click", () => {
+              const username = document.querySelector("#username_change").value;
+              const password = document.querySelector("#password_change").value;
+              const newPassword = document.querySelector(
+                "#new_password_change"
+              ).value;
+              AuthManager.handlePasswordChange(username, password, newPassword);
+            });
+          }
+        },
+      };
+
+      // Initialize application
+      document.addEventListener("DOMContentLoaded", () => {
+        // Set random background
+        BackgroundManager.setBackground();
+
+        // Clear any existing auth
+        AuthManager.clearAuthCookie();
+
+        // Initialize UI
+        UIManager.init();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include ../common/header %>
+
+  <body class="bg-black text-gray-200">
+    <div class="flex h-screen">
+      <% include ../common/sidebar %>
+
+      <!-- Content Wrapper -->
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <!-- Main Content -->
+        <div class="flex-1 overflow-x-hidden overflow-y-auto">
+          <div class="container mx-auto px-6 py-8">
+            <!-- Page Heading -->
+            <div class="flex justify-between items-center mb-6">
+              <h1 class="text-2xl font-semibold text-gray-100">
+                <i class="fas fa-clipboard-list text-blue-400 mr-2"></i>Quản lý log hệ thống
+              </h1>
+              <div class="flex space-x-2">
+                <button id="refreshBtn" class="px-3 py-2 text-sm font-medium text-gray-300 bg-gray-800 rounded-md hover:bg-gray-700 transition-colors duration-200 flex items-center">
+                  <i class="fas fa-sync-alt mr-1.5"></i> Làm mới
+                </button>
+              </div>
+            </div>
+
+            <!-- Filter Card -->
+            <div class="bg-gray-900 rounded-lg shadow-xl border border-gray-800 mb-6 overflow-hidden transition-all duration-300">
+              <div class="px-6 py-4 bg-gray-800 border-b border-gray-700 cursor-pointer hover:bg-gray-750 transition-colors" id="filterToggle">
+                <div class="flex justify-between items-center">
+                  <h6 class="font-semibold text-blue-400 flex items-center">
+                    <i class="fas fa-filter mr-2"></i>Bộ lọc
+                  </h6>
+                  <div class="flex items-center text-gray-400">
+                    <span id="activeFiltersCount" class="text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full mr-2 <%= Object.keys(query).filter(k => k !== 'page' && query[k]).length > 0 ? '' : 'hidden' %>">
+                      <%= Object.keys(query).filter(k => k !== 'page' && query[k]).length %>
+                    </span>
+                    <i class="fas fa-chevron-down transition-transform duration-300" id="filterChevron"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6 border-b border-gray-800" id="filterContent">
+                <form id="filterForm" method="GET">
+                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="group">
+                      <label for="script_code" class="block text-sm font-medium text-gray-300 mb-1 group-focus-within:text-blue-400 transition-colors">Mã Script:</label>
+                      <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                          <i class="fas fa-code text-xs"></i>
+                        </div>
+                        <input type="text" class="w-full rounded-md bg-gray-800 border-gray-700 text-gray-200 pl-9 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 transition-all"
+                          id="script_code" name="script_code" value="<%= query.script_code || '' %>" placeholder="Nhập mã script...">
+                      </div>
+                    </div>
+                    <div class="group">
+                      <label for="message" class="block text-sm font-medium text-gray-300 mb-1 group-focus-within:text-blue-400 transition-colors">Nội dung:</label>
+                      <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                          <i class="fas fa-align-left text-xs"></i>
+                        </div>
+                        <input type="text" class="w-full rounded-md bg-gray-800 border-gray-700 text-gray-200 pl-9 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 transition-all"
+                          id="message" name="message" value="<%= query.message || '' %>" placeholder="Tìm theo nội dung...">
+                      </div>
+                    </div>
+                    <div class="group">
+                      <label for="startDate" class="block text-sm font-medium text-gray-300 mb-1 group-focus-within:text-blue-400 transition-colors">Từ ngày:</label>
+                      <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                          <i class="fas fa-calendar-alt text-xs"></i>
+                        </div>
+                        <input type="date" class="w-full rounded-md bg-gray-800 border-gray-700 text-gray-200 pl-9 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 transition-all"
+                          id="startDate" name="startDate" value="<%= query.startDate || '' %>">
+                      </div>
+                    </div>
+                    <div class="group">
+                      <label for="endDate" class="block text-sm font-medium text-gray-300 mb-1 group-focus-within:text-blue-400 transition-colors">Đến ngày:</label>
+                      <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                          <i class="fas fa-calendar-alt text-xs"></i>
+                        </div>
+                        <input type="date" class="w-full rounded-md bg-gray-800 border-gray-700 text-gray-200 pl-9 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 transition-all"
+                          id="endDate" name="endDate" value="<%= query.endDate || '' %>">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex justify-end mt-4">
+                    <button type="button" class="px-4 py-2 text-sm font-medium text-gray-300 bg-gray-700 rounded-md hover:bg-gray-600 transition-colors duration-200 mr-2 flex items-center" onclick="resetFilters()">
+                      <i class="fas fa-sync-alt text-xs mr-1.5"></i> Đặt lại
+                    </button>
+                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors duration-200 flex items-center">
+                      <i class="fas fa-search text-xs mr-1.5"></i> Tìm kiếm
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Log Data Card -->
+            <div class="bg-gray-900 rounded-lg shadow-xl border border-gray-800 overflow-hidden">
+              <div class="px-6 py-4 bg-gray-800 border-b border-gray-700 flex justify-between items-center">
+                <h6 class="font-semibold text-blue-400 flex items-center">
+                  <i class="fas fa-list-alt mr-2"></i>Danh sách log
+                  <% if(logs.length > 0) { %>
+                    <span class="ml-2 text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full"><%= total_items %></span>
+                  <% } %>
+                </h6>
+                <button type="button" class="px-3 py-1.5 text-xs font-medium text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors duration-200 flex items-center"
+                  onclick="clearLogs()" <%= logs.length === 0 ? 'disabled' : '' %>
+                  <%= logs.length === 0 ? 'class="px-3 py-1.5 text-xs font-medium text-gray-400 bg-gray-700 rounded-md cursor-not-allowed"' : '' %>>
+                  <i class="fas fa-trash text-xs mr-1.5"></i> Xóa tất cả
+                </button>
+              </div>
+              <div class="p-6">
+                <!-- Loading Indicator -->
+                <div id="tableLoadingIndicator" class="hidden">
+                  <div class="flex justify-center items-center py-20">
+                    <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-500 border-r-transparent">
+                      <span class="sr-only">Đang tải...</span>
+                    </div>
+                    <span class="ml-3 text-sm text-gray-400">Đang tải dữ liệu...</span>
+                  </div>
+                </div>
+
+                <div class="overflow-x-auto" id="tableContainer">
+                  <table class="min-w-full divide-y divide-gray-700 table-fixed">
+                    <thead>
+                      <tr>
+                        <th class="w-16 px-6 py-3 bg-gray-800 text-left text-xs font-medium text-gray-400 uppercase tracking-wider rounded-tl-md">STT</th>
+                        <th class="w-32 px-6 py-3 bg-gray-800 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Mã Script</th>
+                        <th class="px-6 py-3 bg-gray-800 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Nội dung</th>
+                        <th class="w-40 px-6 py-3 bg-gray-800 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Thời gian</th>
+                        <th class="w-24 px-6 py-3 bg-gray-800 text-left text-xs font-medium text-gray-400 uppercase tracking-wider rounded-tr-md">Thao tác</th>
+                      </tr>
+                    </thead>
+                    <tbody class="bg-gray-900 divide-y divide-gray-800">
+                      <% if(logs.length > 0) { %>
+                        <% logs.forEach((log, index) => { %>
+                          <tr class="hover:bg-gray-800 transition-colors duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400"><%= (current_page - 1) * per_page + index + 1 %></td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                              <span class="px-2 py-1 text-xs font-medium text-blue-200 bg-blue-900 rounded-full"><%= log.script_code || 'N/A' %></span>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-300">
+                              <div class="truncate max-w-xs" title="<%= log.message %>"><%= log.message %></div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                              <div class="flex items-center">
+                                <i class="fas fa-clock text-gray-600 mr-1.5"></i>
+                                <%= formatDateTimeForInput(log.createdAt)%>
+                              </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                              <div class="flex space-x-3">
+                                <button type="button" class="text-blue-400 hover:text-blue-300 transition-colors p-1 hover:bg-blue-900 hover:bg-opacity-30 rounded"
+                                  onclick="viewLogDetails('<%= log._id %>')" title="Xem chi tiết">
+                                  <i class="fas fa-eye"></i>
+                                </button>
+                                <button type="button" class="text-red-400 hover:text-red-300 transition-colors p-1 hover:bg-red-900 hover:bg-opacity-30 rounded"
+                                  onclick="deleteLog('<%= log._id %>')" title="Xóa log">
+                                  <i class="fas fa-trash"></i>
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        <% }) %>
+                      <% } else { %>
+                        <tr>
+                          <td colspan="5" class="px-6 py-12 text-center text-gray-400">
+                            <div class="flex flex-col items-center">
+                              <i class="fas fa-inbox text-4xl mb-3 text-gray-700"></i>
+                              <p class="text-lg">Không có dữ liệu</p>
+                              <p class="text-sm text-gray-500 mt-1">Chưa có log nào được ghi nhận</p>
+                            </div>
+                          </td>
+                        </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Pagination -->
+                <% if (total_pages > 1) { %>
+                  <div class="flex flex-col md:flex-row justify-between items-center mt-6 space-y-4 md:space-y-0">
+                    <div class="text-sm text-gray-400 flex items-center">
+                      <i class="fas fa-info-circle mr-2 text-blue-400"></i>
+                      Hiển thị <span class="font-medium text-gray-300 mx-1"><%= logs.length %></span> của
+                      <span class="font-medium text-gray-300 mx-1"><%= total_items %></span> bản ghi
+                    </div>
+                    <nav class="flex justify-center" aria-label="Phân trang">
+                      <ul class="flex flex-wrap rounded-md shadow-sm">
+                        <% if (current_page > 1) { %>
+                          <li>
+                            <a class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-700 bg-gray-800 text-sm font-medium text-gray-400 hover:bg-gray-700 hover:text-gray-200 transition-colors"
+                              href="?page=1<%= query_string %>" aria-label="Trang đầu tiên" title="Trang đầu tiên">
+                              <span class="sr-only">Đầu tiên</span>
+                              <i class="fas fa-angle-double-left"></i>
+                            </a>
+                          </li>
+                          <li>
+                            <a class="relative inline-flex items-center px-2 py-2 border border-gray-700 bg-gray-800 text-sm font-medium text-gray-400 hover:bg-gray-700 hover:text-gray-200 transition-colors"
+                              href="?page=<%= current_page - 1 %><%= query_string %>" aria-label="Trang trước" title="Trang trước">
+                              <span class="sr-only">Trước</span>
+                              <i class="fas fa-angle-left"></i>
+                            </a>
+                          </li>
+                        <% } %>
+
+                        <% for (let i = pagination_start; i <= pagination_end; i++) { %>
+                          <li>
+                            <a
+                              class="relative inline-flex items-center px-4 py-2 border border-gray-700 <%= current_page === i ? 'bg-blue-900 text-blue-200 font-bold' : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-gray-200' %> text-sm font-medium transition-colors"
+                              href="?page=<%= i %><%= query_string %>"
+                              aria-label="Trang <%= i %>"
+                              aria-current="<%= current_page === i ? 'page' : 'false' %>">
+                              <%= i %>
+                            </a>
+                          </li>
+                        <% } %>
+
+                        <% if (current_page < total_pages) { %>
+                          <li>
+                            <a class="relative inline-flex items-center px-2 py-2 border border-gray-700 bg-gray-800 text-sm font-medium text-gray-400 hover:bg-gray-700 hover:text-gray-200 transition-colors"
+                              href="?page=<%= current_page + 1 %><%= query_string %>" aria-label="Trang tiếp" title="Trang tiếp">
+                              <span class="sr-only">Tiếp</span>
+                              <i class="fas fa-angle-right"></i>
+                            </a>
+                          </li>
+                          <li>
+                            <a class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-700 bg-gray-800 text-sm font-medium text-gray-400 hover:bg-gray-700 hover:text-gray-200 transition-colors"
+                              href="?page=<%= total_pages %><%= query_string %>" aria-label="Trang cuối" title="Trang cuối">
+                              <span class="sr-only">Cuối cùng</span>
+                              <i class="fas fa-angle-double-right"></i>
+                            </a>
+                          </li>
+                        <% } %>
+                      </ul>
+                    </nav>
+                  </div>
+                <% } else if (logs.length > 0) { %>
+                  <div class="flex justify-start mt-6">
+                    <div class="text-sm text-gray-400 flex items-center">
+                      <i class="fas fa-info-circle mr-2 text-blue-400"></i>
+                      Hiển thị <span class="font-medium text-gray-300 mx-1"><%= logs.length %></span> bản ghi
+                    </div>
+                  </div>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <% include ../common/footer %>
+      </div>
+    </div>
+
+    <!-- Scroll to Top Button-->
+    <a class="fixed right-5 bottom-5 rounded-full p-3 bg-gray-700 text-white shadow-lg opacity-50 hover:opacity-100 transition-opacity" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Toast Notification -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col space-y-2 max-w-xs"></div>
+
+    <!-- Log Detail Modal -->
+    <div class="fixed inset-0 z-50 hidden overflow-y-auto" id="logDetailModal" aria-labelledby="logDetailModalLabel" aria-modal="true" role="dialog">
+      <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="fixed inset-0 bg-black bg-opacity-75 transition-opacity" aria-hidden="true" id="logDetailModalBackdrop"></div>
+        <div class="relative bg-gray-900 rounded-lg max-w-4xl w-full shadow-xl border border-gray-800 transform transition-all opacity-0 translate-y-4" id="logDetailModalContent">
+          <div class="bg-gray-900 rounded-lg overflow-hidden">
+            <div class="px-6 py-4 bg-gray-800 border-b border-gray-700 flex justify-between items-center">
+              <h5 class="text-lg font-semibold text-gray-100 flex items-center" id="logDetailModalLabel">
+                <i class="fas fa-info-circle text-blue-400 mr-2"></i>Chi tiết log
+              </h5>
+              <button type="button" class="text-gray-400 hover:text-gray-200 transition-colors p-1 rounded-full hover:bg-gray-700" id="logDetailModalClose">
+                <span class="sr-only">Đóng</span>
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="p-6">
+              <div class="text-center py-8 hidden" id="loading-spinner">
+                <div class="inline-block h-10 w-10 animate-spin rounded-full border-4 border-solid border-blue-500 border-r-transparent">
+                  <span class="sr-only">Đang tải...</span>
+                </div>
+                <p class="mt-3 text-gray-400">Đang tải dữ liệu...</p>
+              </div>
+              <div id="log-details-container" class="hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div class="bg-gray-800 p-4 rounded-lg">
+                    <p class="text-sm text-gray-300 flex items-center">
+                      <i class="fas fa-code text-blue-400 mr-2"></i>
+                      <span class="font-medium text-gray-100">Mã Script:</span>
+                      <span id="detail-script-code" class="ml-2 px-2 py-1 text-xs font-medium text-blue-200 bg-blue-900 rounded-full"></span>
+                    </p>
+                    <p class="text-sm text-gray-300 mt-3 flex items-center">
+                      <i class="fas fa-clock text-blue-400 mr-2"></i>
+                      <span class="font-medium text-gray-100">Thời gian:</span>
+                      <span id="detail-timestamp" class="ml-2"></span>
+                    </p>
+                  </div>
+                  <div class="bg-gray-800 p-4 rounded-lg">
+                    <p class="text-sm text-gray-300 flex items-start">
+                      <i class="fas fa-fingerprint text-blue-400 mr-2 mt-0.5"></i>
+                      <span class="font-medium text-gray-100">ID:</span>
+                      <span id="detail-id" class="ml-2 break-all"></span>
+                    </p>
+                  </div>
+                </div>
+                <div class="border-t border-gray-700 my-4"></div>
+                <h6 class="font-medium text-gray-100 mb-2 flex items-center">
+                  <i class="fas fa-align-left text-blue-400 mr-2"></i>Nội dung:
+                </h6>
+                <div class="bg-gray-800 p-4 rounded-lg">
+                  <p id="detail-message" class="text-sm text-gray-300 mb-4 whitespace-pre-line"></p>
+                </div>
+                <div class="border-t border-gray-700 my-4"></div>
+                <h6 class="font-medium text-gray-100 mb-2 flex items-center">
+                  <i class="fas fa-database text-blue-400 mr-2"></i>Dữ liệu chi tiết:
+                </h6>
+                <div class="bg-gray-800 p-4 rounded-lg">
+                  <pre id="detail-data" class="text-sm text-gray-300 overflow-auto max-h-60 font-mono"></pre>
+                </div>
+              </div>
+            </div>
+            <div class="px-6 py-4 bg-gray-800 border-t border-gray-700 flex justify-end">
+              <button type="button" class="px-4 py-2 text-sm font-medium text-gray-300 bg-gray-700 rounded-md hover:bg-gray-600 transition-colors flex items-center" id="logDetailModalCloseBtn">
+                <i class="fas fa-times mr-1.5"></i>Đóng
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirm Delete Modal -->
+    <div class="fixed inset-0 z-50 hidden overflow-y-auto" id="confirmDeleteModal" aria-labelledby="confirmDeleteModalLabel" aria-modal="true" role="dialog">
+      <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="fixed inset-0 bg-black bg-opacity-75 transition-opacity" aria-hidden="true" id="confirmDeleteModalBackdrop"></div>
+        <div class="relative bg-gray-900 rounded-lg max-w-md w-full shadow-xl border border-gray-800 transform transition-all opacity-0 translate-y-4" id="confirmDeleteModalContent">
+          <div class="bg-gray-900 rounded-lg overflow-hidden">
+            <div class="px-6 py-4 bg-gray-800 border-b border-gray-700 flex justify-between items-center">
+              <h5 class="text-lg font-semibold text-gray-100 flex items-center" id="confirmDeleteModalLabel">
+                <i class="fas fa-trash text-red-400 mr-2"></i>Xác nhận xóa
+              </h5>
+              <button type="button" class="text-gray-400 hover:text-gray-200 transition-colors p-1 rounded-full hover:bg-gray-700" id="confirmDeleteModalClose">
+                <span class="sr-only">Đóng</span>
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="p-6">
+              <div class="flex items-center mb-4 text-yellow-300">
+                <i class="fas fa-exclamation-triangle text-2xl mr-3"></i>
+                <p class="text-gray-300">Bạn có chắc chắn muốn xóa log này?</p>
+              </div>
+              <p class="text-sm text-gray-400 mt-2">Thao tác này không thể hoàn tác sau khi thực hiện.</p>
+            </div>
+            <div class="px-6 py-4 bg-gray-800 border-t border-gray-700 flex justify-end">
+              <button type="button" class="px-4 py-2 text-sm font-medium text-gray-300 bg-gray-700 rounded-md hover:bg-gray-600 transition-colors flex items-center mr-2" id="confirmDeleteCancelBtn">
+                <i class="fas fa-times mr-1.5"></i>Hủy
+              </button>
+              <button type="button" class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors flex items-center" id="confirmDeleteBtn">
+                <i class="fas fa-trash mr-1.5"></i>Xóa
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirm Clear All Modal -->
+    <div class="fixed inset-0 z-50 hidden overflow-y-auto" id="confirmClearAllModal" aria-labelledby="confirmClearAllModalLabel" aria-modal="true" role="dialog">
+      <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="fixed inset-0 bg-black bg-opacity-75 transition-opacity" aria-hidden="true" id="confirmClearAllModalBackdrop"></div>
+        <div class="relative bg-gray-900 rounded-lg max-w-md w-full shadow-xl border border-gray-800 transform transition-all opacity-0 translate-y-4" id="confirmClearAllModalContent">
+          <div class="bg-gray-900 rounded-lg overflow-hidden">
+            <div class="px-6 py-4 bg-gray-800 border-b border-gray-700 flex justify-between items-center">
+              <h5 class="text-lg font-semibold text-gray-100 flex items-center" id="confirmClearAllModalLabel">
+                <i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>Xác nhận xóa tất cả
+              </h5>
+              <button type="button" class="text-gray-400 hover:text-gray-200 transition-colors p-1 rounded-full hover:bg-gray-700" id="confirmClearAllModalClose">
+                <span class="sr-only">Đóng</span>
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="p-6">
+              <div class="bg-red-900 border-l-4 border-red-500 p-4 mb-4 rounded-r-md">
+                <div class="flex">
+                  <div class="flex-shrink-0">
+                    <i class="fas fa-exclamation-triangle text-red-400"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="text-sm text-red-300">
+                      Cảnh báo: Thao tác này sẽ xóa <strong>tất cả</strong> các log và không thể khôi phục.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <p class="text-gray-300 flex items-center">
+                <i class="fas fa-question-circle text-yellow-400 mr-2"></i>
+                Bạn có chắc chắn muốn xóa tất cả log?
+              </p>
+              <p class="text-sm text-gray-400 mt-3">Hành động này sẽ xóa vĩnh viễn tất cả log trong hệ thống và không thể hoàn tác.</p>
+            </div>
+            <div class="px-6 py-4 bg-gray-800 border-t border-gray-700 flex justify-end">
+              <button type="button" class="px-4 py-2 text-sm font-medium text-gray-300 bg-gray-700 rounded-md hover:bg-gray-600 transition-colors flex items-center mr-2" id="confirmClearAllCancelBtn">
+                <i class="fas fa-times mr-1.5"></i>Hủy
+              </button>
+              <button type="button" class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors flex items-center" id="confirmClearAllBtn">
+                <i class="fas fa-trash-alt mr-1.5"></i>Xóa tất cả
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Common JS -->
+    <% include ../common/js %>
+
+    <!-- Script to include Tailwind CSS -->
+    <script>
+      // Add Tailwind CSS CDN to the page dynamically if not already included
+      (function() {
+        if (!document.getElementById('tailwindcss')) {
+          const tailwindLink = document.createElement('link');
+          tailwindLink.id = 'tailwindcss';
+          tailwindLink.rel = 'stylesheet';
+          tailwindLink.href = 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css';
+          document.head.appendChild(tailwindLink);
+        }
+      })();
+    </script>
+
+    <script>
+      // Global variables
+      let deleteLogId = null;
+      const toastDuration = 5000; // 5 seconds
+
+      /**
+       * Toast notification system
+       */
+      const Toast = {
+        types: {
+          SUCCESS: 'success',
+          ERROR: 'error',
+          INFO: 'info',
+          WARNING: 'warning'
+        },
+
+        create: function(message, type = this.types.INFO) {
+          const toastContainer = document.getElementById('toast-container');
+          const toast = document.createElement('div');
+
+          // Set toast classes based on type
+          let iconClass, bgClass, textClass;
+          switch(type) {
+            case this.types.SUCCESS:
+              iconClass = 'fas fa-check-circle';
+              bgClass = 'bg-green-800';
+              textClass = 'text-green-200';
+              break;
+            case this.types.ERROR:
+              iconClass = 'fas fa-exclamation-circle';
+              bgClass = 'bg-red-800';
+              textClass = 'text-red-200';
+              break;
+            case this.types.WARNING:
+              iconClass = 'fas fa-exclamation-triangle';
+              bgClass = 'bg-yellow-800';
+              textClass = 'text-yellow-200';
+              break;
+            default: // INFO
+              iconClass = 'fas fa-info-circle';
+              bgClass = 'bg-blue-800';
+              textClass = 'text-blue-200';
+          }
+
+          // Create toast element
+          toast.className = `${bgClass} ${textClass} p-3 rounded-lg shadow-lg flex items-start w-full transform transition-all duration-300 ease-out opacity-0 translate-x-4`;
+          toast.innerHTML = `
+            <div class="flex-shrink-0 mr-2">
+              <i class="${iconClass}"></i>
+            </div>
+            <div class="flex-1">
+              <p class="text-sm">${message}</p>
+            </div>
+            <button class="ml-2 text-sm opacity-70 hover:opacity-100 focus:outline-none" onclick="this.parentElement.remove()">
+              <i class="fas fa-times"></i>
+            </button>
+          `;
+
+          // Add to container
+          toastContainer.appendChild(toast);
+
+          // Animate in
+          setTimeout(() => {
+            toast.classList.remove('opacity-0', 'translate-x-4');
+          }, 10);
+
+          // Auto remove after duration
+          setTimeout(() => {
+            toast.classList.add('opacity-0', 'translate-x-4');
+            setTimeout(() => {
+              if (toast.parentElement) {
+                toast.remove();
+              }
+            }, 300);
+          }, toastDuration);
+
+          return toast;
+        },
+
+        success: function(message) {
+          return this.create(message, this.types.SUCCESS);
+        },
+
+        error: function(message) {
+          return this.create(message, this.types.ERROR);
+        },
+
+        info: function(message) {
+          return this.create(message, this.types.INFO);
+        },
+
+        warning: function(message) {
+          return this.create(message, this.types.WARNING);
+        }
+      };
+
+      /**
+       * Modal management system
+       */
+      const Modal = {
+        show: function(modalId) {
+          const modal = document.getElementById(modalId);
+          const modalContent = document.getElementById(`${modalId}Content`);
+
+          if (modal && modalContent) {
+            modal.classList.remove('hidden');
+
+            // Animate in
+            setTimeout(() => {
+              modalContent.classList.remove('opacity-0', 'translate-y-4');
+            }, 10);
+          }
+        },
+
+        hide: function(modalId) {
+          const modal = document.getElementById(modalId);
+          const modalContent = document.getElementById(`${modalId}Content`);
+
+          if (modal && modalContent) {
+            // Animate out
+            modalContent.classList.add('opacity-0', 'translate-y-4');
+
+            // Hide after animation
+            setTimeout(() => {
+              modal.classList.add('hidden');
+            }, 300);
+          }
+        },
+
+        setup: function() {
+          // Setup all modals
+          const modals = ['logDetailModal', 'confirmDeleteModal', 'confirmClearAllModal'];
+
+          modals.forEach(modalId => {
+            const modal = document.getElementById(modalId);
+            const closeBtn = document.getElementById(`${modalId}Close`);
+            const closeBtnBottom = document.getElementById(`${modalId}CloseBtn`);
+            const backdrop = document.getElementById(`${modalId}Backdrop`);
+            const cancelBtn = document.getElementById(`${modalId}CancelBtn`);
+
+            // Close button in header
+            if (closeBtn) {
+              closeBtn.addEventListener('click', () => this.hide(modalId));
+            }
+
+            // Close button in footer
+            if (closeBtnBottom) {
+              closeBtnBottom.addEventListener('click', () => this.hide(modalId));
+            }
+
+            // Backdrop click
+            if (backdrop) {
+              backdrop.addEventListener('click', () => this.hide(modalId));
+            }
+
+            // Cancel button
+            if (cancelBtn) {
+              cancelBtn.addEventListener('click', () => this.hide(modalId));
+            }
+
+            // ESC key to close
+            document.addEventListener('keydown', (e) => {
+              if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                this.hide(modalId);
+              }
+            });
+          });
+        }
+      };
+
+      /**
+       * Reset filter form
+       */
+      function resetFilters() {
+        document.getElementById('script_code').value = '';
+        document.getElementById('message').value = '';
+        document.getElementById('startDate').value = '';
+        document.getElementById('endDate').value = '';
+
+        // Show loading indicator
+        document.getElementById('tableLoadingIndicator').classList.remove('hidden');
+        document.getElementById('tableContainer').classList.add('opacity-50');
+
+        // Submit form
+        document.getElementById('filterForm').submit();
+      }
+
+      /**
+       * View log details
+       */
+      function viewLogDetails(logId) {
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const logDetailsContainer = document.getElementById('log-details-container');
+
+        // Show modal with loading state
+        loadingSpinner.classList.remove('hidden');
+        logDetailsContainer.classList.add('hidden');
+        Modal.show('logDetailModal');
+
+        // Fetch log details
+        fetch('/admin/logs/' + logId)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            if (data.success) {
+              const log = data.log;
+
+              // Populate details
+              document.getElementById('detail-script-code').textContent = log.script_code || 'N/A';
+              document.getElementById('detail-id').textContent = log._id;
+              document.getElementById('detail-timestamp').textContent = new Date(log.createdAt).toLocaleString("vi-VN");
+              document.getElementById('detail-message').textContent = log.message;
+
+              // Process additional data
+              const detailData = { ...log };
+              delete detailData.script_code;
+              delete detailData.message;
+              delete detailData.createdAt;
+              delete detailData.updatedAt;
+              delete detailData._id;
+              delete detailData.__v;
+
+              // Display additional data if exists
+              const detailDataElem = document.getElementById('detail-data');
+              const detailDataParent = detailDataElem.parentElement.parentElement;
+
+              if (Object.keys(detailData).length > 0) {
+                detailDataElem.textContent = JSON.stringify(detailData, null, 2);
+                detailDataParent.classList.remove('hidden');
+              } else {
+                detailDataParent.classList.add('hidden');
+              }
+
+              // Hide loading, show content
+              loadingSpinner.classList.add('hidden');
+              logDetailsContainer.classList.remove('hidden');
+            } else {
+              Modal.hide('logDetailModal');
+              Toast.error('Không thể tải chi tiết log: ' + data.message);
+            }
+          })
+          .catch(error => {
+            Modal.hide('logDetailModal');
+            Toast.error('Lỗi: ' + error.message);
+          });
+      }
+
+      /**
+       * Delete log confirmation
+       */
+      function deleteLog(logId) {
+        deleteLogId = logId;
+        Modal.show('confirmDeleteModal');
+      }
+
+      /**
+       * Clear all logs confirmation
+       */
+      function clearLogs() {
+        Modal.show('confirmClearAllModal');
+      }
+
+      /**
+       * Toggle filter section
+       */
+      function setupFilterToggle() {
+        const filterToggle = document.getElementById('filterToggle');
+        const filterContent = document.getElementById('filterContent');
+        const filterChevron = document.getElementById('filterChevron');
+
+        if (filterToggle && filterContent && filterChevron) {
+          filterToggle.addEventListener('click', () => {
+            // Toggle content visibility
+            if (filterContent.classList.contains('hidden')) {
+              filterContent.classList.remove('hidden');
+              filterChevron.classList.add('transform', 'rotate-180');
+            } else {
+              filterContent.classList.add('hidden');
+              filterChevron.classList.remove('transform', 'rotate-180');
+            }
+          });
+        }
+      }
+
+      /**
+       * Document ready
+       */
+      document.addEventListener('DOMContentLoaded', function() {
+        // Setup modals
+        Modal.setup();
+
+        // Setup filter toggle
+        setupFilterToggle();
+
+        // Setup refresh button
+        document.getElementById('refreshBtn').addEventListener('click', function() {
+          window.location.reload();
+        });
+
+        // Execute delete on confirmation
+        document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+          if (deleteLogId) {
+            // Show loading state
+            this.disabled = true;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin mr-1.5"></i>Đang xóa...';
+
+            fetch('/admin/logs/' + deleteLogId, {
+              method: 'DELETE'
+            })
+              .then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                  Modal.hide('confirmDeleteModal');
+                  Toast.success('Đã xóa log thành công');
+
+                  // Reload after a short delay
+                  setTimeout(() => {
+                    window.location.reload();
+                  }, 1000);
+                } else {
+                  Modal.hide('confirmDeleteModal');
+                  Toast.error('Không thể xóa log: ' + data.message);
+                }
+              })
+              .catch(error => {
+                Modal.hide('confirmDeleteModal');
+                Toast.error('Lỗi: ' + error.message);
+                this.disabled = false;
+                this.innerHTML = '<i class="fas fa-trash mr-1.5"></i>Xóa';
+              });
+          }
+        });
+
+        // Execute clear all on confirmation
+        document.getElementById('confirmClearAllBtn').addEventListener('click', function() {
+          // Show loading state
+          this.disabled = true;
+          this.innerHTML = '<i class="fas fa-spinner fa-spin mr-1.5"></i>Đang xóa...';
+
+          fetch('/admin/logs/clear', {
+            method: 'DELETE'
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                Modal.hide('confirmClearAllModal');
+                Toast.success('Đã xóa tất cả log thành công');
+
+                // Reload after a short delay
+                setTimeout(() => {
+                  window.location.reload();
+                }, 1000);
+              } else {
+                Modal.hide('confirmClearAllModal');
+                Toast.error('Không thể xóa tất cả log: ' + data.message);
+              }
+            })
+            .catch(error => {
+              Modal.hide('confirmClearAllModal');
+              Toast.error('Lỗi: ' + error.message);
+              this.disabled = false;
+              this.innerHTML = '<i class="fas fa-trash-alt mr-1.5"></i>Xóa tất cả';
+            });
+        });
+      });
+    </script>
+  </body>
+</html>

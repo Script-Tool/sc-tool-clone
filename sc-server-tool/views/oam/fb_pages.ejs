@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include ../common/header%>
+
+  <body id="page-top">
+    <div class="abstract-bg"></div>
+    <div class="grid-pattern"></div>
+    <div class="abstract-shape w-96 h-96 top-1 left-1"></div>
+    <div class="abstract-shape w-96 h-96 bottom-1 right-1"></div>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <% include ../common/sidebar.ejs%>
+      <!-- End of Sidebar -->
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <br />
+            <!-- Page Heading -->
+            <div
+              class="d-sm-flex align-items-center justify-content-between mb-4"
+            >
+              <h1 class="font-weight-bold h3 mb-0 primary-text"><%=title%></h1>
+              <div class="">
+                <% if (set_id) { %>
+                <button
+                  href="#"
+                  type="button"
+                  id="addBtn"
+                  data-toggle="modal"
+                  data-target="#editModal"
+                  class="btn btn-sm btn-primary shadow-sm"
+                >
+                  Add
+                </button>
+                <button
+                  href="#"
+                  type="button"
+                  id="importBtn"
+                  data-toggle="modal"
+                  data-target="#importModal"
+                  class="btn btn-sm btn-primary shadow-sm"
+                >
+                  Import
+                </button>
+                <% } %>
+
+                <button
+                  href="#"
+                  type="button"
+                  id="deleteAllBtn"
+                  class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"
+                >
+                  Delete all
+                </button>
+              </div>
+            </div>
+
+            <br />
+            <div
+              class="filter d-flex align-items-center justify-content-between px-3"
+            >
+              <div class="d-flex">
+                <div class="form-group ml-2">
+                  <label for="exampleFormControlInput1">Name</label>
+                  <div class="d-flex">
+                    <input
+                      class="form-control filterAtt"
+                      id="name"
+                      style="width: 200px"
+                    />
+                  </div>
+                </div>
+                <div class="form-group ml-2">
+                  <label for="exampleFormControlInput1">Link</label>
+                  <div class="d-flex">
+                    <input
+                      class="form-control filterAtt"
+                      id="link"
+                      style="width: 200px"
+                    />
+                  </div>
+                </div>
+                <div class="form-group ml-2">
+                  <label for="exampleFormControlInput1">Status</label>
+                  <div class="d-flex">
+                    <input
+                      class="form-control filterAtt"
+                      id="status"
+                      style="width: 200px"
+                    />
+                  </div>
+                </div>
+                <div class="form-group ml-2">
+                  <label for="exampleFormControlInput1" class="text-success"
+                    ><%=count%> records</label
+                  >
+                  <button
+                    href="#"
+                    class="form-control"
+                    id="searchBtn"
+                    type="button"
+                    class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm"
+                  >
+                    <i class="fas fa-remove fa-sm text-white-50"></i>
+                    Search
+                  </button>
+                </div>
+              </div>
+
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li id="pre_page" class="page-item">
+                    <a class="page-link" href="#"><-</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#"><%=current_page%></a>
+                  </li>
+                  <li id="next_page" class="page-item">
+                    <a class="page-link" href="#">-></a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+            <div
+              class="relative overflow-hidden rounded-lg border border-slate-200/10 bg-slate-800/40 shadow-md backdrop-blur-xl mx-4"
+            >
+              <div class="overflow-x-auto">
+                <table class="w-full table-auto badge-soft-dark" id="tableList">
+                  <thead class="bg-slate-900/50">
+                    <tr>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        ID
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Name
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Status
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Link
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Topic code
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-slate-100/10">
+                    <% rows.forEach(function(row){ %>
+                    <tr class="transition-all hover:bg-slate-700/30">
+                      <td class="px-4 py-3"><%= row._id %></td>
+                      <td class="px-4 py-3"><%= row.name %></td>
+                      <td class="px-4 py-3"><%= row.status %></td>
+                      <td class="px-4 py-3"><%= row.link%></td>
+                      <td class="px-4 py-3"><%= row.set_code %></td>
+                      <td class="px-4 py-3">
+                        <a
+                          href="#"
+                          class="btn btn-warning a-btn-slide-text updateBtn"
+                          data-toggle="modal"
+                          data-target="#editModal"
+                          value="<%=row._id%>"
+                          >Update</a
+                        >
+                        <a
+                          href="#"
+                          class="btn btn-danger a-btn-slide-text delete"
+                          value="<%=row._id%>"
+                          >Xóa</a
+                        >
+                      </td>
+                    </tr>
+                    <%})%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div id="importModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Import <%=title%></h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <div role="form">
+                    <form id="importFile">
+                      <div class="form-group">
+                        <input
+                          type="file"
+                          class="form-control-file"
+                          name="importFile"
+                          accept=".csv"
+                        />
+                      </div>
+                    </form>
+
+                    <input type="hidden" id="topic_code" />
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      id="importFileBtn"
+                    >
+                      Import
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="editModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Update <%=title%></h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <div role="form">
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Name</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" id="group_name" />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Link</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" id="group_link" />
+                      </div>
+                    </div>
+
+                    <input type="hidden" id="row_id" />
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button type="button" class="btn btn-primary" id="saveForm">
+                      Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% include ../common/footer%>
+        </div>
+        <!-- End of Content Wrapper -->
+      </div>
+      <!-- End of Page Wrapper -->
+    </div>
+    <% include ../common/js%>
+    <script src="/js/bootbox.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+    <script src="https://unpkg.com/popper.js@1.15.0/dist/umd/popper.min.js"></script>
+    <script src="/javascripts/utils.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+    <script>
+      let routePath = 'fb_page';
+      $('#tableList').on('click', 'tr .delete', function () {
+        let id = $(this).attr('value');
+        if (id) {
+          bootbox.confirm('Confirm ?', function (result) {
+            if (result) {
+              $.ajax({
+                url: `/admin/${routePath}/delete?id=` + id,
+                type: 'get',
+              }).done(function (data) {
+                location.reload();
+              });
+            }
+          });
+        }
+      });
+
+      $('#tableList').on('click', 'tr .updateBtn', function () {
+        document.querySelector('#saveForm').innerText = 'Update';
+        let id = $(this).attr('value');
+        $.ajax({
+          url: `/admin/${routePath}/detail?id=` + id,
+          type: 'GET',
+          contentType: 'application/json',
+        }).done(function (data) {
+          if (data.success) {
+            $('#row_id').val(id);
+            $('#group_name').val(data.doc.name);
+          }
+        });
+      });
+
+      $('#importFileBtn').click(function () {
+        $.ajax({
+          url: `/admin/fb_group/import?set_id=${getParameterByName('set_id')}`,
+          type: 'POST',
+          data: new FormData($('#importFile')[0]),
+          processData: false,
+          contentType: false,
+        }).done(function (data) {
+          location.reload();
+        });
+
+        document.querySelector('#importFileBtn').innerText = 'Đang import';
+        document.querySelector('#importFileBtn').disabled = true;
+      });
+
+      $('#saveForm').on('click', function () {
+        let group_name = $('#group_name').val();
+        const rowID = $('#row_id').val();
+        if (group_name) {
+          $.ajax({
+            url: `/admin/${routePath}/save`,
+            type: 'GET',
+            data: {
+              rowID: rowID,
+              name: $('#group_name').val(),
+              link: $('#group_link').val(),
+              set_id: getParameterByName('set_id'),
+            },
+            contentType: 'application/json',
+          }).done(function (data) {
+            if (data.success) {
+              location.reload();
+              $('#row_id').val('');
+            }
+            document.querySelector('#saveForm').innerText = 'Add';
+          });
+        }
+      });
+
+      $('#deleteAllBtn').on('click', function (e) {
+        bootbox.confirm('Confirm delete all ?', function (result) {
+          if (result) {
+            $.ajax({
+              url: `/admin/${routePath}/delete-all?set_id=${getParameterByName(
+                'set_id'
+              )}`,
+              type: 'get',
+            }).done(function (data) {
+              location.reload();
+            });
+          }
+        });
+      });
+
+      let per_page = 50;
+      let current_page = 1;
+
+      function getQuery() {
+        let qr = `?per_page=${per_page}&current_page=${current_page}`;
+
+        let filterEls = document.querySelectorAll('.filterAtt');
+        filterEls.forEach((filterEl) => {
+          let idTag = filterEl.id;
+          let filterValue = $(`#${idTag}`).val();
+          if (filterValue) {
+            qr += `&${idTag}=${filterValue}`;
+          }
+        });
+
+        return qr;
+      }
+
+      function getParameterByName(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+          results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+      }
+
+      $(document).ready(function () {
+        let filterEls = document.querySelectorAll('.filterAtt');
+        filterEls.forEach((filterEl) => {
+          let idTag = filterEl.id;
+          $(`#${idTag}`).val(getParameterByName(idTag));
+        });
+        per_page = Number(getParameterByName('per_page') || 50);
+        current_page = Number(getParameterByName('current_page') || 1);
+      });
+
+      $('#pre_page').on('click', function (e) {
+        if (current_page > 1) {
+          current_page -= 1;
+          let newPath = location.origin + location.pathname + getQuery();
+          location.replace(newPath);
+        }
+      });
+      $('#next_page').on('click', function (e) {
+        current_page += 1;
+        let newPath = location.origin + location.pathname + getQuery();
+        location.replace(newPath);
+      });
+
+      $('#searchBtn').on('click', function (e) {
+        let newPath = location.origin + location.pathname + getQuery();
+        location.replace(newPath);
+      });
+    </script>
+  </body>
+</html>

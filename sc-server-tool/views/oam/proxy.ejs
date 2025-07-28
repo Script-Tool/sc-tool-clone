@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include ../common/header%>
+
+  <body id="page-top">
+    <div class="abstract-bg"></div>
+    <div class="grid-pattern"></div>
+    <div class="abstract-shape w-96 h-96 top-1 left-1"></div>
+    <div class="abstract-shape w-96 h-96 bottom-1 right-1"></div>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <% include ../common/sidebar.ejs%>
+      <!-- End of Sidebar -->
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <br />
+            <!-- Page Heading -->
+            <div
+              class="d-sm-flex align-items-center justify-content-between mb-4"
+            >
+              <h1 class="font-weight-bold h3 mb-0 text-gray-800 primary-text">
+                Proxy
+              </h1>
+              <div class="">
+                <% if (role == 'super_admin') { %>
+                <button
+                  id="renewBtn"
+                  href="#"
+                  type="button"
+                  class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"
+                >
+                  <i class="fas fa-remove fa-sm text-white-50"></i>
+                  Renew all proxies
+                </button>
+                <button
+                  id="deleteAll"
+                  href="#"
+                  type="button"
+                  class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"
+                >
+                  <i class="fas fa-remove fa-sm text-white-50"></i>
+                  Delete all
+                </button>
+                <button
+                  id="importProxyBtn"
+                  href="#"
+                  type="button"
+                  data-toggle="modal"
+                  data-target="#importProfileModal"
+                  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                >
+                  <i class="fas fa-upload fa-sm text-white-50"></i>
+                  Add proxy
+                </button>
+                <button
+                  id="exportProxyBtn"
+                  type="button"
+                  class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm"
+                >
+                  <i class="fas fa-download fa-sm text-white-50"></i> Export
+                  Proxy
+                </button>
+                <% } %>
+              </div>
+            </div>
+
+            <!-- Content Row -->
+            <div class="row py-6 gap-6">
+              <!-- Earnings (Monthly) Card Example -->
+              <div
+                class="border-left-primary col-xl-3 col-md-6 mb-4 premium-stats rounded-xl"
+              >
+                <div class="shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div
+                          class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                        >
+                          Total proxy
+                        </div>
+                        <span
+                          class="h5 mb-0 font-weight-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500"
+                        >
+                          <%=info.proxyTotal%>
+                        </span>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Earnings (Monthly) Card Example -->
+              <div
+                class="border-left-success col-xl-3 col-md-6 mb-4 premium-stats rounded-xl"
+              >
+                <div class="shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div
+                          class="text-xs font-weight-bold text-success text-uppercase mb-1"
+                        >
+                          Active proxy
+                        </div>
+                        <span
+                          class="h5 mb-0 font-weight-bolds text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500"
+                        >
+                          <%=info.usedTotal%>
+                        </span>
+                      </div>
+                      <div class="row ml-2">
+                        <input type="checkbox" id="auto_renew_proxy"
+                        <%=auto_renew_proxy?"checked":""%> />
+                        <div class="ml-2">Trả về UnActive khi cần</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="border-left-warning col-xl-3 col-md-6 mb-4 premium-stats rounded-xl"
+              >
+                <div class="shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div
+                          class="text-xs font-weight-bold text-warning text-uppercase mb-1"
+                        >
+                          UnActive proxy
+                        </div>
+                        <span
+                          class="h5 mb-0 font-weight-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500"
+                        >
+                          <%=info.proxyUnactive%>
+                        </span>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-running fa-2x text-gray-300"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+
+          <div
+            id="importProfileModal"
+            class="modal fade bd-example-modal-xl"
+            tabindex="-1"
+            role="dialog"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-xl" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <a href="/oam/download?file=proxy_template.csv"
+                    >Proxy template (server, username, password)</a
+                  >
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form id="ImportForm">
+                    <div class="form-group">
+                      <label for="exampleFormControlFile1">Proxy file</label>
+                      <input
+                        type="file"
+                        class="form-control-file"
+                        id="file"
+                        name="file"
+                        accept=".csv"
+                      />
+                    </div>
+                  </form>
+                  <table id="previewTable" class="table table-bordered"></table>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <!-- <button type="button" class="btn btn-primary" id="previewBtn">Preview</button> -->
+                  <button type="button" class="btn btn-primary" id="saveBtn">
+                    Save changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="relative overflow-hidden rounded-lg border border-slate-200/10 bg-slate-800/40 shadow-md backdrop-blur-xl mx-4"
+          >
+            <div class="overflow-x-auto">
+              <table
+                class="w-full table-auto badge-soft-dark"
+                id="playlistTable"
+              >
+                <thead class="bg-slate-900/50">
+                  <tr>
+                    <th
+                      class="px-4 py-3 text-center text-sm font-medium text-slate-200"
+                    >
+                      Id
+                    </th>
+                    <th
+                      class="px-4 py-3 text-left text-sm font-medium text-slate-200"
+                    >
+                      Server
+                    </th>
+                    <th
+                      class="px-4 py-3 text-left text-sm font-medium text-slate-200"
+                    >
+                      Username
+                    </th>
+                    <th
+                      class="px-4 py-3 text-left text-sm font-medium text-slate-200"
+                    >
+                      Password
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="">
+                  <% proxies.forEach(function(proxy){ %>
+                  <tr class="transition-all hover:bg-slate-700/30">
+                    <td class="px-4 py-3 text-center">
+                      <span class="text-slate-200"><%=proxy.id%></span>
+                    </td>
+
+                    <td class="px-4 py-3">
+                      <span class="text-slate-200"><%=proxy.server%></span>
+                    </td>
+
+                    <td class="px-4 py-3">
+                      <span class="text-slate-200"><%=proxy.username%></span>
+                    </td>
+
+                    <td class="px-4 py-3">
+                      <span class="text-slate-200"><%=proxy.password%></span>
+                    </td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- End of Main Content -->
+
+        <% include ../common/footer%>
+      </div>
+      <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <% include ../common/js%>
+    <script src="/js/bootbox.all.min.js"></script>
+    <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+    <script src="/javascripts/proxy.js"></script>
+    <script src="/javascripts/utils.js"></script>
+  </body>
+</html>

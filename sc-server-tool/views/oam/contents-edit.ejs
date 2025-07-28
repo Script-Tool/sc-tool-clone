@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include ../common/header %>
+
+  <style>
+    .content-card {
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 4px;
+      background-color: #f8f9fc;
+    }
+    .content-card:hover {
+      background-color: #eaecf4;
+    }
+
+    .text-content-container p {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+  </style>
+
+  <body id="page-top">
+    <div class="abstract-bg"></div>
+    <div class="grid-pattern"></div>
+    <div class="abstract-shape w-96 h-96 top-1 left-1"></div>
+    <div class="abstract-shape w-96 h-96 bottom-1 right-1"></div>
+    <div id="wrapper">
+      <% include ../common/sidebar %>
+
+      <!-- Content Wrapper -->
+      <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <div>
+            <h1 class="h3 mb-0 text-white font-weight-bold primary-text">
+              Edit YouTube Content
+            </h1>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb bg-transparent p-0">
+                <li class="breadcrumb-item">
+                  <a href="/admin/view/contents">Contents</a>
+                </li>
+                <li class="breadcrumb-item active">Edit Content</li>
+              </ol>
+            </nav>
+          </div>
+          <a href="/admin/view/contents" class="btn btn-secondary btn-sm">
+            <i class="fas fa-arrow-left fa-sm mr-2"></i>Back to Contents
+          </a>
+        </div>
+
+        <!-- Edit Form Card -->
+        <div class="space-card shadow mb-4 border-0 p-4">
+          <div class="border-0">
+            <h6 class="m-0 font-weight-bold text-white">
+              <i class="fas fa-edit fa-sm mr-2"></i>Edit Content Details
+            </h6>
+          </div>
+          <div class="card-body p-4">
+            <form
+              id="editContentForm"
+              onsubmit="handleSubmit(event)"
+              class="needs-validation"
+              novalidate
+            >
+              <input type="hidden" id="contentId" value="<%= content._id %>" />
+
+              <div class="row">
+                <!-- Left Column -->
+                <div class="col-md-8">
+                  <!-- Title -->
+                  <div class="form-group">
+                    <label class="small font-weight-bold text-white"
+                      >Title</label
+                    >
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text bg-light border-right-0">
+                          <i class="fas fa-heading text-primary"></i>
+                        </span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control border-left-0"
+                        id="title"
+                        value="<%= content.title %>"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <!-- Outline -->
+                  <div class="form-group">
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <label class="small font-weight-bold text-white">
+                        Outline
+                      </label>
+                      <button
+                        type="button"
+                        class="btn btn-outline-primary btn-sm mb-2"
+                        onclick="addOutlineItem()"
+                      >
+                        <i class="fas fa-plus fa-sm mr-1"></i>Add Item
+                      </button>
+                    </div>
+                    <div id="outlineContainer" class="border rounded p-3">
+                      <% content.outline.forEach((item, index) => { %>
+                      <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                          <span
+                            class="input-group-text border-0 bg-transparent"
+                          >
+                            <i class="fas fa-check-circle text-success"></i>
+                          </span>
+                        </div>
+                        <input
+                          type="text"
+                          class="form-control outline-item"
+                          value="<%= item %>"
+                        />
+                        <div class="input-group-append">
+                          <button
+                            type="button"
+                            class="btn btn-link text-danger"
+                            onclick="removeOutlineItem(this)"
+                          >
+                            <i class="fas fa-times"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <% }); %>
+                    </div>
+                  </div>
+
+                  <!-- Target Audience -->
+                  <div class="form-group">
+                    <label class="small font-weight-bold text-white"
+                      >Target Audience</label
+                    >
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text bg-light border-right-0">
+                          <i class="fas fa-users text-primary"></i>
+                        </span>
+                      </div>
+                      <textarea
+                        class="form-control border-left-0"
+                        id="targetAudience"
+                        rows="3"
+                        required
+                      >
+ <%= content.target_audience %></textarea
+                      >
+                    </div>
+                  </div>
+                  <!-- Add this after target_audience textarea in the left column -->
+                  <div class="form-group">
+                    <label class="small font-weight-bold text-white"
+                      >Content</label
+                    >
+
+                    <div id="contentList" class="flex flex-column gap-2">
+                      <% content.contents.forEach((item) => { %>
+                      <div class="glass-panel p-4">
+                        <div
+                          class="d-flex justify-content-between align-items-start"
+                        >
+                          <h6 class="font-weight-bold text-gray-400">
+                            <%=item.chapter%>
+                          </h6>
+                          <div>
+                            <button
+                              type="button"
+                              class="btn btn-primary btn-sm mr-1"
+                              onclick="editContent('<%= item._id %>')"
+                              data-toggle="modal"
+                              data-target="#editContentDetail"
+                            >
+                              <i class="fas fa-edit fa-sm"></i>
+                            </button>
+                            <button
+                              type="button"
+                              onclick="deleteContent('<%= item._id %>')"
+                              class="btn btn-danger btn-sm"
+                            >
+                              <i class="fas fa-trash fa-sm"></i>
+                            </button>
+                          </div>
+                        </div>
+
+                        <div
+                          class="small text-muted mt-2 text-content-container text-gray-400"
+                        >
+                          <p><%= item.content %></p>
+                        </div>
+                        <div class="small text-muted text-gray-400">
+                          <strong>Image:</strong> <%= item.image %> <br />
+
+                          <strong>Scheduled for:</strong>
+                          <div class="mt-1">
+                            <%= formatDateTimeForInput(item.publishTime || new
+                            Date()) %>
+                          </div>
+                        </div>
+                      </div>
+                      <% }); %>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="col-md-4">
+                  <!-- Keywords -->
+                  <div class="form-group">
+                    <label class="small font-weight-bold text-white"
+                      >Keywords</label
+                    >
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text bg-light border-right-0">
+                          <i class="fas fa-tags text-primary"></i>
+                        </span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control border-left-0"
+                        id="keywords"
+                        value="<%= content.keywords.join(', ') %>"
+                        required
+                      />
+                    </div>
+                    <small class="form-text text-muted ml-2">
+                      <i class="fas fa-info-circle mr-1"></i>Separate keywords
+                      with commas
+                    </small>
+                  </div>
+
+                  <!-- Hashtags -->
+                  <div class="form-group">
+                    <label class="small font-weight-bold text-white"
+                      >Hashtags</label
+                    >
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text bg-light border-right-0">
+                          <i class="fas fa-hashtag text-primary"></i>
+                        </span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control border-left-0"
+                        id="hashtags"
+                        value="<%= content.hashtags.join(', ') %>"
+                        required
+                      />
+                    </div>
+                    <small class="form-text text-muted ml-2">
+                      <i class="fas fa-info-circle mr-1"></i>Separate hashtags
+                      with commas
+                    </small>
+                  </div>
+
+                  <!-- Thumbnail -->
+                  <div class="form-group">
+                    <label class="small font-weight-bold text-white"
+                      >Thumbnail</label
+                    >
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text bg-light border-right-0">
+                          <i class="fas fa-image text-primary"></i>
+                        </span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control border-left-0"
+                        id="thumbnail"
+                        value="<%= content.thumbnail %>"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <!-- Action Buttons -->
+                  <div class="mt-4">
+                    <button
+                      type="button"
+                      class="btn btn-info btn-block"
+                      data-toggle="modal"
+                      data-target="#profileEmails"
+                      onclick="openProfileModal()"
+                    >
+                      <i class="fas fa-users mr-2"></i>
+                      Profile Emails
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-block">
+                      <i class="fas fa-save fa-sm mr-2"></i>Save Changes
+                    </button>
+                    <a
+                      href="/admin/view/contents"
+                      class="btn btn-light btn-block mt-2"
+                    >
+                      Cancel
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Content Detail Modal -->
+    <div
+      class="modal fade"
+      id="editContentDetail"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content bg-glass">
+          <div class="modal-header">
+            <h5 class="modal-title text-gray-400">Edit Content Detail</h5>
+            <button
+              type="button"
+              class="close text-white"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form name="editContentDetail">
+              <input
+                type="hidden"
+                class="form-control"
+                name="contentDetailId"
+                required
+              />
+              <div class="form-group">
+                <label class="text-gray-400">Chapter Name:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="chapter"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label class="text-gray-400">Image:</label>
+                <input type="text" class="form-control" name="image" required />
+              </div>
+              <div class="form-group">
+                <label class="text-gray-400">Scheduled for:</label>
+                <input
+                  type="datetime-local"
+                  class="form-control"
+                  name="publishTime"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label class="text-gray-400">Content</label>
+                <textarea
+                  class="form-control"
+                  name="content"
+                  rows="10"
+                  required
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="saveContentDetail()"
+            >
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile emails Modal -->
+    <div
+      class="modal fade"
+      id="profileEmails"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content bg-glass">
+          <div class="modal-header">
+            <h5 class="modal-title text-gray-400">Profile Emails</h5>
+            <button
+              type="button"
+              class="close text-white"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="profileEmailsForm" class="needs-validation" novalidate>
+              <div class="form-group">
+                <div class="d-flex justify-content-between align-items-center">
+                  <input
+                    id="profileSearch"
+                    class="form-control mr-2"
+                    list="datalistOptions"
+                    autocomplete="off"
+                    placeholder="Type to search..."
+                    oninput="this.classList.remove('is-invalid')"
+                  />
+                  <datalist id="datalistOptions" role="listitem">
+                    <% profiles.forEach((item) => { %>
+                    <option value="<%= item.email %>"></option>
+                    <% }); %>
+                  </datalist>
+
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    onclick="handleAddProfileItem()"
+                  >
+                    <i class="fas fa-plus fa-sm"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div id="profileContainer" class="border rounded p-3"></div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Common JS -->
+    <% include ../common/js %>
+
+    <script>
+      let contentProfiles = JSON.parse(
+        `<%- JSON.stringify(content.profile_emails)%>`
+      );
+      const profiles = JSON.parse(`<%- JSON.stringify(profiles)%>`);
+
+      function openProfileModal() {
+        $("#profileEmailsForm #profileContainer").empty();
+
+        contentProfiles.forEach((email) => {
+          addProfileItem(email);
+        });
+      }
+
+      // Function to check profile email exist
+      function checkProfileEmailValid() {
+        let isValid = true;
+        const profileSearch = document.querySelector("#profileSearch");
+
+        if (contentProfiles.some((item) => item === profileSearch.value)) {
+          profileSearch.classList.add("is-invalid");
+          alert("Profile Email is already exist!");
+          isValid = false;
+        } else if (
+          !profiles.some((item) => item.email === profileSearch.value.trim())
+        ) {
+          profileSearch.classList.add("is-invalid");
+          alert("Profile Email is invalid!");
+          isValid = false;
+        }
+
+        return isValid;
+      }
+
+      async function handleAddProfileItem() {
+        const contentId = document.getElementById("contentId").value;
+        if (!checkProfileEmailValid()) return;
+
+        //api add profile
+        try {
+          const contentId = document.getElementById("contentId").value;
+
+          const data = {
+            profile_emails: [
+              ...contentProfiles,
+              document.querySelector("#profileSearch").value,
+            ],
+          };
+
+          const response = await $.ajax({
+            url: `/admin/contents/${contentId}`,
+            type: "PUT",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+          });
+
+          if (response.success) {
+            showAlert("Content updated successfully", "success");
+            addProfileItem($("#profileSearch").val());
+            contentProfiles.push($("#profileSearch").val());
+            $("#profileSearch").val("");
+          }
+        } catch (error) {
+          console.error("Error updating content:", error);
+          showAlert("Error updating content", "danger");
+        }
+      }
+
+      function addProfileItem(email = "") {
+        const container = document.querySelector(
+          "#profileEmailsForm #profileContainer"
+        );
+        const div = document.createElement("div");
+        div.className = "input-group mb-2";
+        div.innerHTML = `
+            <input type="text" name="profileEmail" class="form-control profile-item" value="${email}" readonly>
+            <div class="input-group-append">
+              <button type="button" class="btn btn-outline-danger" data-email="${email}" onclick="removeProfileItem(this)">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="invalid-feedback">Profile Email is invalid</div>
+          `;
+        container.appendChild(div);
+      }
+
+      async function removeProfileItem(button) {
+        // remove profile
+        try {
+          const contentId = document.getElementById("contentId").value;
+
+          const data = {
+            profile_emails: [
+              ...contentProfiles.filter((p) => p !== button.dataset.email),
+            ],
+          };
+
+          const response = await $.ajax({
+            url: `/admin/contents/${contentId}`,
+            type: "PUT",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+          });
+
+          if (response.success) {
+            showAlert("Content updated successfully", "success");
+            contentProfiles = contentProfiles.filter(
+              (p) => p !== button.dataset.email
+            );
+            button.closest(".input-group").remove();
+          }
+        } catch (error) {
+          console.error("Error updating content:", error);
+          showAlert("Error updating content", "danger");
+        }
+      }
+
+      function addOutlineItem() {
+        const container = document.getElementById("outlineContainer");
+        const div = document.createElement("div");
+        div.className = "input-group mb-2";
+        div.innerHTML = `
+          <input type="text" class="form-control outline-item" value="">
+          <div class="input-group-append">
+            <button type="button" class="btn btn-outline-danger" onclick="removeOutlineItem(this)">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        `;
+
+        container.appendChild(div);
+      }
+
+      function removeOutlineItem(button) {
+        button.closest(".input-group").remove();
+      }
+
+      function editContent(id) {
+        const contentId = document.getElementById("contentId").value;
+        const form = document.forms["editContentDetail"];
+
+        $.ajax({
+          url: `/admin/contents/${contentId}/details/${id}`,
+          method: "GET",
+          success: function (content) {
+            form.contentDetailId.value = id;
+            form.chapter.value = content.chapter;
+            form.content.value = content.content;
+            form.image.value = content.image;
+            form.publishTime.value = formatDateTimeForInput(
+              content.publishTime
+            );
+          },
+          error: function (err) {
+            showAlert("Failed to load content details", "danger");
+          },
+        });
+      }
+
+      async function saveContentDetail() {
+        const contentId = document.getElementById("contentId").value;
+        const form = document.forms["editContentDetail"];
+
+        const res = await $.ajax({
+          url: `/admin/contents/${contentId}`,
+          method: "GET",
+
+          error: function (err) {
+            showAlert("Failed to load content details", "danger");
+          },
+        });
+
+        const contents = res.contents;
+        const contentDetail = contents.find(
+          (c) => c._id === form.contentDetailId.value
+        );
+
+        Object.assign(contentDetail, {
+          chapter: form.chapter.value,
+          content: form.content.value,
+          image: form.image.value,
+          publishTime: form.publishTime.value,
+        });
+
+        const response = await $.ajax({
+          url: `/admin/contents/${contentId}`,
+          type: "PUT",
+          data: JSON.stringify({
+            contents,
+          }),
+          contentType: "application/json",
+        });
+
+        if (response.success) {
+          $("#editContentDetail").modal("hide");
+          window.location.reload();
+          showAlert("Content updated successfully", "success");
+        }
+      }
+
+      async function deleteContent(id) {
+        const contentId = document.getElementById("contentId").value;
+
+        const res = await $.ajax({
+          url: `/admin/contents/${contentId}`,
+          method: "GET",
+
+          error: function (err) {
+            showAlert("Failed to load content details", "danger");
+          },
+        });
+        const contents = res.contents;
+
+        if (confirm("Are you sure you want to delete this content?")) {
+          try {
+            const contentId = document.getElementById("contentId").value;
+
+            const data = {
+              contents: contents.filter((c) => c._id !== id),
+            };
+
+            const response = await $.ajax({
+              url: `/admin/contents/${contentId}`,
+              type: "PUT",
+              data: JSON.stringify(data),
+              contentType: "application/json",
+            });
+
+            if (response.success) {
+              showAlert("Content updated successfully", "success");
+              setTimeout(() => {
+                window.location.href = `/admin/view/contents`;
+              }, 1500);
+            }
+          } catch (error) {
+            console.error("Error updating content:", error);
+            showAlert("Error updating content", "danger");
+          }
+        }
+      }
+
+      async function handleSubmit(event) {
+        event.preventDefault();
+
+        try {
+          const contentId = document.getElementById("contentId").value;
+
+          const outlineItems = Array.from(
+            document.querySelectorAll(".outline-item")
+          )
+            .map((input) => input.value.trim())
+            .filter((item) => item);
+
+          const keywords = document
+            .getElementById("keywords")
+            .value.split(",")
+            .map((k) => k.trim())
+            .filter((k) => k);
+
+          const hashtags = document
+            .getElementById("hashtags")
+            .value.split(",")
+            .map((t) => t.trim())
+            .filter((t) => t);
+
+          // [...new Set(myArray)]
+          const data = {
+            title: document.getElementById("title").value,
+            profile_emails: [
+              ...document.querySelectorAll(
+                '#profileEmails [name="profileEmail"]'
+              ),
+            ]
+              .map((item) => item.value.trim())
+              .filter((val) => val),
+            outline: outlineItems,
+            target_audience: document.getElementById("targetAudience").value,
+            keywords: keywords,
+            hashtags: hashtags,
+            thumbnail: document.getElementById("thumbnail").value,
+          };
+
+          const response = await $.ajax({
+            url: `/admin/contents/${contentId}`,
+            type: "PUT",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+          });
+
+          if (response.success) {
+            showAlert("Content updated successfully", "success");
+            setTimeout(() => {
+              window.location.href = `/admin/view/contents`;
+            }, 1500);
+          }
+        } catch (error) {
+          console.error("Error updating content:", error);
+          showAlert("Error updating content", "danger");
+        }
+      }
+
+      function formatDateTimeForInput(date) {
+        return new Date(date).toISOString().slice(0, 16);
+      }
+
+      function showAlert(message, type) {
+        const alertDiv = document.createElement("div");
+        alertDiv.style.position = "fixed";
+        alertDiv.style.top = "20px";
+        alertDiv.style.right = "20px";
+        alertDiv.style.zIndex = "9999";
+
+        const alertHtml = `
+          <div class="toast shadow border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header border-0 bg-${type} text-white py-2">
+              <strong class="mr-auto">
+                <i class="fas ${
+                  type === "success"
+                    ? "fa-check-circle"
+                    : "fa-exclamation-triangle"
+                } mr-2"></i>
+                ${type === "success" ? "Success!" : "Error!"}
+              </strong>
+              <button type="button" class="close text-white" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="toast-body py-2">
+              ${message}
+            </div>
+          </div>
+        `;
+
+        alertDiv.innerHTML = alertHtml;
+        document.body.appendChild(alertDiv);
+
+        const toastElement = alertDiv.querySelector(".toast");
+        toastElement.classList.add("fade");
+
+        const toast = new bootstrap.Toast(toastElement, {
+          delay: 3000,
+          animation: true,
+        });
+
+        setTimeout(() => {
+          toastElement.classList.add("show");
+        }, 100);
+
+        toast.show();
+
+        toastElement.addEventListener("hidden.bs.toast", function () {
+          document.body.removeChild(alertDiv);
+        });
+      }
+    </script>
+  </body>
+</html>

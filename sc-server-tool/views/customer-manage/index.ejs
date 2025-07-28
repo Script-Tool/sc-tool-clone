@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<% include ../common/header%>
+
+  <body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+      <!-- Sidebar -->
+      <% include ../common/customer-sidebar.ejs%>
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+          <!-- Main Content -->
+          <div id="content">
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+              <br>
+              <!-- Page Heading -->
+              <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                <div class="">
+                 
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-xl-3 col-md-6 mb-4">
+                  <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Customers</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            <%=data.total_customer%>
+                          </div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                  <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Wallet Balance</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            <%=data.total_current_wallet_balance%>
+                          </div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                  <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Wallet Charged</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            <%=data.total_wallet_charged%>
+                          </div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                  <div class="card border-left-danger shadow h-100 py-2">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Total Order Running</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            <%=data.total_order_running%>
+                          </div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                  <div class="card border-left-danger shadow h-100 py-2">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Total Order Ready</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            <%=data.total_order_wait_to_run%>
+                          </div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            <!-- /.container-fluid -->
+          </div>
+          <!-- End of Main Content -->
+          <% include ../common/footer%>
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <% include ../common/js%>
+      <script src="/js/bootbox.all.min.js"></script>
+      <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+      <script src="https://unpkg.com/popper.js@1.15.0/dist/umd/popper.min.js"></script>
+      <script src="/javascripts/utils.js"></script>
+      <script src="/javascripts/oam.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+      
+  </body>
+
+</html>

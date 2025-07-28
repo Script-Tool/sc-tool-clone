@@ -1,0 +1,14 @@
+#!/bin/bash
+sudo hwclock --hctosys
+gsettings set org.gnome.system.proxy ignore-hosts "['random-data-api.com','localhost:2000', '::1', '_SERVER']"
+echo '_USER ALL=(ALL) NOPASSWD: ALL' | sudo EDITOR='tee -a' visudo
+apt install -y sudo curl && curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - && apt install -y nodejs && apt install -y imagemagick xdotool htop xvfb wget git vim
+snap install brave
+npm install forever -g
+
+sudo -u _USER -H sh -c 'cd /home/_USER/ && git clone https://kimtrongdev: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@github.com/kimtrongdev/scripts.git && cd scripts && git checkout _BRANCH && npm i'
+#sudo -u _USER -H sh -c 'gsettings set org.gnome.desktop.session idle-delay 0'
+cd /home/_USER/scripts
+sudo -u _USER -H sh -c 'rm -rf .env && cp .env.example .env && vim -esnc "%s/_HOST_IP/"_SERVER"/g|:wq" .env && vim -esnc "%s/_MAX_PROFILES/"1"/g|:wq" .env && vim -esnc "%s/_DEBUG/"0"/g|:wq" .env && vim -esnc "%s/_SHOW_UI/"1"/g|:wq" .env && vim -esnc "%s/_IS_SYSTEM_SCRIPT/"_isSystemScript"/g|:wq" .env && vim -esnc "%s/_VM_NAME/"vmName"/g|:wq" .env && sed -i -e "s/\r//g" .env'
+sudo -u _USER -H sh -c 'forever start main.js'
+su _USER

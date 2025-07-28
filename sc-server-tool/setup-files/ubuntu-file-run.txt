@@ -1,0 +1,50 @@
+#!/bin/bash
+echo -e "Trung@123456\nTrung@123456" | passwd
+sed -re 's/.*PasswordAuthentication.*/PasswordAuthentication yes/' -i.`date -I` /etc/ssh/sshd_config
+sed -i 's/.*PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+export DEBIAN_FRONTEND=noninteractive
+PATH=$PATH:/usr/sbin
+service sshd restart
+
+apt install -y sudo curl
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+apt install -y nodejs
+npm install forever -g
+apt install -y gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget sshpass libavcodec-extra software-properties-common
+apt install -y imagemagick xdotool htop xvfb wget git vim
+cd /root
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+apt install -y ./google-chrome-stable_current_amd64.deb
+
+#sudo apt install -y apt-transport-https
+#sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+#echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+#sudo apt install -y brave-browser
+
+userdel -r runuser
+echo -e "Trung@123456\nTrung@123456" | adduser runuser
+#dd if=/dev/zero of=/swapfile bs=5024 count=1048576
+#chmod 600 /swapfile
+#mkswap /swapfile
+#swapon /swapfile
+# create user
+useradd runuser
+echo -e "Trung@123456\nTrung@123456" | passwd runuser
+
+cd /home/runuser/
+
+git clone https://kimtrongdev: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@github.com/kimtrongdev/scripts.git
+
+cd scripts
+git checkout <branch>
+
+vim -esnc '%s/HOSTIP/"_HOSTIP"/g|:wq' dev.json
+vim -esnc '%s/MAX_PROFILE/"_MAX_PROFILE"/g|:wq' dev.json
+sed -i -e 's/\r//g' dev.json
+
+npm i --unsafe-perm=true
+
+#cp -rf ../scripts /home/runuser/
+chown -R runuser: /etc/dm
+chmod +x /etc/dm/*
+sudo -u runuser -H sh -c 'cd /etc/dm/ && forever stopall && forever start --killSignal=SIGTERM main.js run'

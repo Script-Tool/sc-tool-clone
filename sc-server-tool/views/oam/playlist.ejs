@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<% include ../common/header%>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+  <!-- Sidebar -->
+  <% include ../common/sidebar.ejs%>
+  <!-- End of Sidebar -->
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+        <br/>
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="font-weight-bold h3 mb-0 text-gray-800">Youtube Playlists</h1>
+          <div class="">
+            <button id="deleteAll" href="#" type="button" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i class="fas fa-remove fa-sm text-white-50"></i> Delete all</button>
+            <!-- <button id="importPlaylistBtn" href="#" type="button" data-toggle="modal" data-target="#editVideoModal" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-upload fa-sm text-white-50"></i> Add videos</button> -->
+            <button href="#" type="button" data-toggle="modal" data-target="#editPlaylistModal" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+              Add playlist
+            </button>
+            <button type="button" id="saveChartBtn" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">
+              Save Chart
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Earnings (Monthly) Card Example -->
+          <div class="col-xl-2 col-md-4 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Playlist</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800"><%=info.playlist%></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Earnings (Monthly) Card Example -->
+          <div class="col-xl-2 col-md-4 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">JCT Playlist</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800"><%=info.jct_playlist%></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <% include ../sections/chart-youtube-view.ejs%>
+        <br>
+        <div class="table-responsive">
+          <table class="table table-bordered" id="playlistGrid" width="100%" cellspacing="0">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Playlist ID</th>
+              <th>Group</th>
+              <th>VM Names</th>
+              <th>Edit</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% playlists.forEach(function(playlist){ %>
+            <tr>
+              <td><%=playlist.id%></td>
+              <td><a href="https://www.youtube.com/playlist?<%=playlist.data%>" target="_blank"><%=playlist.data%></a></td>
+              <td>
+                <% if(playlist.group_type){ %>
+                  <span class="badge badge-info">Nhóm 1</span>
+                <%} else { %>
+                  <span class="badge badge-success">Nhóm 2</span>
+                <% } %>
+              </td>
+              <td>
+                <% playlist.vm_names.forEach(function(vm_name){ %>
+                  <span class="badge badge-warning"><%=vm_name%></span>
+                <%})%>
+                <span value="<%=playlist._id%>" data-toggle="modal" data-target="#editVmModal" class="badge badge-info editVmBtn" style="cursor: pointer;">Add</span>
+              </td>
+              <td>
+                <a class="playlistDelete" href="#" class="btn btn-danger a-btn-slide-text" value="<%=playlist._id%>">Delete</a>
+              </td>
+            </tr>
+            <%})%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div id="editPlaylistModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Playlist</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div role="form">
+                <div class="form-group row">
+                  <label for="videoUrl" class="col-sm-4 col-form-label">Playlist Data</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="v=videoid&list=listid" name="channel_name" id="playlist_data">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="videoUrl" class="col-sm-4 col-form-label">Nhóm kênh</label>
+                  <div class="col-sm-8">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="group_type_1" checked>
+                      <label class="form-check-label" for="group_type_1">
+                        Nhóm 1
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="group_type_2">
+                      <label class="form-check-label" for="group_type_2">
+                        Nhóm 2
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="videoUrl" class="col-sm-4 col-form-label">Số lần next video tìm kiếm ADS</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" name="channel_name" id="playlist_total_times_next_video">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="videoUrl" class="col-sm-4 col-form-label">Tỷ lệ sub</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="playlist_sub_percent">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="videoUrl" class="col-sm-4 col-form-label">Tỷ lệ xem quảng cáo</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="playlist_ads_percent">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="videoUrl" class="col-sm-4 col-form-label">Thời gian xem video khi ko có ads</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" name="channel_name" id="playlist_watching_time_non_ads">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="videoUrl" class="col-sm-4 col-form-label">Thời gian xem video khi có ads</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="playlist_watching_time_start_ads">
+                    <input type="text" class="form-control" id="playlist_watching_time_end_ads">
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="savePlaylist">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="editVmModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Select VMs</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <input type="hidden" id="lid" />
+            <div class="modal-body">
+              <% vmNames.forEach(function(vmName){ %>
+                <div class="d-flex align-items-center">
+                  <input type="checkbox" class="vmNameInputs" id="<%=vmName%>" />
+                  <label class="ml-2 mt-2"><%=vmName%></label>
+                </div>
+              <%})%>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveSelectedVms">Save selected vms</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% include ../common/footer%>
+
+  </div>
+  <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<% include ../common/js%>
+<script src="/js/bootbox.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+<script src="https://unpkg.com/popper.js@1.15.0/dist/umd/popper.min.js"></script>
+<script src="/javascripts/utils.js"></script>
+<script src="/javascripts/playlist.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include ../common/header%>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+  <!-- Sidebar -->
+  <% include ../common/customer-sidebar.ejs%>
+  <!-- End of Sidebar -->
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+        <br/>
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Lịch sử nạp tiền</h1>
+        </div>
+
+        <br>
+        <div class="table-responsive">
+          <table class="table table-bordered" id="tableList" width="100%" cellspacing="0">
+            <thead>
+            <tr>
+              <th>Type</th>
+              <th>Customer</th>
+              <th>Old Balance</th>
+              <th>Total Recharge</th>
+              <th>New Balance</th>
+              <th>Created At</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% jounals.forEach(function(jounal){ %>
+              <tr>
+                <td> <%= jounal.type %></td>
+                <td> <%= jounal.customer %></td>
+                <td class="text-danger"> <%= jounal.old_balance.toLocaleString('it-IT', {style : 'currency', currency : 'VND'}) %></td>
+                <td class="text-success">+ <%= jounal.amount.toLocaleString('it-IT', {style : 'currency', currency : 'VND'}) %></td>
+                <td class="text-info"> <%= jounal.new_balance.toLocaleString('it-IT', {style : 'currency', currency : 'VND'}) %></td>
+                <td><%= jounal.createdAt.toLocaleString("vi-VN", {timeZone: "Asia/Ho_Chi_Minh"}) %></td>
+              </tr>
+            <%})%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% include ../common/footer%>
+
+  </div>
+  <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<% include ../common/js%>
+<script src="/js/bootbox.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+<script src="https://unpkg.com/popper.js@1.15.0/dist/umd/popper.min.js"></script>
+
+
+</body>
+
+</html>

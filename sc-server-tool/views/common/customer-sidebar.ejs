@@ -1,0 +1,181 @@
+<!-- Sidebar -->
+<ul class="navbar-nav sidebar sidebar-dark accordion" style="background-color: #f29c34;" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <div class="d-flex align-items-center">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin/view/dashboard">
+            <div class="sidebar-brand-text mx-1">
+                <%=server_name%>
+            </div>
+        </a>
+
+        <svg id="logoutBtn" style="cursor: pointer" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+            fill="currentColor" class="bi bi-caret-left-square" viewBox="0 0 16 16">
+            <path
+                d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+            <path
+                d="M10.205 12.456A.5.5 0 0 0 10.5 12V4a.5.5 0 0 0-.832-.374l-4.5 4a.5.5 0 0 0 0 .748l4.5 4a.5.5 0 0 0 .537.082z" />
+        </svg>
+
+    </div>
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" href="/admin/view/dashboard">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Quản lý tool</span></a>
+    </li>
+    <li class="nav-item active" id="dashboard">
+        <a class="nav-link" href="/admin/customer/view/dashboard">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Quản lý dịch vụ</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Manage
+    </div>
+
+    <!-- Nav Item - Charts -->
+    <li class="nav-item" id="customers">
+        <a class="nav-link" href="/admin/customer/view/customers">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Khách hàng</span>
+        </a>
+    </li>
+    <li class="nav-item" id="orders">
+        <a class="nav-link" href="/admin/customer/view/orders">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Đơn hàng</span>
+        </a>
+    </li>
+    <li class="nav-item" id="admin-orders">
+        <a class="nav-link" href="/admin/customer/view/admin-orders">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Tạo lô SUB</span>
+        </a>
+    </li>
+    <li class="nav-item" id="packages">
+        <a class="nav-link" href="/admin/customer/view/packages">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Gói hàng</span>
+        </a>
+    </li>
+
+    <li class="nav-item" id="payment_jounal">
+        <a class="nav-link" href="/admin/customer/view/payment_jounal">
+            <i class="fas fa-fw fa-table"></i>
+            <span>LS Nạp tiền</span>
+        </a>
+    </li>
+
+    <li class="nav-item" id="keyword_tool">
+        <a class="nav-link" href="/admin/customer/view/keyword-tool">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Keyword Tool</span>
+        </a>
+    </li>
+
+    <!-- <li class="nav-item" id="support">
+        <a class="nav-link" href="/admin/customer/view/support">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Support</span>
+        </a>
+    </li> -->
+
+    <!-- <li class="nav-item">
+      <a class="nav-link" href="/oam/config">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Config</span></a>
+  </li> -->
+
+    <!-- <li class="nav-item">
+      <a class="nav-link" href="/oam/playlist?filter=1">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Dailymotion</span></a>
+  </li> -->
+
+    <!-- Nav Item - Tables -->
+    <!-- <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseChannel" aria-expanded="true" aria-controls="collapseChannel">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Sub</span>
+      </a>
+      <div id="collapseChannel" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">Channel</h6>
+              <a class="collapse-item" href="/oam/channel?filter=1">Channel manage</a>
+              <a class="collapse-item" href="/oam/sub-increase">Sub increase</a>
+          </div>
+      </div>
+  </li> -->
+
+    <!-- <li class="nav-item">
+      <a class="nav-link" href="/oam/config">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Config</span></a>
+  </li> -->
+
+    <!-- Nav Item - Utilities Collapse Menu -->
+    <!-- <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Utilities</span>
+      </a>
+      <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">Reset Utilities:</h6>
+              <a class="collapse-item" href="/oam/config">Config</a>
+              <a class="collapse-item" href="#">Reset profile status</a>
+              <a class="collapse-item" href="#">Reset vpn use</a>
+          </div>
+      </div>
+  </li> -->
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+</ul>
+<!-- End of Sidebar -->
+
+<script>
+    let pageName = window.location.pathname.split('/').pop()
+    let navItem = document.querySelector('#' + pageName)
+    if (navItem) {
+        navItem.classList.add('nav-link-active')
+    }
+
+    let logoutBtn = document.querySelector('#logoutBtn')
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function () {
+            document.cookie = '_scripts_tool=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            window.location.replace('/login')
+        })
+    }
+</script>
+
+<style>
+    .nav-link-active {
+        margin-left: 5px;
+        background-color: #f8f9fc;
+        border-top-left-radius: 30px;
+        border-bottom-left-radius: 30px;
+    }
+
+    .nav-link-active span {
+        color: #000 !important;
+    }
+
+    .nav-link-active i {
+        color: #000 !important;
+    }
+</style>

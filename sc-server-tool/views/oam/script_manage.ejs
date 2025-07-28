@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include ../common/header%>
+  <style>
+    .meta-text {
+      font-size: 0.85rem;
+      color: #aeb2b4;
+    }
+  </style>
+
+  <body id="page-top">
+    <div class="abstract-bg"></div>
+    <div class="grid-pattern"></div>
+    <div class="abstract-shape w-96 h-96 top-1 left-1"></div>
+    <div class="abstract-shape w-96 h-96 bottom-1 right-1"></div>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <% include ../common/sidebar.ejs%>
+      <!-- End of Sidebar -->
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <!-- Service Header -->
+            <div class="service-header p-4 mb-4">
+              <div class="mx-auto">
+                <div class="flex justify-between items-center">
+                  <div>
+                    <h1 class="text-2xl font-bold mb-2">
+                      Service:
+                      <span
+                        class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+                      >
+                        <%= code %>
+                      </span>
+                    </h1>
+                  </div>
+
+                  <div class="flex items-center space-x-3">
+                    <% if (code === 'create_video_1') { %>
+                    <button
+                      class="ultra-button px-4 py-2 text-sm rounded-lg text-yellow-400 flex items-center space-x-2"
+                      data-toggle="modal"
+                      data-target="#backblazeKeyModal"
+                    >
+                      <i class="fas fa-plus fa-sm text-white-50"></i> Add
+                      Backblaze.com Key
+                    </button>
+                    <% } %>
+
+                    <!-- Warranty & Sub Data Buttons -->
+                    <% if (["like_youtube", "comment_youtube", "youtube_sub",
+                    "folow_fb", "fb_add_member", "like_fb_page"].includes(code))
+                    { %>
+                    <button
+                      id="baohanh"
+                      value="<%= code %>"
+                      class="ultra-button px-4 py-2 text-sm rounded-lg text-yellow-400 flex items-center space-x-2"
+                    >
+                      <span>⚡</span>
+                      <span>Bảo hành</span>
+                    </button>
+                    <button
+                      id="loadsubdata"
+                      value="<%= code %>"
+                      class="ultra-button px-4 py-2 text-sm rounded-lg text-blue-400 flex items-center space-x-2"
+                    >
+                      <span>🔄</span>
+                      <span>Load sub data</span>
+                    </button>
+                    <% } %>
+
+                    <!-- Watch Video Actions -->
+                    <% if (code === 'ai_create_video') { %>
+                    <button
+                      data-toggle="modal"
+                      data-target="#logsModal"
+                      class="ultra-button px-4 py-2 text-sm rounded-lg text-yellow-400 flex items-center space-x-2"
+                    >
+                      <span>📺</span>
+                      <span>Logs</span>
+                    </button>
+                    <% } %>
+
+                    <!-- Admin Actions -->
+                    <% if (role === 'super_admin') { %>
+                    <button
+                      id="loadServiceTime"
+                      class="ultra-button px-4 py-2 text-sm rounded-lg text-green-400 flex items-center space-x-2"
+                    >
+                      <span>⏱️</span>
+                      <span>Load service time</span>
+                    </button>
+
+                    <!-- Export Buttons -->
+                    <div class="relative group flex gap-2">
+                      <button
+                        id="exportServicesBtn"
+                        class="ultra-button px-4 py-2 text-sm rounded-lg text-purple-400 flex items-center space-x-2"
+                      >
+                        <span>📤</span>
+                        <span>Export</span>
+                      </button>
+                      <button
+                        id="exportServicesBtn2"
+                        class="ultra-button px-4 py-2 text-sm rounded-lg text-purple-400 flex items-center space-x-2"
+                      >
+                        <span>📤</span>
+                        <span>Export Không Xóa</span>
+                      </button>
+
+                      <div
+                        class="absolute top-full mt-2 right-0 w-48 ultra-container rounded-lg p-2 hidden group-hover:block"
+                      >
+                        <button
+                          id="exportServicesBtn"
+                          class="ultra-button w-full px-3 py-1.5 text-sm rounded-lg text-left mb-1"
+                        >
+                          Export All
+                        </button>
+                        <button
+                          id="exportServicesBtn2"
+                          class="ultra-button w-full px-3 py-1.5 text-sm rounded-lg text-left"
+                        >
+                          Export Không Xóa
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Import Button -->
+                    <button
+                      id="importBtn"
+                      data-toggle="modal"
+                      data-target="#importScriptModel"
+                      class="ultra-button px-4 py-2 text-sm rounded-lg text-blue-400 flex items-center space-x-2"
+                    >
+                      <span>📥</span>
+                      <span>Import</span>
+                    </button>
+
+                    <!-- Delete Button -->
+                    <button
+                      id="deleteAll"
+                      class="ultra-button px-4 py-2 text-sm rounded-lg text-red-400 flex items-center space-x-2"
+                    >
+                      <span>🗑️</span>
+                      <span>Delete selected</span>
+                    </button>
+                    <% } %>
+
+                    <!-- Watch Video Actions -->
+                    <% if (code === 'watch_video') { %>
+                    <button
+                      data-toggle="modal"
+                      data-target="#channel_info_s"
+                      class="ultra-button px-4 py-2 text-sm rounded-lg text-yellow-400 flex items-center space-x-2"
+                    >
+                      <span>📺</span>
+                      <span>Add videos from channel ID</span>
+                    </button>
+                    <% } %>
+
+                    <!-- Playlist Actions -->
+                    <% if (code === 'create_playlist') { %>
+                    <button
+                      data-toggle="modal"
+                      data-target="#create_playlist_model"
+                      class="ultra-button px-4 py-2 text-sm rounded-lg text-yellow-400 flex items-center space-x-2"
+                    >
+                      <span>📋</span>
+                      <span>Create Playlist</span>
+                    </button>
+                    <button
+                      data-toggle="modal"
+                      data-target="#import_create_playlist_model"
+                      class="ultra-button px-4 py-2 text-sm rounded-lg text-yellow-400 flex items-center space-x-2"
+                    >
+                      <span>📥</span>
+                      <span>Import create playlist</span>
+                    </button>
+                    <button
+                      data-toggle="modal"
+                      data-target="#import_create_playlist_model_2"
+                      class="ultra-button px-4 py-2 text-sm rounded-lg text-blue-400 flex items-center space-x-2"
+                    >
+                      <span>📝</span>
+                      <span>Import tên pll</span>
+                    </button>
+                    <% } %>
+
+                    <!-- Add Item Button (for both admin and non-admin) -->
+                    <% if ((role === 'super_admin') || (role !== 'super_admin'
+                    && (code === 'add_video_playlist' || code ===
+                    'create_playlist'))) { %>
+                    <button
+                      id="importPlaylistBtn"
+                      data-toggle="modal"
+                      data-target="#editVideoModal"
+                      class="ultra-button px-4 py-2 text-sm rounded-lg text-cyan-400 flex items-center space-x-2"
+                    >
+                      <span>➕</span>
+                      <span>Add Item</span>
+                    </button>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Filter Section -->
+            <div class="ultra-container rounded-lg p-2 mb-4">
+              <div class="filter-container items-end">
+                <!-- Status -->
+                <div class="filter-item relative with-animation">
+                  <label>Status</label>
+                  <select
+                    class="ultra-input ultra-select w-full rounded-lg"
+                    id="service-status"
+                  >
+                    <option value="">All Status</option>
+                    <option value="running">Đang chạy</option>
+                    <option value="waiting_for_handle">Chờ xử lý</option>
+                    <option value="-1">Không giới hạn (-1)</option>
+                    <option value="0">Hoàn tất</option>
+                    <option value="stopped">Tạm dừng</option>
+                    <option value="baohanh">Đã bảo hành</option>
+                    <option value="loibaohanh">Lỗi khi bảo hành</option>
+                    <option value="hoantat">Check đủ</option>
+                    <option value="error">Lỗi</option>
+                  </select>
+                </div>
+
+                <!-- Note -->
+                <div class="filter-item relative with-animation">
+                  <label>Note</label>
+                  <input
+                    type="text"
+                    id="service-note"
+                    class="ultra-input w-full rounded-lg"
+                    placeholder="Note"
+                  />
+                </div>
+
+                <!-- Data Reported -->
+                <div class="filter-item relative with-animation">
+                  <label>Data Reported</label>
+                  <input
+                    type="text"
+                    id="data_reported"
+                    class="ultra-input w-full rounded-lg"
+                    placeholder="Data reported"
+                  />
+                </div>
+
+                <!-- Created day -->
+                <div class="filter-item relative with-animation">
+                  <label>Created Day</label>
+                  <input
+                    type="number"
+                    id="created_day"
+                    class="ultra-input w-full rounded-lg"
+                    placeholder="Created day"
+                  />
+                </div>
+
+                <!-- ID -->
+                <div class="filter-item compact relative with-animation w-8">
+                  <label>ID</label>
+                  <input
+                    type="number"
+                    id="service_id"
+                    class="ultra-input w-full rounded-lg"
+                    placeholder="ID"
+                  />
+                </div>
+
+                <!-- Order ID -->
+                <div class="filter-item relative with-animation">
+                  <label>Order ID</label>
+                  <input
+                    type="text"
+                    id="service_order_id"
+                    class="ultra-input w-full rounded-lg"
+                    placeholder="Order ID"
+                  />
+                </div>
+
+                <!-- Remaining -->
+                <div class="filter-input relative with-animation">
+                  <label>Remaining</label>
+                  <div class="flex gap-1">
+                    <select
+                      class="ultra-input w-16 ultra-select operator-select rounded-lg text-gray-600"
+                      id="executed-operator"
+                    >
+                      <option value="$gt">></option>
+                      <option value="$lt"><</option>
+                      <option value="$eq">=</option>
+                    </select>
+                    <input
+                      type="number"
+                      id="executed-value"
+                      class="ultra-input flex-1 rounded-lg w-20"
+                      placeholder="Value"
+                    />
+                  </div>
+                </div>
+
+                <!-- Data -->
+                <div class="filter-item relative with-animation ml-2">
+                  <label>Data</label>
+                  <input
+                    type="text"
+                    id="service-data"
+                    class="ultra-input w-full rounded-lg"
+                    placeholder="Data"
+                  />
+                </div>
+
+                <!-- Start max time -->
+                <div class="filter-item relative with-animation">
+                  <label>Start max time</label>
+                  <input
+                    id="start_max_time"
+                    type="number"
+                    class="ultra-input w-full rounded-lg"
+                    placeholder="Start max time"
+                  />
+                </div>
+
+                <!-- Names -->
+                <div class="filter-item relative with-animation">
+                  <label>Names</label>
+                  <select
+                    class="ultra-input ultra-select w-full rounded-lg"
+                    id="names"
+                  >
+                    <option value="">All</option>
+                    <option value="1">Has Names</option>
+                    <option value="0">No Names</option>
+                  </select>
+                </div>
+
+                <!-- Record Count and Search -->
+                <div class="flex items-center gap-3">
+                  <button
+                    id="searchBtn"
+                    class="ultra-button h-9 px-4 rounded-lg flex items-center gap-2"
+                  >
+                    <span>🔍</span>
+                    <span class="text-sm font-medium">Search</span>
+                  </button>
+                  <span class="text-gray-600 text-sm font-medium"
+                    ><%= count %> records</span
+                  >
+                </div>
+
+                <!-- Pagination -->
+                <div class="ultra-pagination ml-auto">
+                  <button id="prev_page" class="ultra-pagination-item">
+                    ◀
+                  </button>
+                  <span class="ultra-pagination-item"><%= current_page %></span>
+
+                  <% if (current_page == Math.ceil(count / per_page)) { %>
+                  <button id="next_page" class="ultra-pagination-item" disabled>
+                    ▶
+                  </button>
+                  <% } else { %>
+                  <button id="next_page" class="ultra-pagination-item">
+                    ▶
+                  </button>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+
+            <!-- Thao tác với id dã chọn -->
+
+            <div class="py-1">
+              <span
+                >Số lượng ID đã chọn: <span id="selectedCount">0</span></span
+              >
+              <% if (['create_playlist', 'add_video_playlist' ].includes(code) )
+              { %>
+              <button
+                id="selectedStop"
+                href="#"
+                type="button"
+                class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm"
+              >
+                Stop
+              </button>
+              <button
+                id="selectedStart"
+                href="#"
+                type="button"
+                class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm"
+              >
+                Start
+              </button>
+              <button
+                id="selectedDelete"
+                href="#"
+                type="button"
+                class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"
+              >
+                Delete
+              </button>
+              <% if (code=='create_playlist' ) { %>
+              <button
+                type="button"
+                data-toggle="modal"
+                data-target="#editPlaylistDescription"
+                class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm"
+              >
+                Change Playlist Description
+              </button>
+              <button
+                type="button"
+                data-toggle="modal"
+                data-target="#channel_list_model"
+                class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm"
+              >
+                <i class="fas fa-remove fa-sm text-white-50"></i>
+                Danh sách kênh youtube đang theo dõi
+              </button>
+              <% } %> <% } %>
+
+              <!--
+                <button
+                type="button"
+                class="btn btn-primary"
+                id="checkCompleteYoutubeSub"
+              >
+                Check Youtube Sub
+              </button>
+                -->
+            </div>
+
+            <!-- Table -->
+            <div
+              class="relative overflow-hidden rounded-lg border border-slate-200/10 bg-slate-800/40 shadow-md backdrop-blur-xl"
+            >
+              <div class="overflow-x-auto">
+                <table class="w-full table-auto badge-soft-dark" id="tableList">
+                  <thead class="bg-slate-900/50">
+                    <tr>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Id
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Remaining
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Reported
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Note
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Max time
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Date
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Data
+                      </th>
+                      <% if(code=='youtube_sub') { %>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Channel
+                      </th>
+                      <% } %>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        One time
+                      </th>
+                      <th
+                        class="px-4 py-3 text-left text-sm font-medium text-white"
+                      >
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-slate-100/10">
+                    <!-- Default row -->
+                    <tr class="transition-all hover:bg-slate-700/30">
+                      <td class="px-4 py-3"></td>
+                      <td class="px-4 py-3"></td>
+                      <td class="px-4 py-3"></td>
+                      <td class="px-4 py-3"></td>
+                      <td class="px-4 py-3">
+                        <div>
+                          <%=default_service_data.start_max_time%>~<%=default_service_data.end_max_time%>
+                        </div>
+                        <button
+                          type="button"
+                          data-toggle="modal"
+                          data-target="#setTimerPopup"
+                          class="ultra-table-btn"
+                        >
+                          Set timer
+                        </button>
+                        <button
+                          type="button"
+                          data-toggle="modal"
+                          data-target="#setLikeComment"
+                          class="ultra-table-btn"
+                        >
+                          Set Like/Comment
+                        </button>
+                      </td>
+                      <td class="px-4 py-3"></td>
+                      <td class="px-4 py-3">
+                        <% if (["add_video_playlist"].includes(code)) {%>
+                        <button
+                          type="button"
+                          data-toggle="modal"
+                          data-target="#changeChannelIDPopup"
+                          class="ultra-table-btn"
+                        >
+                          Change Channel ID
+                        </button>
+                        <% } %>
+                        <div class="meta-text">
+                          <%=default_service_data.data%>
+                        </div>
+                      </td>
+                      <td class="px-4 py-3"></td>
+                      <% if (code == 'youtube_sub') { %>
+                      <td class="px-4 py-3"></td>
+                      <% } %>
+
+                      <td class="px-4 py-3 flex items-center justify-center">
+                        <button
+                          class="ultra-table-btn"
+                          data-toggle="modal"
+                          data-target="#editDefaultServiceData"
+                          value="default_service_data"
+                        >
+                          Edit default data
+                        </button>
+                      </td>
+                    </tr>
+
+                    <!-- Data rows -->
+                    <% services.forEach(function(service){ %>
+                    <tr
+                      class="<%= service.is_stop ? 'warning' : service.remaining === 0 ? 'success' : '' %> transition-all hover:bg-slate-700/30"
+                    >
+                      <td class="px-4 py-3">
+                        <div class="flex items-center">
+                          <input
+                            type="checkbox"
+                            class="ultra-checkbox"
+                            value="<%=service._id%>"
+                          />
+                          <span><%=service.id%></span>
+                        </div>
+                      </td>
+
+                      <td class="px-4 py-3">
+                        <span class="ultra-badge whitespace-nowrap">
+                          <%=service.executed%> / <%=service.remaining%>
+                        </span>
+                      </td>
+
+                      <td class="px-4 py-3">
+                        <% if (service.first_data_reported &&
+                        service.first_data_reported_watch_new) { %>
+                        <div class="meta-text text-blue-500">
+                          <%=service.first_data_reported%> -
+                          <%=service.first_data_reported_watch_new %>
+                        </div>
+                        <% } %> <% if (['ai_create_video',
+                        'create_video_1'].includes(code)) { %>
+                        <div class="max-w-lg break-words">
+                          <% let videoId = ''; let audioId = ''; let imageId =
+                          ''; if (service?.data_reported) { [videoId, audioId,
+                          imageId] = service.data_reported.split('*'); } %> <%
+                          if (videoId && audioId) { %>
+                          <a
+                            href="<%= videoId %>"
+                            target="_blank"
+                            class="text-blue-600 hover:underline"
+                          >
+                            Video
+                          </a>
+                          <br />
+                          <% } else { %>
+                          <p><%=videoId%></p>
+                          <% } %> <% if (audioId) { %>
+                          <a
+                            href="<%= audioId %>"
+                            target="_blank"
+                            class="text-blue-600 hover:underline"
+                          >
+                            Audio
+                          </a>
+                          <% } %> <% if (imageId) { %>
+                          <a
+                            href="<%= imageId %>"
+                            target="_blank"
+                            class="text-blue-600 hover:underline"
+                          >
+                            Image
+                          </a>
+                          <% } %>
+                        </div>
+                        <% } else if
+                        (service?.data_reported?.startsWith("https://") ) { %>
+                        <div class="max-w-lg break-words">
+                          <a
+                            href="<%= service.data_reported
+                            .replace(/^\s*\[(audio|image|video)\]:\s*/, '')   // cắt tiền tố
+                            .trim() %>"
+                            target="_blank"
+                            class="text-blue-600 hover:underline"
+                          >
+                            Link
+                          </a>
+                        </div>
+                        <% } else { %>
+                        <div class="max-w-lg break-words">
+                          <%= service.data_reported %>
+                        </div>
+                        <% } %>
+                      </td>
+
+                      <td class="px-4 py-3"><%=service.note%></td>
+
+                      <td class="px-4 py-3 text-center">
+                        <div><%=service.start_max_time%></div>
+                        <div class="mt-1"><%=service.end_max_time%></div>
+                      </td>
+
+                      <td class="px-4 py-3">
+                        <div class="meta-text">
+                          <%= new
+                          Date(service.createdAt).toLocaleTimeString('en-US', {
+                          hour: '2-digit', minute: '2-digit', timeZone:
+                          'Asia/Ho_Chi_Minh' }) %>
+                        </div>
+                        <div class="meta-text">
+                          <%= new
+                          Date(service.createdAt).toLocaleDateString('en-US', {
+                          day: 'numeric', month: 'numeric', timeZone:
+                          'Asia/Ho_Chi_Minh' }) %>
+                        </div>
+                      </td>
+
+                      <!-- Data -->
+                      <td class="px-4 py-3 break-all">
+                        <% if (code == 'ai_create_video' || code ==
+                        'create_video_1') { %> <% let videoData, contentLength,
+                        truncatedContent; try { videoData =
+                        JSON.parse(service.data); contentLength =
+                        videoData.content?.length || 0; truncatedContent =
+                        videoData.content?.substring(0, 100) + (contentLength >
+                        100 ? '...' : ''); } catch(e) { videoData = { videoName:
+                        '', content: service.data, thumbnailsText: '' };
+                        contentLength = service.data?.length || 0;
+                        truncatedContent = service.data?.substring(0, 100) +
+                        (contentLength > 100 ? '...' : ''); } %>
+                        <div>
+                          <div>
+                            videoName: '<%= videoData.videoName || "" %>',
+                          </div>
+                          <div>content: '<%= truncatedContent %>',</div>
+                          <div>
+                            contentLength: '<%= contentLength %> ký tự',
+                          </div>
+                          <div
+                            style="
+                              display: -webkit-box;
+                              -webkit-line-clamp: 2;
+                              line-clamp: 2;
+                              -webkit-box-orient: vertical;
+                              overflow: hidden;
+                              text-overflow: ellipsis;
+                            "
+                          >
+                            thumbnailsText: '<%=
+                            JSON.stringify(videoData?.thumbnailsText, null, 2)
+                            || "" %>'
+                          </div>
+                          <div>folderId: '<%= videoData.folderId || "" %>'</div>
+                        </div>
+                        <% } else if (code == 'video_merge_1') { %> <% let
+                        mergeData; try { mergeData = JSON.parse(service.data); }
+                        catch(e) { mergeData = { audioLinks: [], imageLinks: []
+                        }; } %>
+                        <div>
+                          <% if (mergeData.audioLinks &&
+                          mergeData.audioLinks.length > 0) { %>
+                          <p>
+                            Audio Links Count: <%= mergeData.audioLinks.length
+                            %>
+                          </p>
+                          <% } %>
+                        </div>
+                        <% } else if (code == 'create_image_1' || code ==
+                        'create_image_2') { %> <% let videoData =
+                        JSON.parse(service.data); %>
+                        <div>
+                          <div
+                            style="
+                              display: -webkit-box;
+                              -webkit-line-clamp: 2;
+                              line-clamp: 2;
+                              -webkit-box-orient: vertical;
+                              overflow: hidden;
+                              text-overflow: ellipsis;
+                            "
+                          >
+                            thumbnailsText: '<%=
+                            JSON.stringify(videoData?.thumbnailsText, null, 2)
+                            || "" %>'
+                          </div>
+                          <div>folderId: '<%= videoData.folderId || "" %>'</div>
+                          <div>folder: '<%= videoData.folder || "" %>'</div>
+                        </div>
+                        <% } else if (code == 'create_audio_1' ) { %> <% let
+                        videoData, contentLength, truncatedContent; try {
+                        videoData = JSON.parse(service.data); contentLength =
+                        videoData.content?.length || 0; truncatedContent =
+                        videoData.content?.substring(0, 100) + (contentLength >
+                        100 ? '...' : ''); } catch(e) { videoData = { videoName:
+                        '', content: service.data, thumbnailsText: '' };
+                        contentLength = service.data?.length || 0;
+                        truncatedContent = service.data?.substring(0, 100) +
+                        (contentLength > 100 ? '...' : ''); } %>
+                        <div>
+                          <div>content: '<%= truncatedContent %>',</div>
+                          <div>
+                            contentLength: '<%= contentLength %> ký tự',
+                          </div>
+                          <div>folderId: '<%= videoData.folderId || "" %>'</div>
+                          <div>folder: '<%= videoData.folder || "" %>'</div>
+                          <div>
+                            Voice: '<%= videoData?.additionalInfo?.voice || ""
+                            %>'
+                          </div>
+                        </div>
+                        <% } else { %>
+                        <div><%=service.data%></div>
+
+                        <% } %> <% if ((code == 'youtube_sub' || code ==
+                        'comment_youtube' || code == 'like_youtube') &&
+                        service.names) { %>
+                        <div class="meta-text text-blue-500">
+                          <%= JSON.stringify(service.names) %>
+                        </div>
+                        <% } %>
+                      </td>
+
+                      <% if(code=='youtube_sub') { %>
+                      <td class="px-4 py-3">
+                        <div><%=service.channel_title%></div>
+                        <% try { %> <% const serviceData =
+                        JSON.parse(service.data); %> <% const channelId =
+                        serviceData.channel_id || ''; %> <% const videoId =
+                        serviceData.video_id || ''; %>
+                        <a
+                          href="https://www.youtube.com/<%= channelId ? channelId : videoId %>"
+                          target="_blank"
+                          class="text-blue-500"
+                        >
+                          View Channel
+                        </a>
+
+                        <% } catch(e) { %>
+                        <!-- Handle parse error -->
+                        <% } %>
+                        <div class="meta-text">
+                          Order ID: <%=service.order_id%>
+                          <button
+                            class="ultra-table-btn"
+                            onclick="copyToClipboard('<%=service.order_id%>')"
+                          >
+                            Copy
+                          </button>
+                        </div>
+                      </td>
+                      <% } %>
+
+                      <td class="px-4 py-3"><%=service.one_time%></td>
+
+                      <td class="px-4 py-3">
+                        <div class="btn-group-grid">
+                          <% if (service.is_stop) { %>
+                          <!-- Giữ lại class runBtn cho event handler-->
+                          <button
+                            class="ultra-table-btn success runBtn"
+                            value="<%=service._id%>"
+                          >
+                            Run
+                          </button>
+                          <% } else { %>
+                          <!-- Giữ lại class stopBtn cho event handler -->
+                          <button
+                            class="ultra-table-btn danger stopBtn"
+                            value="<%=service._id%>"
+                          >
+                            Stop
+                          </button>
+                          <% if (service.remaining > 0) { %>
+                          <!-- Giữ lại class doneBtn cho event handler -->
+                          <button
+                            class="ultra-table-btn success doneBtn"
+                            value="<%=service._id%>"
+                          >
+                            Done
+                          </button>
+                          <% } %> <% } %> <% if (role=='super_admin') { %>
+                          <button
+                            class="ultra-table-btn text-blue-500 restartBtn"
+                            value="<%=service.id%>"
+                          >
+                            ↻ Restart
+                          </button>
+                          <!-- Giữ lại class videoEdit cho event handler -->
+                          <button
+                            class="ultra-table-btn text-blue-500 videoEdit"
+                            data-toggle="modal"
+                            data-target="#editVideoModal"
+                            value="<%=service._id%>"
+                          >
+                            Edit
+                          </button>
+                          <!-- Giữ lại class videoDelete cho event handler -->
+                          <button
+                            class="ultra-table-btn danger videoDelete"
+                            value="<%=service._id%>"
+                          >
+                            Delete
+                          </button>
+                          <% } %> <% if (service.status=="error") { %>
+                          <!-- Giữ lại class loadDataBtn cho event handler -->
+                          <button
+                            class="ultra-table-btn success loadDataBtn"
+                            value="<%=service._id%>"
+                          >
+                            Load Data
+                          </button>
+                          <% } %>
+                        </div>
+                      </td>
+                    </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- editVideoModal -->
+          <div id="editVideoModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content bg-glass">
+                <div class="modal-header">
+                  <h5 class="modal-title text-gray-400">New</h5>
+                  <button
+                    type="button"
+                    class="close text-white"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <div role="form">
+                    <input type="hidden" id="first_data_reported" />
+                    <div class="form-group">
+                      <label class="col-form-label text-gray-400"
+                        >Script code</label
+                      >
+                      <div class="">
+                        <input
+                          class="form-control"
+                          id="script_code"
+                          value="<%=code%>"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <input
+                      class="form-control"
+                      id="service_id"
+                      type="hidden"
+                      disabled
+                    />
+                    <div class="form-group">
+                      <label class="col-form-label text-gray-400"
+                        >Remaining</label
+                      >
+                      <div>
+                        <input
+                          class="form-control"
+                          id="service_remaining"
+                          value="-1"
+                        />
+                      </div>
+                    </div>
+                    <% if (!['ai_create_video', 'create_video_1',
+                    'create_image_1','create_image_2' ,
+                    'create_audio_1'].includes(code)) { %>
+                    <div class="form-group">
+                      <label class="col-form-label text-gray-400">Note</label>
+                      <div>
+                        <input class="form-control" id="service_note" />
+                      </div>
+                    </div>
+                    <% } %>
+                    <!--  -->
+                    <% if (['watch_video', 'like_youtube' , 'comment_youtube'
+                    ].includes(code)) { %>
+                    <div class="form-group">
+                      <label class="col-form-label text-gray-400"
+                        >Get video</label
+                      >
+                      <div class="d-flex">
+                        <input class="form-control mr-2" id="video_id" />
+                        <button
+                          id="getVideoInfoBtn"
+                          class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                        >
+                          Get Video Data
+                        </button>
+                      </div>
+                    </div>
+                    <% } %>
+                    <!--  -->
+                    <% if (!['ai_create_video', 'create_video_1',
+                    'create_image_1','create_image_2',
+                    'create_audio_1'].includes(code)) { %>
+                    <div class="form-group">
+                      <label class="col-form-label text-gray-400"
+                        >Max time</label
+                      >
+                      <div class="row">
+                        <input
+                          class="form-control col-sm-6"
+                          type="number"
+                          id="service_start_max_time"
+                          placeholder="From Time"
+                          value="<%= default_service_data?.start_max_time %>"
+                        />
+                        <input
+                          class="form-control col-sm-6"
+                          type="number"
+                          id="service_end_max_time"
+                          placeholder="To Time"
+                          value="<%= default_service_data?.end_max_time %>"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-form-label text-gray-400"
+                        >One time</label
+                      >
+                      <div>
+                        <input type="checkbox" id="service_one_time" />
+                      </div>
+                    </div>
+                    <% } %>
+
+                    <div class="form-group">
+                      <div class="">
+                        <% if (['ai_create_video',
+                        'create_video_1'].includes(code)) { %>
+                        <div class="flex flex-col gap-1" id="formdata">
+                          <div class="form-group">
+                            <label class="col-form-label text-gray-400"
+                              >videoName
+                              <span class="text-red-400">*</span></label
+                            >
+                            <input
+                              class="form-control"
+                              id="videoName"
+                              name="videoName"
+                            />
+                          </div>
+
+                          <div class="form-group">
+                            <label class="col-form-label text-gray-400"
+                              >Content
+                              <span class="text-red-400">*</span></label
+                            >
+                            <textarea
+                              rows="8"
+                              class="form-control"
+                              id="content"
+                              name="content"
+                            ></textarea>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="col-form-label text-gray-400"
+                              >thumbnailsText
+                              <span class="text-red-400">*</span></label
+                            >
+                            <textarea
+                              rows="4"
+                              class="form-control mr-2"
+                              id="thumbnailsText"
+                              name="thumbnailsText"
+                              placeholder='["Tạo ảnh về thung lũng", "Tạo ảnh rừng núi"]'
+                            ></textarea>
+                            <small class="form-text text-muted"
+                              >Nhập dưới dạng mảng JSON. Ví dụ: ["Tạo ảnh về
+                              thung lũng", "Tạo ảnh rừng núi"]</small
+                            >
+                          </div>
+
+                          <div class="form-group">
+                            <label class="col-form-label text-gray-400"
+                              >Folder Id
+                              <span class="text-red-400">*</span></label
+                            >
+                            <input
+                              class="form-control"
+                              id="folderId"
+                              name="folderId"
+                            />
+
+                            <small class="form-text text-muted">
+                              Ví dụ: d117089e8aaed2c7932e0f13
+                            </small>
+                          </div>
+                        </div>
+                        <% } else if (['create_image_1','create_image_2',
+                        'create_audio_1'].includes(code)) { %>
+                        <div class="flex flex-col gap-1" id="formdata">
+                          <% if (code === 'create_image_1' || code ===
+                          'create_image_2') { %>
+                          <div class="form-group">
+                            <label class="col-form-label text-gray-400"
+                              >thumbnailsText
+                              <span class="text-red-400">*</span></label
+                            >
+                            <textarea
+                              rows="6"
+                              class="form-control mr-2"
+                              id="thumbnailsText"
+                              name="thumbnailsText"
+                              placeholder='["Tạo ảnh về thung lũng", "Tạo ảnh rừng núi"]'
+                            ></textarea>
+                            <small class="form-text text-muted"
+                              >Nhập dưới dạng mảng JSON. Ví dụ: ["Tạo ảnh về
+                              thung lũng", "Tạo ảnh rừng núi"]</small
+                            >
+                          </div>
+
+                          <% } else if (code === 'create_audio_1') { %>
+                          <div class="form-group">
+                            <label class="col-form-label text-gray-400"
+                              >Content
+                              <span class="text-red-400">*</span></label
+                            >
+                            <textarea
+                              rows="8"
+                              class="form-control"
+                              id="content"
+                              name="content"
+                            ></textarea>
+                          </div>
+                          <% } %>
+
+                          <div class="form-group">
+                            <label class="col-form-label text-gray-400"
+                              >Folder
+                            </label>
+                            <input
+                              class="form-control"
+                              id="folder"
+                              name="folder"
+                            />
+
+                            <small class="form-text text-muted">
+                              Ví dụ: videos/2025
+                            </small>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="col-form-label text-gray-400"
+                              >Folder Id
+                              <span class="text-red-400">*</span></label
+                            >
+                            <input
+                              class="form-control"
+                              id="folderId"
+                              name="folderId"
+                            />
+
+                            <small class="form-text text-muted">
+                              Ví dụ: d117089e8aaed2c7932e0f13
+                            </small>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="col-form-label text-gray-400"
+                              >Link</label
+                            >
+                            <input class="form-control" id="link" name="link" />
+                          </div>
+                        </div>
+                        <% } else if (code === 'create_audio_1') { %>
+                        <div class="flex flex-col gap-1" id="formdata">
+                          <div class="form-group">
+                            <label class="col-form-label text-gray-400"
+                              >Content
+                              <span class="text-red-400">*</span></label
+                            >
+                            <textarea
+                              rows="8"
+                              class="form-control"
+                              id="content"
+                              name="content"
+                            ></textarea>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="col-form-label text-gray-400"
+                              >Folder Id
+                              <span class="text-red-400">*</span></label
+                            >
+                            <input
+                              class="form-control"
+                              id="folderId"
+                              name="folderId"
+                            />
+
+                            <small class="form-text text-muted">
+                              Ví dụ: d117089e8aaed2c7932e0f13
+                            </small>
+                          </div>
+                        </div>
+                        <% } else { %>
+                        <textarea
+                          rows="8"
+                          class="form-control"
+                          id="script_data"
+                        >
+<%=default_service_data?.data%></textarea
+                        >
+                        <% } %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      id="saveVideo"
+                    >
+                      Save changes
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- add playlist -->
+          <div
+            id="create_playlist_model"
+            class="modal"
+            tabindex="-1"
+            role="dialog"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">
+                    Create scripts from keyword/channel ID
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <div role="form">
+                    <div class="form-group">
+                      <label class="col-form-label"
+                        >Từ khóa / ID kênh (channel/UC_akS8vA5UFbCIBXwxAOCYw Or
+                        @mccorison-p2f)</label
+                      >
+                      <div>
+                        <input class="form-control" id="keyword" />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-form-label">Số lượng tạo</label>
+                      <div>
+                        <input
+                          class="form-control"
+                          value="50"
+                          type="number"
+                          id="limit"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-form-label"
+                        >ID kênh cần thêm video vào PLL
+                        (channel/UC_akS8vA5UFbCIBXwxAOCYw Or
+                        @mccorison-p2f)</label
+                      >
+                      <div>
+                        <input class="form-control" id="suggest_channel" />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-form-label">Tags</label>
+                      <div class="">
+                        <input
+                          class="form-control"
+                          value="default_tag"
+                          id="tags"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-form-label"
+                        >Mô tả playlist (Thêm dấu # ở giữa để tạo nhiều mô tả :
+                        mô tả 1 # mô tả 2)</label
+                      >
+                      <div class="">
+                        <input class="form-control" id="pll_description" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      id="create_playlist"
+                    >
+                      Create
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <% if (["create_playlist"].includes(code)) {%>
+          <div
+            id="import_create_playlist_model_2"
+            class="modal"
+            tabindex="-1"
+            role="dialog"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">
+                    Import tên pll (Tên pll, mô tả, suggest_channel)
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <div role="form">
+                    <div class="form-group">
+                      <label class="col-form-label">File</label>
+                      <div>
+                        <form id="keywordFile">
+                          <div class="form-group">
+                            <input
+                              type="file"
+                              class="form-control-file"
+                              name="keywordFile2"
+                              accept=".csv"
+                            />
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      id="import_keyword_playlist_2"
+                    >
+                      Import
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% } %>
+          <div
+            id="import_create_playlist_model"
+            class="modal"
+            tabindex="-1"
+            role="dialog"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Import keyword file</h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <div role="form">
+                    <div class="form-group">
+                      <label class="col-form-label">Keyword file</label>
+                      <div>
+                        <form id="keywordFile">
+                          <div class="form-group">
+                            <input
+                              type="file"
+                              class="form-control-file"
+                              name="keywordFile"
+                              accept=".csv"
+                            />
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-form-label"
+                        >Số lượng pll mỗi từ khóa</label
+                      >
+                      <div>
+                        <input
+                          class="form-control"
+                          value="50"
+                          type="number"
+                          id="limit_per_keyword"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      id="import_keyword_playlist"
+                    >
+                      Import
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="editDefaultServiceData"
+            class="modal"
+            tabindex="-1"
+            role="dialog"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content bg-glass">
+                <div class="modal-header">
+                  <h5 class="modal-title text-gray-400">
+                    Edit Default Service Data
+                  </h5>
+                  <button
+                    type="button"
+                    class="close text-white"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <div role="form">
+                    <div class="form-group">
+                      <label class="col-form-label text-gray-400"
+                        >Max time</label
+                      >
+                      <div class="row">
+                        <input
+                          class="form-control col-sm-6"
+                          type="number"
+                          id="default_service_start_max_time"
+                          placeholder="From Time"
+                          value="<%=default_service_data.start_max_time%>"
+                        />
+                        <input
+                          class="form-control col-sm-6"
+                          type="number"
+                          id="default_service_end_max_time"
+                          placeholder="To Time"
+                          value="<%=default_service_data.end_max_time%>"
+                        />
+                      </div>
+                    </div>
+                    <!-- <div class="form-group">
+                  <label class="col-form-label text-gray-400">One time</label>
+                  <div>
+                    <input type="checkbox" id="default_service_one_time" <%=default_service_data.one_time == 'true' ? 'checked' : '' %>>
+                  </div>
+                </div> -->
+                    <div class="form-group">
+                      <label class="col-form-label text-gray-400">Data</label>
+                      <div class="">
+                        <textarea
+                          rows="8"
+                          class="form-control"
+                          id="default_script_data"
+                        >
+<%=default_service_data.data%></textarea
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      id="saveDefaultServiceData"
+                    >
+                      Save changes
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="channel_info_s" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">New</h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <div role="form">
+                    <div class="form-group">
+                      <label class="col-form-label">Channel ID</label>
+                      <div>
+                        <input class="form-control" id="channel_id" />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-form-label">Total Videos</label>
+                      <div>
+                        <input
+                          class="form-control"
+                          type="number"
+                          id="max_videos"
+                        />
+                      </div>
+                    </div>
+                    <div class="">
+                      <label class="col-form-label">Suggest Channel IDs</label>
+                      <div>
+                        <input class="form-control" id="suggest_channel_ids" />
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        id="getListVideos"
+                      >
+                        Save changes
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- log modal -->
+          <div id="logsModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content bg-glass">
+                <div class="modal-header">
+                  <h5 class="modal-title text-white">Logs</h5>
+                  <button
+                    type="button"
+                    class="close text-white"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <!-- list logs -->
+                  <% logs.forEach(function(log, idx){ %>
+                  <div
+                    class="flex p-2 gap-2 border rounded justify-between text-white my-1"
+                  >
+                    <div>
+                      <span class="mr-1"><%=idx + 1%>.</span>
+                      <span><%=log.message%></span>
+                    </div>
+                  </div>
+                  <% }) %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <% if (["add_video_playlist"].includes(code)) {%>
+          <div
+            id="changeChannelIDPopup"
+            class="modal"
+            tabindex="-1"
+            role="dialog"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Đổi ID kênh</h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <div role="form">
+                    <div class="form-group">
+                      <label class="col-form-label"
+                        >ID Kênh (channel/abcdef)</label
+                      >
+                      <div>
+                        <input class="form-control" id="channel_id_change" />
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        id="saveChannelID"
+                      >
+                        Save changes
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% } %>
+          <div id="setTimerPopup" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">New</h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <div role="form">
+                    <div class="form-group">
+                      <label class="col-form-label">Timer</label>
+                      <div>
+                        <input class="form-control" id="timer_value" />
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        id="saveTimer"
+                      >
+                        Save changes
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="setLikeComment" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Thay dổi tỉ lệ like/comment</h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <div role="form">
+                    <div class="form-group">
+                      <label class="col-form-label">Tỉ lệ like</label>
+                      <div>
+                        <input class="form-control" id="like_percent_value" />
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-form-label">Tỉ lệ comment</label>
+                      <div>
+                        <input
+                          class="form-control"
+                          id="comment_percent_value"
+                        />
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        id="saveLikeCommentPercent"
+                      >
+                        Save changes
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="importScriptModel"
+            class="modal fade bd-example-modal-xl"
+            tabindex="-1"
+            role="dialog"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-xl" role="document">
+              <div class="modal-content bg-glass">
+                <div class="modal-header">
+                  <a class="text-gray-400">Template</a>
+                  <button
+                    type="button"
+                    class="close text-white"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form id="importServiceForm">
+                    <div class="form-group">
+                      <label for="exampleFormControlFile1" class="text-gray-400"
+                        >Services file</label
+                      >
+                      <input
+                        type="file"
+                        class="form-control-file"
+                        id="serviceFile"
+                        name="serviceFile"
+                        accept=".csv"
+                      />
+                    </div>
+                  </form>
+                  <table id="previewTable" class="table table-bordered"></table>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="button" class="btn btn-primary" id="previewBtn">
+                    Preview
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="saveImportBtn"
+                  >
+                    Save changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="editPlaylistDescription" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Playlist Description</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <div role="form">
+              <div class="form-group">
+                <label class="col-form-label">Playlist Description </label>
+                <div>
+                  <input class="form-control" id="edit_playlist_description" />
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  id="save_edit_playlist_description"
+                >
+                  Save changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Danh sách kênh tự động được tạo playlist -->
+    <div id="channel_list_model" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              Danh sách tự động tạo playlist theo ID kênh youtube
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <div id="channelList">
+              <!-- Danh sách kênh sẽ được thêm vào đây bằng JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add BackblazeKey key Modal -->
+    <div
+      class="modal fade"
+      id="backblazeKeyModal"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+      data-backdrop="static"
+      data-keyboard="false"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content bg-glass">
+          <div class="modal-header">
+            <h5 class="modal-title text-white">Add Backblaze key</h5>
+          </div>
+
+          <div class="modal-body">
+            <form id="addBackblazeKeyForm">
+              <div class="form-group">
+                <label class="text-white">Application Key Id</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="applicationKeyId"
+                  required
+                />
+                <label class="text-white">Application Key</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="applicationKey"
+                  required
+                />
+              </div>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+              disabled=""
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="submit-backblazeKey-btn"
+            >
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% include ../common/js%>
+    <script>
+      // Đưa config từ server vào biến toàn cục
+      var appConfig = JSON.parse(`<%- JSON.stringify(config) %>`);
+    </script>
+    <script src="/js/bootbox.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+    <script src="https://unpkg.com/popper.js@1.15.0/dist/umd/popper.min.js"></script>
+    <script src="/javascripts/utils.js"></script>
+    <script src="/javascripts/service.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+    <script>
+      new ClipboardJS(".copy-btn");
+
+      function copyToClipboard(text) {
+        // Tạo một input tạm thời
+        const tempInput = document.createElement("input");
+        tempInput.value = text;
+        document.body.appendChild(tempInput);
+
+        // Select text
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999); /* For mobile devices */
+
+        // Copy
+        document.execCommand("copy");
+
+        // Xóa input tạm thời
+        document.body.removeChild(tempInput);
+
+        // Có thể thêm alert nếu muốn
+        // alert('Copied: ' + text);
+      }
+    </script>
+  </body>
+</html>
